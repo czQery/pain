@@ -3,9 +3,10 @@
     import Timetable from "./routes/Timetable.svelte"
     import Index from "./routes/Index.svelte"
     import {LucideClock, LucideSheet} from "lucide-svelte"
-    import {timetableFetch} from "./lib/timetable.js"
+    import {timetableFetch, timetablePermanentFetch} from "./lib/timetable.js"
 
     timetableFetch()
+    timetablePermanentFetch()
 </script>
 
 <Router>
@@ -40,17 +41,17 @@
         justify-content: center;
         height: calc(100svh - 50px);
 
-        --subject-A: #0A2239;
+        --subject-A: #0c355b;
         --subject-AJ: #d5334b;
-        --subject-CAD: #5c6073;
+        --subject-CAD: #5f6895;
         --subject-ČJL: #f2c40e;
         --subject-ČT: #dd7571;
-        --subject-E: #058E3F;
+        --subject-E: #058e3f;
         --subject-EM: #a845b3;
         --subject-ET: #11bb41;
         --subject-EK: #fa147f;
         --subject-M: #23b1d2;
-        --subject-ON: #363537;
+        --subject-ON: #571641;
         --subject-OV: #a09262;
         --subject-TV: #f5980c;
     }

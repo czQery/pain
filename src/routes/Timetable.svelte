@@ -1,5 +1,5 @@
 <script>
-    import {timetableStore} from "../lib/timetable.js"
+    import {timetablePermanentStore, timetableStore} from "../lib/timetable.js"
     import {formatRemovedSubject} from "../lib/format.js";
 
     const hours = 9
@@ -7,23 +7,26 @@
     let windowHeight = 0
     let cornerHeight = 0
     let footerHeight = 50
+
     let timetable = null
+    let timetablePermanent = null
     timetableStore.subscribe(async value => {
-        if (value) {
-            timetable = value
-        }
+        if (value) timetable = value
+    })
+    timetablePermanentStore.subscribe(async value => {
+        if (value) timetablePermanent = value
     })
 </script>
 
 
 <svelte:window bind:innerHeight={windowHeight}/>
 <table>
-    {#if timetable}
+    {#if timetable && timetablePermanent}
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
-                <h2>{timetable["Cycles"][0]["Abbrev"]}</h2>
+                <h2>{timetable["Cycles"][0]["Abbrev"] === "S" ? "EVEN" : "ODD"}</h2>
             </th>
-            <th><h2>MNO</h2></th>
+            <th><h2>MON</h2></th>
             <th><h2>TUE</h2></th>
             <th><h2>WED</h2></th>
             <th><h2>THU</h2></th>
@@ -40,14 +43,22 @@
                         {@const group=timetable["Groups"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["GroupIds"][0])["Abbrev"].replace(" ", "").replace(timetable["Groups"][0]["Abbrev"], "")}
                         {@const room=timetable["Rooms"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["RoomId"])["Abbrev"]}
                         {@const subject=timetable["Subjects"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["SubjectId"])["Abbrev"].toUpperCase()}
-                        {@const subjectOriginal=(timetable["Days"][j]["Atoms"][i]["Change"] ? "? > " : "")} <!--TODO: add permanent timeline to api-->
+                        {@const subjectOriginal=
+                            timetable["Days"][j]["Atoms"][i]["Change"] && timetable["Days"][j]["Atoms"][i]["Change"]["ChangeType"] === "Added" ?
+                                (timetablePermanent["Subjects"].find(s => s["Id"] ===
+                                    (timetablePermanent["Days"][j]["Atoms"].find(t => {
+                                        return t["HourId"] === timetable["Days"][j]["Atoms"][i]["HourId"] && t["CycleIds"][0] === timetable["Days"][j]["Atoms"][i]["CycleIds"][0]
+                                    })?.["SubjectId"] ?? "")
+                                )?.["Abbrev"].toUpperCase() ?? "#") + " > "
+                                : ""
+                        }
                         {@const teacher=timetable["Teachers"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["TeacherId"])["Abbrev"]}
                         <td style="background-color:var(--subject-{subject})">
                             <div class="flex-between">
                                 <span>{group}</span>
                                 <span>{room}</span>
                             </div>
-                            <h3 style="margin:{(((windowHeight-footerHeight-cornerHeight-1) / hours)-20-18-10)/2 - 1}px 0">{subjectOriginal+subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px is another magic fucking number-->
+                            <h3 style="margin:{(((windowHeight-footerHeight-cornerHeight-1) / hours)-20-18-10)/2 - 1}px 0">{subjectOriginal + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px is another magic fucking number-->
                             <span>{teacher}</span>
                         </td>
                     {:else if timetable["Days"][j]["Atoms"][i] && timetable["Days"][j]["Atoms"][i]["Change"]["ChangeType"] === "Removed"}
