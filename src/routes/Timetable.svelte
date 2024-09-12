@@ -1,5 +1,6 @@
 <script>
     import {timetableStore} from "../lib/timetable.js"
+    import {formatRemovedSubject} from "../lib/format.js";
 
     const hours = 9
 
@@ -39,14 +40,21 @@
                         {@const group=timetable["Groups"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["GroupIds"][0])["Abbrev"].replace(" ", "").replace(timetable["Groups"][0]["Abbrev"], "")}
                         {@const room=timetable["Rooms"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["RoomId"])["Abbrev"]}
                         {@const subject=timetable["Subjects"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["SubjectId"])["Abbrev"].toUpperCase()}
+                        {@const subjectOriginal=(timetable["Days"][j]["Atoms"][i]["Change"] ? "? > " : "")} <!--TODO: add permanent timeline to api-->
                         {@const teacher=timetable["Teachers"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["TeacherId"])["Abbrev"]}
                         <td style="background-color:var(--subject-{subject})">
                             <div class="flex-between">
                                 <span>{group}</span>
                                 <span>{room}</span>
                             </div>
-                            <h3>{subject}</h3>
+                            <h3 style="margin:{(((windowHeight-footerHeight-cornerHeight-1) / hours)-20-18-10)/2 - 1}px 0">{subjectOriginal+subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px is another magic fucking number-->
                             <span>{teacher}</span>
+                        </td>
+                    {:else if timetable["Days"][j]["Atoms"][i] && timetable["Days"][j]["Atoms"][i]["Change"]["ChangeType"] === "Removed"}
+                        <td class="subject-removed">
+                            <span></span>
+                            <h3>{formatRemovedSubject(timetable["Days"][j]["Atoms"][i]["Change"]["Description"])}</h3>
+                            <span>removed</span>
                         </td>
                     {:else}
                         <td></td>
@@ -73,7 +81,7 @@
         min-width: 50px;
         position: -webkit-sticky;
         position: sticky;
-        left: 0;
+        left: -1px; /*-1px because of border*/
         background-color: var(--black);
     }
 
@@ -91,6 +99,16 @@
         border: 1px var(--silver) solid;
         padding: 10px;
         font-weight: bold;
+    }
+
+    .subject-removed {
+        background: repeating-linear-gradient(
+                45deg,
+                var(--black),
+                var(--black) 10px,
+                rgba(255, 255, 255, 0.15) 10px,
+                rgba(255, 255, 255, 0.15) 20px
+        );
     }
 
     .flex-between {

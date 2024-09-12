@@ -40,19 +40,19 @@
         justify-content: center;
         height: calc(100svh - 50px);
 
-        --subject-A: #0A176C;
-        --subject-AJ: #B70A28;
-        --subject-ČT: #1ebd5c;
-        --subject-ON: #9B9015;
+        --subject-A: #0A2239;
+        --subject-AJ: #d5334b;
         --subject-CAD: #5c6073;
-        --subject-ČJL: #deae0f;
-        --subject-E: #148C33;
-        --subject-ET: #4f6b1f;
-        --subject-M: #1492c5;
-        --subject-EM: #6414c5;
-        --subject-TV: #c2569f;
-        --subject-EK: #9a1f1c;
-        --subject-OV: #734431;
+        --subject-ČJL: #f2c40e;
+        --subject-ČT: #dd7571;
+        --subject-E: #058E3F;
+        --subject-EM: #a845b3;
+        --subject-ET: #11bb41;
+        --subject-EK: #fa147f;
+        --subject-M: #23b1d2;
+        --subject-ON: #363537;
+        --subject-OV: #a09262;
+        --subject-TV: #f5980c;
     }
 
     footer {

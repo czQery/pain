@@ -7,14 +7,14 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^3.1.1",
-    "svelte": "^4.2.18",
-    "vite": "^5.4.1"
+    "@sveltejs/vite-plugin-svelte": "^3.1.2",
+    "svelte": "^4.2.19",
+    "vite": "^5.4.4"
   },
   "dependencies": {
     "browserslist": "^4.23.3",
     "lightningcss": "^1.27.0",
-    "lucide-svelte": "^0.440.0",
+    "lucide-svelte": "^0.441.0",
     "path": "^0.12.7",
     "svelte-routing": "^2.13.0"
   }
