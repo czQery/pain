@@ -2,8 +2,10 @@
     import {timetablePermanentStore, timetableStore} from "../lib/timetable.js"
     import {formatRemovedSubject, formatTime} from "../lib/format.js";
     import {onDestroy, onMount} from "svelte";
+    import {LucidePencil, LucideTriangleAlert} from "lucide-svelte";
 
     const hours = 9
+    const subjectChange = " > "
 
     let time = new Date()
     let interval
@@ -65,7 +67,7 @@
                                     (timetablePermanent["Days"][j]["Atoms"].find(t => {
                                         return t["HourId"] === timetable["Days"][j]["Atoms"][i]["HourId"] && t["CycleIds"][0] === timetable["Days"][j]["Atoms"][i]["CycleIds"][0]
                                     })?.["SubjectId"] ?? "")
-                                )?.["Abbrev"].toUpperCase() ?? "#") + " > "
+                                )?.["Abbrev"].toUpperCase() ?? "#") + subjectChange
                                 : ""
                         }
                         {@const teacher=timetable["Teachers"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["TeacherId"])["Abbrev"]}
@@ -74,8 +76,22 @@
                                 <span>{group}</span>
                                 <span>{room}</span>
                             </div>
-                            <h3 style="margin:{(((windowHeight-footerHeight-cornerHeight-1) / hours)-20-18-10)/2 - 1}px 0">{subjectOriginal + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px is another magic fucking number-->
-                            <span>{teacher}</span>
+                            <h3 style="margin:{(((windowHeight-footerHeight-cornerHeight-1) / hours)-20-18-10)/2 - 1}px 0">{(subjectOriginal !== subject + subjectChange ? subjectOriginal : "") + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px is another magic fucking number-->
+                            <div class="flex-between">
+                                <span>
+                                    {#if timetable["Days"][j]["Atoms"][i]["Change"]}
+                                        {#if subjectOriginal.includes("#")}
+                                            <LucideTriangleAlert/>
+                                        {:else}
+                                            <LucidePencil/>
+                                        {/if}
+                                        {:else}
+                                        <svg></svg>
+                                    {/if}
+                                </span>
+                                <span>{teacher}</span>
+                                <span><svg></svg></span>
+                            </div>
                         </td>
                     {:else if timetable["Days"][j]["Atoms"][i] && timetable["Days"][j]["Atoms"][i]["Change"]["ChangeType"] === "Removed"}
                         <td class={"subject-removed "+past}>
@@ -133,6 +149,12 @@
         border: 1px var(--silver) solid;
         padding: 10px;
         font-weight: bold;
+    }
+
+    td :global(svg) {
+        height: 10px;
+        width: 10px;
+        stroke-width: 3px; /*default is 2px*/
     }
 
     .subject-past {
