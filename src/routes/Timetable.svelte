@@ -96,7 +96,9 @@
     table {
         display: block;
         border-collapse: collapse;
-        overflow: scroll;
+        overflow-x: auto;
+        overflow-y: clip;
+        border-left: 1px var(--silver) solid; /*.slim border*/
     }
 
     tr th, tr td {
@@ -108,8 +110,13 @@
         min-width: 50px;
         position: -webkit-sticky;
         position: sticky;
-        left: -1px; /*-1px because of border*/
+        left: 0;
         background-color: var(--black);
+        z-index: 10;
+        border: none;
+        border-top: 1px var(--silver) solid; /*.slim border*/
+        border-bottom: 1px var(--silver) solid; /*.slim border*/
+        border-right: 1px var(--silver) solid; /*.slim border*/
     }
 
     td, th {
@@ -129,7 +136,7 @@
     }
 
     .subject-past {
-        filter: brightness(0.3);
+        filter: brightness(0.4);
     }
 
     .subject-removed {
