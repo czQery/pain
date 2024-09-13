@@ -1,8 +1,12 @@
 <script>
     import {timetablePermanentStore, timetableStore} from "../lib/timetable.js"
-    import {formatRemovedSubject} from "../lib/format.js";
+    import {formatRemovedSubject, formatTime} from "../lib/format.js";
+    import {onDestroy, onMount} from "svelte";
 
     const hours = 9
+
+    let time = new Date()
+    let interval
 
     let windowHeight = 0
     let cornerHeight = 0
@@ -15,6 +19,16 @@
     })
     timetablePermanentStore.subscribe(async value => {
         if (value) timetablePermanent = value
+    })
+
+    onMount(() => {
+        setInterval(() => {
+            time = new Date()
+        }, 1000)
+    })
+
+    onDestroy(() => {
+        clearInterval(interval)
     })
 </script>
 
@@ -39,6 +53,8 @@
                     <span>{hour["BeginTime"] + "-" + hour["EndTime"]}</span>
                 </th>
                 {#each Array(5) as _, j}
+                    <!--check if day is in past or day is today but the hour is in the past-->
+                    {@const past=(j + 1 < time.getDay() || j + 1 === time.getDay() && time.getTime() > formatTime(hour).getTime() - 1) ? "subject-past" : ""}
                     {#if timetable["Days"][j]["Atoms"][i] && timetable["Days"][j]["Atoms"][i]["SubjectId"]}
                         {@const group=timetable["Groups"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["GroupIds"][0])["Abbrev"].replace(" ", "").replace(timetable["Groups"][0]["Abbrev"], "")}
                         {@const room=timetable["Rooms"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["RoomId"])["Abbrev"]}
@@ -53,7 +69,7 @@
                                 : ""
                         }
                         {@const teacher=timetable["Teachers"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["TeacherId"])["Abbrev"]}
-                        <td style="background-color:var(--subject-{subject})">
+                        <td style="background-color:var(--subject-{subject})" class={past}>
                             <div class="flex-between">
                                 <span>{group}</span>
                                 <span>{room}</span>
@@ -62,7 +78,7 @@
                             <span>{teacher}</span>
                         </td>
                     {:else if timetable["Days"][j]["Atoms"][i] && timetable["Days"][j]["Atoms"][i]["Change"]["ChangeType"] === "Removed"}
-                        <td class="subject-removed">
+                        <td class={"subject-removed "+past}>
                             <span></span>
                             <h3>{formatRemovedSubject(timetable["Days"][j]["Atoms"][i]["Change"]["Description"])}</h3>
                             <span>removed</span>
@@ -110,6 +126,10 @@
         border: 1px var(--silver) solid;
         padding: 10px;
         font-weight: bold;
+    }
+
+    .subject-past {
+        filter: brightness(0.3);
     }
 
     .subject-removed {
