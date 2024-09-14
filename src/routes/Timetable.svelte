@@ -1,8 +1,15 @@
 <script>
     import {timetablePermanentStore, timetableStore} from "../lib/timetable.js"
-    import {formatRemovedSubject} from "../lib/format.js";
+    import {formatRemovedSubject, formatTime} from "../lib/format.js"
+    import {onDestroy, onMount} from "svelte"
+    import {LucidePencil, LucideTriangleAlert} from "lucide-svelte"
+    import Loading from "../components/Loading.svelte"
 
     const hours = 9
+    const subjectChange = " > "
+
+    let time = new Date()
+    let interval
 
     let windowHeight = 0
     let cornerHeight = 0
@@ -16,12 +23,22 @@
     timetablePermanentStore.subscribe(async value => {
         if (value) timetablePermanent = value
     })
+
+    onMount(() => {
+        setInterval(() => {
+            time = new Date()
+        }, 1000)
+    })
+
+    onDestroy(() => {
+        clearInterval(interval)
+    })
 </script>
 
 
 <svelte:window bind:innerHeight={windowHeight}/>
-<table>
-    {#if timetable && timetablePermanent}
+{#if timetable && timetablePermanent}
+    <table>
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
                 <h2>{timetable["Cycles"][0]["Abbrev"] === "S" ? "EVEN" : "ODD"}</h2>
@@ -39,6 +56,8 @@
                     <span>{hour["BeginTime"] + "-" + hour["EndTime"]}</span>
                 </th>
                 {#each Array(5) as _, j}
+                    <!--check if day is in past or day is today but the hour is in the past-->
+                    {@const past=(j + 1 < time.getDay() || j + 1 === time.getDay() && time.getTime() > formatTime(hour).getTime() - 1) ? "subject-past" : ""}
                     {#if timetable["Days"][j]["Atoms"][i] && timetable["Days"][j]["Atoms"][i]["SubjectId"]}
                         {@const group=timetable["Groups"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["GroupIds"][0])["Abbrev"].replace(" ", "").replace(timetable["Groups"][0]["Abbrev"], "")}
                         {@const room=timetable["Rooms"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["RoomId"])["Abbrev"]}
@@ -49,20 +68,34 @@
                                     (timetablePermanent["Days"][j]["Atoms"].find(t => {
                                         return t["HourId"] === timetable["Days"][j]["Atoms"][i]["HourId"] && t["CycleIds"][0] === timetable["Days"][j]["Atoms"][i]["CycleIds"][0]
                                     })?.["SubjectId"] ?? "")
-                                )?.["Abbrev"].toUpperCase() ?? "#") + " > "
+                                )?.["Abbrev"].toUpperCase() ?? "#") + subjectChange
                                 : ""
                         }
                         {@const teacher=timetable["Teachers"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["TeacherId"])["Abbrev"]}
-                        <td style="background-color:var(--subject-{subject})">
+                        <td style="background-color:var(--subject-{subject})" class={past}>
                             <div class="flex-between">
                                 <span>{group}</span>
                                 <span>{room}</span>
                             </div>
-                            <h3 style="margin:{(((windowHeight-footerHeight-cornerHeight-1) / hours)-20-18-10)/2 - 1}px 0">{subjectOriginal + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px is another magic fucking number-->
-                            <span>{teacher}</span>
+                            <h3 style="margin:{(((windowHeight-footerHeight-cornerHeight-1) / hours)-20-18-10)/2 - 1}px 0">{(subjectOriginal !== subject + subjectChange ? subjectOriginal : "") + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px is another magic fucking number-->
+                            <div class="flex-between">
+                                <span>
+                                    {#if timetable["Days"][j]["Atoms"][i]["Change"]}
+                                        {#if subjectOriginal.includes("#")}
+                                            <LucideTriangleAlert/>
+                                        {:else}
+                                            <LucidePencil/>
+                                        {/if}
+                                        {:else}
+                                        <svg></svg>
+                                    {/if}
+                                </span>
+                                <span>{teacher}</span>
+                                <span><svg></svg></span>
+                            </div>
                         </td>
                     {:else if timetable["Days"][j]["Atoms"][i] && timetable["Days"][j]["Atoms"][i]["Change"]["ChangeType"] === "Removed"}
-                        <td class="subject-removed">
+                        <td class={"subject-removed "+past}>
                             <span></span>
                             <h3>{formatRemovedSubject(timetable["Days"][j]["Atoms"][i]["Change"]["Description"])}</h3>
                             <span>removed</span>
@@ -73,27 +106,37 @@
                 {/each}
             </tr>
         {/each}
-    {/if}
-</table>
+    </table>
+{:else}
+    <Loading/>
+{/if}
 
 <style>
     table {
         display: block;
         border-collapse: collapse;
-        overflow: scroll;
+        overflow-x: auto;
+        overflow-y: clip;
+        border-left: 1px var(--silver) solid; /*.slim border*/
     }
 
     tr th, tr td {
         min-width: 100px;
         width: 200px;
+        user-select: none;
     }
 
     tr .slim {
         min-width: 50px;
         position: -webkit-sticky;
         position: sticky;
-        left: -1px; /*-1px because of border*/
+        left: 0;
         background-color: var(--black);
+        z-index: 10;
+        border: none;
+        border-top: 1px var(--silver) solid; /*.slim border*/
+        border-bottom: 1px var(--silver) solid; /*.slim border*/
+        border-right: 1px var(--silver) solid; /*.slim border*/
     }
 
     td, th {
@@ -110,6 +153,16 @@
         border: 1px var(--silver) solid;
         padding: 10px;
         font-weight: bold;
+    }
+
+    td :global(svg) {
+        height: 10px;
+        width: 10px;
+        stroke-width: 3px; /*default is 2px*/
+    }
+
+    .subject-past {
+        filter: brightness(0.4);
     }
 
     .subject-removed {
