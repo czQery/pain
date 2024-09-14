@@ -4,14 +4,21 @@
     import Index from "./routes/Index.svelte"
     import {LucideClock, LucideSheet} from "lucide-svelte"
     import {timetableFetch, timetablePermanentFetch} from "./lib/timetable.js"
+    import Countdown from "./routes/Countdown.svelte"
+    import {onMount} from "svelte"
 
-    timetableFetch()
-    timetablePermanentFetch()
+    onMount(() => {
+        document.getElementById("init-loading").style.display = "none"
+        document.getElementById("app").style.display = "flex"
+
+        timetableFetch()
+        timetablePermanentFetch()
+    })
 </script>
 
 <Router>
     <main class="container">
-        <Route path="/countdown"/>
+        <Route path="/countdown" component={Countdown}/>
         <Route path="/timetable" component={Timetable}/>
         <Route component={Index}></Route>
     </main>
@@ -59,6 +66,9 @@
     footer {
         height: 50px;
         width: 100%;
+        user-select: none;
+        outline: 1px var(--silver) solid;
+        z-index: 20;
     }
 
     footer ul {

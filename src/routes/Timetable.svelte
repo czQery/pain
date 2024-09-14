@@ -1,8 +1,9 @@
 <script>
     import {timetablePermanentStore, timetableStore} from "../lib/timetable.js"
-    import {formatRemovedSubject, formatTime} from "../lib/format.js";
-    import {onDestroy, onMount} from "svelte";
-    import {LucidePencil, LucideTriangleAlert} from "lucide-svelte";
+    import {formatRemovedSubject, formatTime} from "../lib/format.js"
+    import {onDestroy, onMount} from "svelte"
+    import {LucidePencil, LucideTriangleAlert} from "lucide-svelte"
+    import Loading from "../components/Loading.svelte"
 
     const hours = 9
     const subjectChange = " > "
@@ -36,8 +37,8 @@
 
 
 <svelte:window bind:innerHeight={windowHeight}/>
-<table>
-    {#if timetable && timetablePermanent}
+{#if timetable && timetablePermanent}
+    <table>
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
                 <h2>{timetable["Cycles"][0]["Abbrev"] === "S" ? "EVEN" : "ODD"}</h2>
@@ -105,8 +106,10 @@
                 {/each}
             </tr>
         {/each}
-    {/if}
-</table>
+    </table>
+{:else}
+    <Loading/>
+{/if}
 
 <style>
     table {
@@ -120,6 +123,7 @@
     tr th, tr td {
         min-width: 100px;
         width: 200px;
+        user-select: none;
     }
 
     tr .slim {

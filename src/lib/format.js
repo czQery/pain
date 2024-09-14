@@ -1,5 +1,5 @@
 export const formatRemovedSubject = (description) => {
-    return description.split("(").pop().split(",")[0];
+    return description.split("(").pop().split(",")[0]
 }
 
 export const formatTime = (hour) => {
