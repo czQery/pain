@@ -58,20 +58,21 @@
                 {#each Array(5) as _, j}
                     <!--check if day is in past or day is today but the hour is in the past-->
                     {@const past=(j + 1 < time.getDay() || j + 1 === time.getDay() && time.getTime() > formatTime(hour).getTime() - 1) ? "subject-past" : ""}
-                    {#if timetable["Days"][j]["Atoms"][i] && timetable["Days"][j]["Atoms"][i]["SubjectId"]}
-                        {@const group=timetable["Groups"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["GroupIds"][0])["Abbrev"].replace(" ", "").replace(timetable["Groups"][0]["Abbrev"], "")}
-                        {@const room=timetable["Rooms"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["RoomId"])["Abbrev"]}
-                        {@const subject=timetable["Subjects"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["SubjectId"])["Abbrev"].toUpperCase()}
+                    {@const atom=timetable["Days"][j]["Atoms"].find(t => t["HourId"] === hour["Id"])}
+                    {#if atom && atom["SubjectId"]}
+                        {@const group=timetable["Groups"].find(s => s["Id"] === atom["GroupIds"][0])["Abbrev"].replace(" ", "").replace(timetable["Groups"][0]["Abbrev"], "")}
+                        {@const room=timetable["Rooms"].find(s => s["Id"] === atom["RoomId"])["Abbrev"]}
+                        {@const subject=timetable["Subjects"].find(s => s["Id"] === atom["SubjectId"])["Abbrev"].toUpperCase()}
                         {@const subjectOriginal=
-                            timetable["Days"][j]["Atoms"][i]["Change"] && timetable["Days"][j]["Atoms"][i]["Change"]["ChangeType"] === "Added" ?
+                            atom["Change"] && atom["Change"]["ChangeType"] === "Added" ?
                                 (timetablePermanent["Subjects"].find(s => s["Id"] ===
                                     (timetablePermanent["Days"][j]["Atoms"].find(t => {
-                                        return t["HourId"] === timetable["Days"][j]["Atoms"][i]["HourId"] && t["CycleIds"][0] === timetable["Days"][j]["Atoms"][i]["CycleIds"][0]
+                                        return t["HourId"] === atom["HourId"] && t["CycleIds"][0] === atom["CycleIds"][0]
                                     })?.["SubjectId"] ?? "")
                                 )?.["Abbrev"].toUpperCase() ?? "#") + subjectChange
                                 : ""
                         }
-                        {@const teacher=timetable["Teachers"].find(s => s["Id"] === timetable["Days"][j]["Atoms"][i]["TeacherId"])["Abbrev"]}
+                        {@const teacher=timetable["Teachers"].find(s => s["Id"] === atom["TeacherId"])["Abbrev"]}
                         <td style="background-color:var(--subject-{subject})" class={past}>
                             <div class="flex-between">
                                 <span>{group}</span>
@@ -80,7 +81,7 @@
                             <h3 style="margin:{(((windowHeight-footerHeight-cornerHeight-1) / hours)-20-18-10)/2 - 1}px 0">{(subjectOriginal !== subject + subjectChange ? subjectOriginal : "") + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px is another magic fucking number-->
                             <div class="flex-between">
                                 <span>
-                                    {#if timetable["Days"][j]["Atoms"][i]["Change"]}
+                                    {#if atom["Change"]}
                                         {#if subjectOriginal.includes("#")}
                                             <LucideTriangleAlert/>
                                         {:else}
@@ -94,10 +95,10 @@
                                 <span><svg></svg></span>
                             </div>
                         </td>
-                    {:else if timetable["Days"][j]["Atoms"][i] && timetable["Days"][j]["Atoms"][i]["Change"]["ChangeType"] === "Removed"}
+                    {:else if atom && atom["Change"]["ChangeType"] === "Removed"}
                         <td class={"subject-removed "+past}>
                             <span></span>
-                            <h3>{formatRemovedSubject(timetable["Days"][j]["Atoms"][i]["Change"]["Description"])}</h3>
+                            <h3>{formatRemovedSubject(atom["Change"]["Description"])}</h3>
                             <span>removed</span>
                         </td>
                     {:else}
@@ -170,8 +171,8 @@
                 45deg,
                 var(--black),
                 var(--black) 10px,
-                rgba(255, 255, 255, 0.15) 10px,
-                rgba(255, 255, 255, 0.15) 20px
+                rgba(255, 255, 255, 0.2) 10px,
+                rgba(255, 255, 255, 0.2) 20px
         );
     }
 
