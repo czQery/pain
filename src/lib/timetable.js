@@ -3,8 +3,8 @@ import {writable} from "svelte/store"
 export const timetableStore = writable(null)
 export const timetablePermanentStore = writable(null)
 
-export const timetableFetch = async () => {
-    const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable?page=0", {
+export const timetableFetch = async (page) => {
+    const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable?page="+page.toString(), {
         credentials: "include"
     })
     const data = await response.json()

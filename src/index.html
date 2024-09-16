@@ -39,6 +39,7 @@
             --gray: #2F3336;
             --border: 5px;
             --transition: 0.1s;
+            --hover: brightness(40%);
             --animation-rotate: rotate 1.5s cubic-bezier(.79, .14, .15, .86) infinite;
             --animation-blend: blend 1s cubic-bezier(.6, -0.28, .74, .05) 1;
         }
@@ -93,6 +94,23 @@
             font-size: 10px;
             min-height: 10px;
             line-height: 10px;
+        }
+
+        a, button {
+            transition: var(--transition) all linear;
+        }
+
+        button:disabled,
+        button[disabled] {
+            filter: var(--hover);
+            cursor: default !important;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            a:hover, button:hover {
+                cursor: pointer;
+                filter: var(--hover);
+            }
         }
 
         #app {
