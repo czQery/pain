@@ -2,8 +2,8 @@
     import {Link, Route, Router} from "svelte-routing"
     import Timetable from "./routes/Timetable.svelte"
     import Index from "./routes/Index.svelte"
-    import {LucideClock, LucideSheet} from "lucide-svelte"
-    import {timetableFetch, timetablePermanentFetch} from "./lib/timetable.js"
+    import {LucideCalendarRange, LucideClock} from "lucide-svelte"
+    import {timetablePermanentFetch} from "./lib/timetable.js"
     import Countdown from "./routes/Countdown.svelte"
     import {onMount} from "svelte"
 
@@ -11,7 +11,6 @@
         document.getElementById("init-loading").style.display = "none"
         document.getElementById("app").style.display = "flex"
 
-        timetableFetch()
         timetablePermanentFetch()
     })
 </script>
@@ -31,7 +30,7 @@
             </li>
             <li>
                 <Link class="link" to="/timetable">
-                    <LucideSheet/>
+                    <LucideCalendarRange/>
                 </Link>
             </li>
             <li style="display: none">
@@ -46,6 +45,8 @@
         display: flex;
         width: 100%;
         justify-content: center;
+        align-items: center;
+        flex-direction: column;
         height: calc(100svh - 50px);
 
         --subject-A: #0c355b;
