@@ -73,7 +73,8 @@
             <th><h3>FRI</h3></th>
         </tr>
         {#each $timetableStore["Hours"].slice(0, hours) as hour, i}
-            <tr style="height:{(windowHeight-footerHeight-navHeight-cornerHeight-1) / hours}px"> <!--the 1px is for border idk don't ask me-->
+            {@const atomHeight=(windowHeight - footerHeight - navHeight - cornerHeight - 1) / hours} <!--the 1px is for border idk don't ask me-->
+            <tr style="height:{atomHeight}px">
                 <th class="slim">
                     <h2>{hour["Caption"]}</h2>
                     <span>{hour["BeginTime"] + "-" + hour["EndTime"]}</span>
@@ -101,7 +102,7 @@
                                 <span>{group}</span>
                                 <span>{room}</span>
                             </div>
-                            <h3 style="margin:{(((windowHeight-footerHeight-navHeight-cornerHeight-1) / hours)-20-18-10)/2 - 1}px 0">{(subjectOriginal !== subject + subjectChange ? subjectOriginal : "") + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px is another magic fucking number-->
+                            <h3 style="margin:{(atomHeight-20-18-10)/2 - 1}px 0">{(subjectOriginal !== subject + subjectChange ? subjectOriginal : "") + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px is another magic fucking number-->
                             <div class="flex-between">
                                 <span>
                                     {#if atom["Change"]}
@@ -177,7 +178,7 @@
     }
 
     tr .slim {
-        min-width: 50px;
+        min-width: 80px;
         position: -webkit-sticky;
         position: sticky;
         left: 0;

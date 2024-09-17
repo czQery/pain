@@ -9,7 +9,7 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.1.2",
     "svelte": "^4.2.19",
-    "vite": "^5.4.5"
+    "vite": "^5.4.6"
   },
   "dependencies": {
     "browserslist": "^4.23.3",
