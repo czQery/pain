@@ -44,7 +44,6 @@
     main {
         display: flex;
         width: 100%;
-        justify-content: center;
         align-items: center;
         flex-direction: column;
         height: calc(100svh - 50px);

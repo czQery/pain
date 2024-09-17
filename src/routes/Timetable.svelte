@@ -73,7 +73,7 @@
             <th><h3>FRI</h3></th>
         </tr>
         {#each $timetableStore["Hours"].slice(0, hours) as hour, i}
-            {@const atomHeight=(windowHeight - footerHeight - navHeight - cornerHeight - hours) / hours}
+            {@const atomHeight=Math.round((((windowHeight - footerHeight - navHeight - cornerHeight) / hours) + Number.EPSILON) * 10) / 10} <!--round the number because different browsers use different precision - the epsilon trick is not perfect but whatever -->
             <tr style="height:{atomHeight}px">
                 <th class="slim">
                     <h2>{hour["Caption"]}</h2>
@@ -98,12 +98,13 @@
                         }
                         {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"])["Abbrev"]}
                         <td style="background-color:var(--subject-{subject})" class={past}>
-                            <div class="flex-between">
-                                <span>{group}</span>
-                                <span>{room}</span>
-                            </div>
-                            <h3 style="margin:{((atomHeight - 20 - 18 - 10) / 2) - 1}px 0">{(subjectOriginal !== subject + subjectChange ? subjectOriginal : "") + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
-                            <div class="flex-between">
+                            <div class="flex-atom" style="height:{atomHeight-10}px"> <!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
+                                <div class="flex-between">
+                                    <span>{group}</span>
+                                    <span>{room}</span>
+                                </div>
+                                <h3>{(subjectOriginal !== subject + subjectChange ? subjectOriginal : "") + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
+                                <div class="flex-between">
                                 <span>
                                     {#if atom["Change"]}
                                         {#if subjectOriginal.includes("#")}
@@ -115,8 +116,9 @@
                                         <svg></svg>
                                     {/if}
                                 </span>
-                                <span>{teacher}</span>
-                                <span><svg></svg></span>
+                                    <span>{teacher}</span>
+                                    <span><svg></svg></span>
+                                </div>
                             </div>
                         </td>
                     {:else if atom && atom["Change"]["ChangeType"] === "Removed"}
@@ -197,7 +199,7 @@
     td {
         border: 1px var(--gray) solid;
         font-weight: normal;
-        padding: 5px;
+        padding: 0;
     }
 
     th {
@@ -224,6 +226,13 @@
                 rgba(255, 255, 255, 0.2) 10px,
                 rgba(255, 255, 255, 0.2) 20px
         );
+    }
+
+    .flex-atom {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0 5px;
     }
 
     .flex-between {
