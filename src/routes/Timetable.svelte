@@ -73,7 +73,7 @@
             <th><h3>FRI</h3></th>
         </tr>
         {#each $timetableStore["Hours"].slice(0, hours) as hour, i}
-            {@const atomHeight=(windowHeight - footerHeight - navHeight - cornerHeight - 1) / hours} <!--the 1px is for border idk don't ask me-->
+            {@const atomHeight=(windowHeight - footerHeight - navHeight - cornerHeight - hours) / hours}
             <tr style="height:{atomHeight}px">
                 <th class="slim">
                     <h2>{hour["Caption"]}</h2>
@@ -81,7 +81,7 @@
                 </th>
                 {#each Array(5) as _, j}
                     <!--check if day is in past or day is today but the hour is in the past-->
-                    {@const past=((j + 1 < time.getDay() || j + 1 === time.getDay()) && time.getTime() > formatTime(hour).getTime() - 1 && page === 0) ? "subject-past" : ""}
+                    {@const past=((j + 1 < time.getDay() || (j + 1 === time.getDay() && time.getTime() > formatTime(hour).getTime() - 1)) && page === 0) ? "subject-past" : ""}
                     {@const atom=$timetableStore["Days"][j]["Atoms"].find(t => t["HourId"] === hour["Id"])}
                     {#if atom && atom["SubjectId"]}
                         {@const group=$timetableStore["Groups"].find(s => s["Id"] === atom["GroupIds"][0])["Abbrev"].replace(" ", "").replace($timetableStore["Classes"][0]["Abbrev"], "")}
@@ -102,7 +102,7 @@
                                 <span>{group}</span>
                                 <span>{room}</span>
                             </div>
-                            <h3 style="margin:{(atomHeight-20-18-10)/2 - 1}px 0">{(subjectOriginal !== subject + subjectChange ? subjectOriginal : "") + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px is another magic fucking number-->
+                            <h3 style="margin:{((atomHeight - 20 - 18 - 10) / 2) - 1}px 0">{(subjectOriginal !== subject + subjectChange ? subjectOriginal : "") + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
                             <div class="flex-between">
                                 <span>
                                     {#if atom["Change"]}
