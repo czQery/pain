@@ -67,7 +67,7 @@
         height: 50px;
         width: 100%;
         user-select: none;
-        outline: 1px var(--silver) solid;
+        outline: 1px var(--gray) solid;
         z-index: 20;
     }
 
