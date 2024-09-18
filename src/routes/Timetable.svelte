@@ -35,7 +35,7 @@
 
     onMount(() => {
         timetableFetch(page)
-        setInterval(() => {
+        interval = setInterval(() => {
             time = new Date()
         }, 1000)
     })
@@ -48,13 +48,13 @@
 
 <svelte:window bind:innerHeight={windowHeight}/>
 {#if $timetablePermanentStore}
-    {@const pageTimeStart=new Date(new Date().setDate((time.getDate() - time.getDay() + 1) + page * 7))}
-    {@const pageTimeEnd=new Date(new Date().setDate(pageTimeStart.getDate() + 4))}
+    {@const pageTimeBegin=new Date(new Date().setDate((time.getDate() - time.getDay() + 1) + page * 7))}
+    {@const pageTimeEnd=new Date(new Date().setDate(pageTimeBegin.getDate() + 4))}
     <nav>
         <button on:click={() => setPage("backward")} disabled="{page === 0}">
             <LucideArrowBigLeftDash/>
         </button>
-        <h3 style="width:125px;text-align:center">{pageTimeStart.getDate() + "-" + pageTimeEnd.getDate() + "." + (pageTimeStart.getMonth() + 1) + "." + pageTimeEnd.getFullYear()}</h3>
+        <h3 style="width:125px;text-align:center">{pageTimeBegin.getDate() + "-" + pageTimeEnd.getDate() + "." + (pageTimeBegin.getMonth() + 1) + "." + pageTimeEnd.getFullYear()}</h3>
         <button on:click={() => setPage("forward")} disabled="{page === maxPage}">
             <LucideArrowBigRightDash/>
         </button>
@@ -81,7 +81,7 @@
                 </th>
                 {#each Array(5) as _, j}
                     <!--check if day is in past or day is today but the hour is in the past-->
-                    {@const past=((j + 1 < time.getDay() || (j + 1 === time.getDay() && time.getTime() > formatTime(hour).getTime() - 1)) && page === 0) ? "subject-past" : ""}
+                    {@const past=((j + 1 < time.getDay() || (j + 1 === time.getDay() && time.getTime() > formatTime(hour["EndTime"]).getTime() - 1)) && page === 0) ? "subject-past" : ""}
                     {@const atom=$timetableStore["Days"][j]["Atoms"].find(t => t["HourId"] === hour["Id"])}
                     {#if atom && atom["SubjectId"]}
                         {@const group=$timetableStore["Groups"].find(s => s["Id"] === atom["GroupIds"][0])["Abbrev"].replace(" ", "").replace($timetableStore["Classes"][0]["Abbrev"], "")}
@@ -92,7 +92,7 @@
                                 ($timetablePermanentStore["Subjects"].find(s => s["Id"] ===
                                     ($timetablePermanentStore["Days"][j]["Atoms"].find(t => {
                                         return t["HourId"] === atom["HourId"] && t["CycleIds"][0] === atom["CycleIds"][0]
-                                    })?.["SubjectId"] ?? "")
+                                    })?.["SubjectId"] ?? "#")
                                 )?.["Abbrev"].toUpperCase() ?? "#") + subjectChange
                                 : ""
                         }
@@ -170,7 +170,7 @@
         overflow-x: auto;
         overflow-y: clip;
         max-width: 100%;
-        border-left: 1px var(--silver) solid; /*.slim border*/
+        border-left: 1px var(--gray) solid; /*.slim border*/
     }
 
     tr th, tr td {
@@ -187,9 +187,9 @@
         background-color: var(--black);
         z-index: 10;
         border: none;
-        border-top: 1px var(--silver) solid; /*.slim border*/
-        border-bottom: 1px var(--silver) solid; /*.slim border*/
-        border-right: 1px var(--silver) solid; /*.slim border*/
+        border-top: 1px var(--gray) solid; /*.slim border*/
+        border-bottom: 1px var(--gray) solid; /*.slim border*/
+        border-right: 1px var(--gray) solid; /*.slim border*/
     }
 
     td, th {
@@ -203,7 +203,7 @@
     }
 
     th {
-        border: 1px var(--silver) solid;
+        border: 1px var(--gray) solid;
         padding: 10px;
         font-weight: bold;
     }
