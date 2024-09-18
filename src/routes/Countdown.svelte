@@ -39,7 +39,8 @@
     })}
     {@const atom=$timetableStore["Days"][time.getDay() - 1]["Atoms"].find(t => t["HourId"] === hour?.["Id"] ?? "#")}
     {@const atomNext=$timetableStore["Days"][time.getDay() - 1]["Atoms"].find(t => t["HourId"] === hourNext?.["Id"] ?? "#")}
-    {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === (atom ? atom["SubjectId"] : (atomNext ? atomNext?.["SubjectId"] : "#")))?.["Abbrev"].toUpperCase() ?? "#"}
+    {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === (atom ? atom["SubjectId"] : (atomNext ? atomNext["SubjectId"] : "#")))?.["Abbrev"].toUpperCase() ?? "#"}
+    {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === (atom ? atom["TeacherId"] : (atomNext ? atomNext["TeacherId"] : "#")))?.["Abbrev"] ?? ""}
     <div id="countdown-block">
         <div></div>
         <div id="countdown-center">
@@ -51,7 +52,10 @@
             {#if !hour && subject !== "#"}
                 <h2 style="color:var(--snow)">break followed by</h2>
             {/if}
-            <h2 style="color:var(--subject-{subject})">{subject !== "#" ? ((hour ? hour["Caption"] : hourNext["Caption"]) + " - " + subject) : "painless"}</h2>
+            <h2 style="color:var(--subject-{(subject !== '#' ? subject : 'NON')})">{subject !== "#" ? ("#" + (hour ? hour["Caption"] : hourNext["Caption"]) + " - " + subject) : "painless"}</h2>
+            {#if subject !== "#"}
+                <h4 style="color:var(--silver)">{teacher}</h4>
+            {/if}
         </div>
         <div id="countdown-footer">
             <div>
