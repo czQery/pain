@@ -1,6 +1,6 @@
 {
   "name": "Pain",
-  "description": "Better timetable",
+  "description": "Better Bakaláři timetable",
   "short_name": "Pain",
   "start_url": "/",
   "id": "/",
@@ -20,10 +20,11 @@
     {
       "src": "/img/face.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/img/face.png",
+      "src": "/img/face-black.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
