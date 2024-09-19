@@ -159,6 +159,10 @@
         height: 40px;
     }
 
+    nav button:active :global(svg) {
+        animation: var(--animation-scale);
+    }
+
     nav :global(svg) {
         height: 25px;
         width: 25px;

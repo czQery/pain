@@ -46,6 +46,7 @@
             --hover: brightness(40%);
             --animation-rotate: rotate 1.5s cubic-bezier(.79, .14, .15, .86) infinite;
             --animation-blend: blend 1s cubic-bezier(.6, -0.28, .74, .05) 1;
+            --animation-scale: 50ms reverse scale;
         }
 
         * {
@@ -175,6 +176,12 @@
             }
             to {
                 opacity: 1;
+            }
+        }
+
+        @keyframes scale {
+            to {
+                transform: scale(110%);
             }
         }
     </style>

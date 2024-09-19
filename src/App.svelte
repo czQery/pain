@@ -33,9 +33,6 @@
                     <LucideCalendarRange/>
                 </Link>
             </li>
-            <li style="display: none">
-                <a class="link" href="/">class bypass</a>
-            </li>
         </ul>
     </footer>
 </Router>
@@ -79,6 +76,16 @@
         justify-content: space-evenly;
         list-style-type: none;
         text-decoration: none;
+    }
+
+    footer :global(a) {
+        text-decoration: none;
+        -webkit-tap-highlight-color: transparent !important;
+        outline: none !important;
+    }
+
+    footer :global(a:active svg) {
+        animation: var(--animation-scale);
     }
 
     footer :global(svg) {
