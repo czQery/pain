@@ -49,9 +49,9 @@
     {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === (atom ? atom["SubjectId"] : (atomNext ? atomNext["SubjectId"] : "#")))?.["Abbrev"].toUpperCase() ?? "#"}
     {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === (atom ? atom["TeacherId"] : (atomNext ? atomNext["TeacherId"] : "#")))?.["Abbrev"] ?? ""}
 
-    {@const hourH=(hour ? getH(hour["EndTime"]) : getH(hourNext["BeginTime"]))}
-    {@const hourM=(hour ? getM(hour["EndTime"]) : getM(hourNext["BeginTime"]))}
-    {@const hourS=(hour ? getS(hour["EndTime"]) : getS(hourNext["BeginTime"]))}
+    {@const hourH=(hour ? getH(hour["EndTime"]) : getH(hourNext?.["BeginTime"] ?? "00"))}
+    {@const hourM=(hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00"))}
+    {@const hourS=(hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00"))}
     <div id="countdown-block">
         <div></div>
         <div id="countdown-center">
