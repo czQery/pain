@@ -1,0 +1,56 @@
+{
+  "name": "Pain",
+  "description": "Better timetable",
+  "short_name": "Pain",
+  "start_url": "/",
+  "id": "/",
+  "lang": "en-US",
+  "theme_color": "#000000",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#000000",
+  "shortcuts": [],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "categories": [
+    "utilities",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "/img/face.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/face.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/img/sc-countdown.png",
+      "sizes": "750x1334",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/sc-timetable.png",
+      "sizes": "750x1334",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/sc-countdown-wide.png",
+      "sizes": "1024x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/img/sc-timetable-wide.png",
+      "sizes": "1024x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}
