@@ -45,16 +45,15 @@
     })
 </script>
 
-
 <svelte:window bind:innerHeight={windowHeight}/>
 {#if $timetablePermanentStore}
     {@const pageTimeBegin=new Date(new Date().setDate((time.getDate() - time.getDay() + 1) + page * 7))}
-    {@const pageTimeEnd=new Date(new Date().setDate(pageTimeBegin.getDate() + 4))}
+    {@const pageTimeEnd=new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + page * 7))}
     <nav>
         <button on:click={() => setPage("backward")} disabled="{page === 0}">
             <LucideArrowBigLeftDash/>
         </button>
-        <h3 style="width:125px;text-align:center">{pageTimeBegin.getDate() + "-" + pageTimeEnd.getDate() + "." + (pageTimeBegin.getMonth() + 1) + "." + pageTimeEnd.getFullYear()}</h3>
+        <h3 style="width:125px;text-align:center">{pageTimeBegin.getDate() + "-" + pageTimeEnd.getDate() + "." + (pageTimeEnd.getMonth() + 1) + "." + pageTimeEnd.getFullYear()}</h3>
         <button on:click={() => setPage("forward")} disabled="{page === maxPage}">
             <LucideArrowBigRightDash/>
         </button>
