@@ -3,23 +3,32 @@
     import Loading from "../components/Loading.svelte"
     import {formatAddZero, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
+    import {overrideOV} from "../lib/override.js";
 
     let time = new Date()
     let interval
+    let overridden = false
 
-    const getH = (hour) => {
-        return formatAddZero(Math.trunc((formatTime(hour).getTime() - time) / 1000 / 3600).toString())
+    const getH = (hour) => formatAddZero(Math.trunc((formatTime(hour).getTime() - time) / 1000 / 3600).toString())
+    const getM = (hour) => formatAddZero(Math.trunc((((formatTime(hour).getTime() - time) / 1000) % 3600) / 60).toString())
+    const getS = (hour) => formatAddZero(Math.trunc(((formatTime(hour).getTime() - time) / 1000) % 60).toString())
+
+    const setOverride = (value) => {
+        if (value && value["Days"][time.getDay() - 1] && value["Days"][time.getDay() - 1]["Atoms"][0]?.["SubjectId"] === "67") {
+            let edit = $timetableStore
+            edit["Days"][time.getDay() - 1]["Atoms"] = overrideOV["Atoms"]
+            edit["Hours"] = overrideOV["Hours"]
+            timetableStore.set(edit)
+            overridden = true
+        }
     }
 
-    const getM = (hour) => {
-        return formatAddZero(Math.trunc((((formatTime(hour).getTime() - time) / 1000) % 3600) / 60).toString())
-    }
-
-    const getS = (hour) => {
-        return formatAddZero(Math.trunc(((formatTime(hour).getTime() - time) / 1000) % 60).toString())
-    }
+    timetableStore.subscribe((value) => {
+        if (!overridden) setOverride(value)
+    })
 
     onMount(() => {
+        overridden = false
         timetableFetch(0)
         interval = setInterval(() => {
             time = new Date()
@@ -28,6 +37,7 @@
 
     onDestroy(() => {
         clearInterval(interval)
+        timetableStore.set(null)
     })
 </script>
 
@@ -90,6 +100,10 @@
             {#if subject !== "#"}
                 <h4 style="color:var(--silver)">{teacher}</h4>
             {/if}
+            <!-- DEBUG
+            <span>{hour?.["Caption"]}</span>
+            <span>{hourNext?.["Caption"]}</span>
+            -->
         </div>
         <div id="countdown-footer">
             <div>

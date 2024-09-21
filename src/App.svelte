@@ -15,6 +15,7 @@
         if (localStorage.getItem("build") !== build) {
             caches.delete("offline")
             localStorage.setItem("build", build)
+            location.reload(true) // true is for hard reload, but it's only supported in gecko
         }
 
         timetablePermanentFetch()
