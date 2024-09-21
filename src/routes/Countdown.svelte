@@ -32,20 +32,21 @@
 </script>
 
 {#if $timetableStore}
-    {@const atomBegin=$timetableStore["Days"][time.getDay() - 1]["Atoms"][0]}
+    {@const today = $timetableStore["Days"]?.[time.getDay() - 1] ?? null}
+    {@const atomBegin=today ? today["Atoms"]?.[0] : null}
 
     {@const hour=$timetableStore["Hours"].find(t => {
         let hourBegin = formatTime(t["BeginTime"])
         let hourEnd = formatTime(t["EndTime"])
-        return time - hourBegin >= 0 && hourEnd - time >= 0 && $timetableStore["Days"][time.getDay() - 1]["Atoms"].find(s => s["HourId"] === t["Id"]) // check if current hour has atom else use hourNext
+        return time - hourBegin >= 0 && hourEnd - time >= 0 && today?.["Atoms"].find(s => s["HourId"] === t["Id"]) // check if current hour has atom else use hourNext
     })}
     {@const hourNext=$timetableStore["Hours"].find(t => {
         let hourEnd = formatTime(t["EndTime"])
         return hourEnd - time >= 0 && t["Id"] >= (atomBegin?.["HourId"] ?? 0)
     })}
 
-    {@const atom=$timetableStore["Days"][time.getDay() - 1]["Atoms"].find(t => t["HourId"] === hour?.["Id"] ?? "#")}
-    {@const atomNext=$timetableStore["Days"][time.getDay() - 1]["Atoms"].find(t => t["HourId"] === hourNext?.["Id"] ?? "#")}
+    {@const atom=today ? today["Atoms"].find(t => t["HourId"] === hour?.["Id"] ?? "#") : null}
+    {@const atomNext=today ? today["Atoms"].find(t => t["HourId"] === hourNext?.["Id"] ?? "#") : null}
     {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === (atom ? atom["SubjectId"] : (atomNext ? atomNext["SubjectId"] : "#")))?.["Abbrev"].toUpperCase() ?? "#"}
     {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === (atom ? atom["TeacherId"] : (atomNext ? atomNext["TeacherId"] : "#")))?.["Abbrev"] ?? ""}
 

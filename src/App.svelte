@@ -11,6 +11,12 @@
         document.getElementById("init-loading").style.display = "none"
         document.getElementById("app").style.display = "flex"
 
+        let build = (__CF_PAGES_COMMIT_SHA__ ? __CF_PAGES_COMMIT_SHA__ : "dev") // injected variable by cloudflare
+        if (localStorage.getItem("build") !== build) {
+            caches.delete("offline")
+            localStorage.setItem("build", build)
+        }
+
         timetablePermanentFetch()
     })
 </script>
