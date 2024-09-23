@@ -11,13 +11,6 @@
         document.getElementById("init-loading").style.display = "none"
         document.getElementById("app").style.display = "flex"
 
-        let build = (__CF_PAGES_COMMIT_SHA__ ? __CF_PAGES_COMMIT_SHA__ : "dev") // injected variable by cloudflare
-        if (localStorage.getItem("build") !== build) {
-            caches.delete("offline")
-            localStorage.setItem("build", build)
-            location.reload(true) // true is for hard reload, but it's only supported in gecko
-        }
-
         timetablePermanentFetch()
     })
 </script>
@@ -62,7 +55,7 @@
         --subject-ET: #11bb41;
         --subject-EK: #fa147f;
         --subject-M: #23b1d2;
-        --subject-ON: #571641;
+        --subject-ON: #851049;
         --subject-OV: #a09262;
         --subject-TV: #f5980c;
     }

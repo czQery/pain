@@ -87,10 +87,10 @@
                         {@const room=$timetableStore["Rooms"].find(s => s["Id"] === atom["RoomId"])["Abbrev"]}
                         {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"])["Abbrev"].toUpperCase()}
                         {@const subjectOriginal=
-                            atom["Change"] && atom["Change"]["ChangeType"] === "Added" ?
+                            atom["Change"] ?
                                 ($timetablePermanentStore["Subjects"].find(s => s["Id"] ===
                                     ($timetablePermanentStore["Days"][j]["Atoms"].find(t => {
-                                        return t["HourId"] === atom["HourId"] && t["CycleIds"][0] === atom["CycleIds"][0]
+                                        return t["HourId"] === atom["HourId"] && (t["CycleIds"]?.[0] === atom["CycleIds"][0] || t["CycleIds"]?.[1] === atom["CycleIds"][0])
                                     })?.["SubjectId"] ?? "#")
                                 )?.["Abbrev"].toUpperCase() ?? "#") + subjectChange
                                 : ""
