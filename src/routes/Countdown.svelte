@@ -43,22 +43,22 @@
 
 {#if $timetableStore}
     {@const today = $timetableStore["Days"]?.[time.getDay() - 1] ?? null}
-    {@const atomBegin=today ? today["Atoms"]?.[0] : null}
+    {@const atomBegin=today ? today?.["Atoms"].find(s => s["SubjectId"]) : null}
 
     {@const hour=$timetableStore["Hours"].find(t => {
         let hourBegin = formatTime(t["BeginTime"])
         let hourEnd = formatTime(t["EndTime"])
-        return time - hourBegin >= 0 && hourEnd - time >= 0 && today?.["Atoms"].find(s => s["HourId"] === t["Id"]) // check if current hour has atom else use hourNext
+        return time - hourBegin >= 0 && hourEnd - time >= 0 && today?.["Atoms"].find(s => s["HourId"] === t["Id"] && s["SubjectId"]) // check if current hour has atom else use hourNext
     })}
     {@const hourNext=$timetableStore["Hours"].find(t => {
-        let hourEnd = formatTime(t["EndTime"])
-        return hourEnd - time >= 0 && t["Id"] >= (atomBegin?.["HourId"] ?? 0)
+        let hourBegin = formatTime(t["BeginTime"])
+        return hourBegin - time >= 0 && today?.["Atoms"].find(s => s["HourId"] === t["Id"]) && t["Id"] >= (atomBegin?.["HourId"] ?? 0)
     })}
 
     {@const atom=today ? today["Atoms"].find(t => t["HourId"] === hour?.["Id"] ?? "#") : null}
     {@const atomNext=today ? today["Atoms"].find(t => t["HourId"] === hourNext?.["Id"] ?? "#") : null}
-    {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === (atom ? atom["SubjectId"] : (atomNext ? atomNext["SubjectId"] : "#")))?.["Abbrev"].toUpperCase() ?? "#"}
-    {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === (atom ? atom["TeacherId"] : (atomNext ? atomNext["TeacherId"] : "#")))?.["Abbrev"] ?? ""}
+    {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === (atom?.["SubjectId"] ?? (atomNext?.["SubjectId"] ?? "#")))?.["Abbrev"].toUpperCase() ?? "#"}
+    {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Abbrev"] ?? ""}
 
     {@const hourH=(hour ? getH(hour["EndTime"]) : getH(hourNext?.["BeginTime"] ?? "00"))}
     {@const hourM=(hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00"))}
@@ -96,14 +96,14 @@
                     <h2 style="color:var(--snow)">break followed by</h2>
                 {/if}
             {/if}
-            <h2 style="color:var(--subject-{(subject !== '#' ? subject : 'NON')})">{subject !== "#" ? ("#" + (hour ? hour["Caption"] : hourNext["Caption"]) + " - " + subject) : "painless"}</h2>
+            <h2 style="color:var(--subject-{(subject !== '#' ? subject : 'NON')})">{subject !== "#" ? ("#" + (hour?.["Caption"] ?? hourNext["Caption"]) + " - " + subject) : "painless"}</h2>
             {#if subject !== "#"}
                 <h4 style="color:var(--silver)">{teacher}</h4>
             {/if}
-            <!-- DEBUG
-            <span>{hour?.["Caption"]}</span>
-            <span>{hourNext?.["Caption"]}</span>
-            -->
+            <!--DEBUG
+            <span>{subject}</span>
+            <span>{hour?.["Caption"] + " - " + atom?.["SubjectId"]}</span>
+            <span>{hourNext?.["Caption"] + " - " + atomNext?.["SubjectId"]}</span>-->
         </div>
         <div id="countdown-footer">
             <div>
