@@ -52,7 +52,7 @@
     })}
     {@const hourNext=$timetableStore["Hours"].find(t => {
         let hourBegin = formatTime(t["BeginTime"])
-        return hourBegin - time >= 0 && today?.["Atoms"].find(s => s["HourId"] === t["Id"]) && t["Id"] >= (atomBegin?.["HourId"] ?? 0)
+        return hourBegin - time >= 0 && today?.["Atoms"].find(s => s["HourId"] === t["Id"] && s["SubjectId"]) && t["Id"] >= (atomBegin?.["HourId"] ?? 0)
     })}
 
     {@const atom=today ? today["Atoms"].find(t => t["HourId"] === hour?.["Id"] ?? "#") : null}
