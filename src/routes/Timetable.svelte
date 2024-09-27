@@ -80,7 +80,7 @@
                 </th>
                 {#each Array(5) as _, j}
                     <!--check if day is in past or day is today but the hour is in the past-->
-                    {@const past=((j + 1 < time.getDay() || (j + 1 === time.getDay() && time.getTime() > formatTime(hour["EndTime"]).getTime() - 1)) && page === 0) ? "subject-past" : ""}
+                    {@const past=((0 === time.getDay() || j + 1 < time.getDay() || (j + 1 === time.getDay() && time.getTime() > formatTime(hour["EndTime"]).getTime() - 1)) && page === 0) ? "subject-past" : ""}
                     {@const atom=$timetableStore["Days"][j]["Atoms"].find(t => t["HourId"] === hour["Id"])}
                     {#if atom && atom["SubjectId"]}
                         {@const group=$timetableStore["Groups"].find(s => s["Id"] === atom["GroupIds"][0])["Abbrev"].replace(" ", "").replace($timetableStore["Classes"][0]["Abbrev"], "")}
