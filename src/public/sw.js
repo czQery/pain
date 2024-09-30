@@ -1,4 +1,4 @@
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js")
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js")
 
 const CACHE = "offline"
 
@@ -8,6 +8,7 @@ self.addEventListener("message", (event) => {
     }
 })
 
+workbox.navigationPreload.enable()
 workbox.routing.registerRoute(
     new RegExp('/*'),
     new workbox.strategies.NetworkFirst({

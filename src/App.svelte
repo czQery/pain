@@ -56,7 +56,7 @@
         --subject-EK: #fa147f;
         --subject-M: #23b1d2;
         --subject-ON: #851049;
-        --subject-OV: #a09262;
+        --subject-OV: #885d4c;
         --subject-TV: #f5980c;
     }
 
