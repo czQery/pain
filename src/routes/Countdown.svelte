@@ -15,7 +15,7 @@
 
     const setOverride = (value) => {
         if (value && value["Days"][time.getDay() - 1] && value["Days"][time.getDay() - 1]["Atoms"][0]?.["SubjectId"] === "67") {
-            let edit = $timetableStore
+            let edit = value
             edit["Days"][time.getDay() - 1]["Atoms"] = overrideOV["Atoms"]
             edit["Hours"] = overrideOV["Hours"]
             timetableStore.set(edit)
@@ -23,13 +23,13 @@
         }
     }
 
-    timetableStore.subscribe((value) => {
+    let timetableUnsubscribe = timetableStore.subscribe((value) => {
         if (!overridden) setOverride(value)
     })
 
-    onMount(() => {
+    onMount(async () => {
         overridden = false
-        timetableFetch(0)
+        await timetableFetch(0)
         interval = setInterval(() => {
             time = new Date()
         }, 1000)
@@ -37,6 +37,7 @@
 
     onDestroy(() => {
         clearInterval(interval)
+        timetableUnsubscribe()
         timetableStore.set(null)
     })
 </script>
