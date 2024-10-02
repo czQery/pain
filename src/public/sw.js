@@ -14,5 +14,15 @@ workbox.routing.registerRoute(
     new workbox.strategies.NetworkFirst({
         cacheName: CACHE,
         networkTimeoutSeconds: 1,
+        matchOptions: {
+            ignoreVary: true
+        },
+        plugins: [
+            new workbox.expiration.ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 12,
+                maxEntries: 100,
+                purgeOnQuotaError: true,
+            }),
+        ],
     })
 )

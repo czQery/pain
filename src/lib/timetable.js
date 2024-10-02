@@ -4,7 +4,7 @@ export const timetableStore = writable(null)
 export const timetablePermanentStore = writable(null)
 
 export const timetableFetch = async (page) => {
-    const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable?page="+page.toString(), {
+    const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable?page=" + page.toString(), {
         credentials: "include"
     })
     const data = await response.json()

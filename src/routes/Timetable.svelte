@@ -33,8 +33,8 @@
         await timetableFetch(page)
     }
 
-    onMount(() => {
-        timetableFetch(page)
+    onMount(async () => {
+        await timetableFetch(page)
         interval = setInterval(() => {
             time = new Date()
         }, 1000)
@@ -83,9 +83,9 @@
                     {@const past=((0 === time.getDay() || j + 1 < time.getDay() || (j + 1 === time.getDay() && time.getTime() > formatTime(hour["EndTime"]).getTime() - 1)) && page === 0) ? "subject-past" : ""}
                     {@const atom=$timetableStore["Days"][j]["Atoms"].find(t => t["HourId"] === hour["Id"])}
                     {#if atom && atom["SubjectId"]}
-                        {@const group=$timetableStore["Groups"].find(s => s["Id"] === atom["GroupIds"][0])["Abbrev"].replace(" ", "").replace($timetableStore["Classes"][0]["Abbrev"], "")}
-                        {@const room=$timetableStore["Rooms"].find(s => s["Id"] === atom["RoomId"])["Abbrev"]}
-                        {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"])["Abbrev"].toUpperCase()}
+                        {@const group=$timetableStore["Groups"].find(s => s["Id"] === atom["GroupIds"]?.[0] ?? "#")?.["Abbrev"].replace(" ", "").replace($timetableStore["Classes"][0]["Abbrev"], "") ?? ""}
+                        {@const room=$timetableStore["Rooms"].find(s => s["Id"] === atom["RoomId"])?.["Abbrev"] ?? ""}
+                        {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"])?.["Abbrev"].toUpperCase() ?? "#"}
                         {@const subjectOriginal=
                             atom["Change"] ?
                                 ($timetablePermanentStore["Subjects"].find(s => s["Id"] ===
@@ -95,7 +95,7 @@
                                 )?.["Abbrev"].toUpperCase() ?? "#") + subjectChange
                                 : ""
                         }
-                        {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"])["Abbrev"]}
+                        {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"])?.["Abbrev"] ?? "none"}
                         <td style="background-color:var(--subject-{subject})" class={past}>
                             <div class="flex-atom" style="height:{atomHeight-10}px"> <!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
                                 <div class="flex-between">
