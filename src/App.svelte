@@ -2,10 +2,11 @@
     import {Link, Route, Router} from "svelte-routing"
     import Timetable from "./routes/Timetable.svelte"
     import Index from "./routes/Index.svelte"
-    import {LucideCalendarRange, LucideClock} from "lucide-svelte"
+    import {LucideCalendarRange, LucideClock, LucideUtensilsCrossed} from "lucide-svelte"
     import {timetablePermanentFetch} from "./lib/timetable.js"
     import Countdown from "./routes/Countdown.svelte"
     import {onMount} from "svelte"
+    import Canteen from "./routes/Canteen.svelte"
 
     onMount(() => {
         document.getElementById("init-loading").style.display = "none"
@@ -19,18 +20,24 @@
     <main class="container">
         <Route path="/countdown" component={Countdown}/>
         <Route path="/timetable" component={Timetable}/>
+        <Route path="/canteen" component={Canteen}/>
         <Route component={Index}></Route>
     </main>
     <footer>
         <ul>
             <li>
-                <Link class="link" to="/countdown">
+                <Link to="/countdown">
                     <LucideClock/>
                 </Link>
             </li>
             <li>
-                <Link class="link" to="/timetable">
+                <Link to="/timetable">
                     <LucideCalendarRange/>
+                </Link>
+            </li>
+            <li>
+                <Link to="/canteen">
+                    <LucideUtensilsCrossed/>
                 </Link>
             </li>
         </ul>
@@ -44,6 +51,8 @@
         align-items: center;
         flex-direction: column;
         height: calc(100svh - 50px);
+
+        --subject-NON: var(--silver);
 
         --subject-A: #0c355b;
         --subject-AJ: #d5334b;

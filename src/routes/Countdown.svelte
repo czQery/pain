@@ -3,7 +3,7 @@
     import Loading from "../components/Loading.svelte"
     import {formatAddZero, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
-    import {overrideOV} from "../lib/override.js";
+    import {overrideOV} from "../lib/override.js"
 
     let time = new Date()
     let interval
