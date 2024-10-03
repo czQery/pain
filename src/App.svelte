@@ -89,7 +89,7 @@
         margin: 0;
         padding: 0;
         height: 100%;
-        justify-content: space-evenly;
+        justify-content: center;
         list-style-type: none;
         text-decoration: none;
     }
@@ -115,5 +115,6 @@
 
     footer ul li {
         width: 100%;
+        max-width: 200px;
     }
 </style>
