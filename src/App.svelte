@@ -2,11 +2,12 @@
     import {Link, Route, Router} from "svelte-routing"
     import Timetable from "./routes/Timetable.svelte"
     import Index from "./routes/Index.svelte"
-    import {LucideCalendarRange, LucideClock, LucideUtensilsCrossed} from "lucide-svelte"
+    import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
     import {timetablePermanentFetch} from "./lib/timetable.js"
     import Countdown from "./routes/Countdown.svelte"
     import {onMount} from "svelte"
     import Canteen from "./routes/Canteen.svelte"
+    import Settings from "./routes/Settings.svelte";
 
     onMount(() => {
         document.getElementById("init-loading").style.display = "none"
@@ -21,6 +22,7 @@
         <Route path="/countdown" component={Countdown}/>
         <Route path="/timetable" component={Timetable}/>
         <Route path="/canteen" component={Canteen}/>
+        <Route path="/settings" component={Settings}/>
         <Route component={Index}></Route>
     </main>
     <footer>
@@ -38,6 +40,11 @@
             <li>
                 <Link to="/canteen">
                     <LucideUtensilsCrossed/>
+                </Link>
+            </li>
+            <li>
+                <Link to="/settings">
+                    <LucideSettings/>
                 </Link>
             </li>
         </ul>
@@ -91,6 +98,9 @@
         text-decoration: none;
         -webkit-tap-highlight-color: transparent !important;
         outline: none !important;
+        display: flex;
+        justify-content: center;
+        width: inherit;
     }
 
     footer :global(a:active svg) {
@@ -101,5 +111,9 @@
         display: block;
         height: 40px;
         margin: 5px;
+    }
+
+    footer ul li {
+        width: 100%;
     }
 </style>
