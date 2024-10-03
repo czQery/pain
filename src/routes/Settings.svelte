@@ -13,7 +13,9 @@
     <code>curl -d "grant_type=password&client_id=ANDR&username=<strong>jméno</strong>&password=<strong>heslo</strong>&scope=bakalari_api+offline_access+timetable_widget" https://sssenp.bakalari.cz/api/login</code>
 
     <h3>To vypíše dlouhý text kde by jsi měl najít:</h3>
-    <h3>"refresh-token": "<h3 style="color: var(--pink)">tohle bych poprosil</h3>"</h3>
+    <div>
+        <h3>"refresh-token": "</h3><h3 style="color: var(--pink)">tohle bych poprosil</h3><h3>"</h3>
+    </div>
 
     <span>*když ti nepůjde příkaz vložit do cmd zkus místo CTRL+V prostě kliknout pravým tlačítkem na myši</span>
 </div>
