@@ -14,8 +14,8 @@
     <meta name="og:site_name" content="Pain">
     <meta name="author" content="Štěpán Aubrecht">
     <link rel="manifest" href="/manifest.json">
-    <link rel="preload" href="/font/roboto.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
-    <link rel="preload" href="/font/roboto-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
+    <link rel="preload" href="/font/roboto.woff2" as="font" type="font/woff2" crossorigin/>
+    <link rel="preload" href="/font/roboto-bold.woff2" as="font" type="font/woff2" crossorigin/>
     <style>
         @font-face {
             font-family: "Roboto";
@@ -225,8 +225,26 @@
 <div id="app" style="display:none"></div>
 <script type="module" src="main.js"></script>
 <script>
-    if (typeof navigator.serviceWorker !== "undefined") {
-        navigator.serviceWorker.register("/sw.js")
+    window.addEventListener("error", async (e) => {
+        if (e.target.tagName === "SCRIPT" && e.target.type === "module") {
+            await new Promise(r => setTimeout(r, 3000))
+            window.location.replace("/")
+        }
+    }, true)
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("/sw.js").then((sw) => {
+                if (sw.waiting) sw.waiting.postMessage({type: "SKIP_WAITING"})
+                sw.onupdatefound = () => {
+                    const swNew = sw.installing
+                    swNew.onstatechange = () => {
+                        if (swNew.state === "installed" && navigator.serviceWorker.controller) {
+                            swNew.postMessage({type: "SKIP_WAITING"})
+                        }
+                    }
+                }
+            })
+        })
     }
 </script>
 </body>
