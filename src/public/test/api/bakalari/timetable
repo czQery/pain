@@ -1,0 +1,1096 @@
+{
+  "data": {
+    "Hours": [
+      {
+        "Id": 2,
+        "Caption": "0",
+        "BeginTime": "7:00",
+        "EndTime": "7:45"
+      },
+      {
+        "Id": 3,
+        "Caption": "1",
+        "BeginTime": "7:55",
+        "EndTime": "8:40"
+      },
+      {
+        "Id": 4,
+        "Caption": "2",
+        "BeginTime": "8:50",
+        "EndTime": "9:35"
+      },
+      {
+        "Id": 5,
+        "Caption": "3",
+        "BeginTime": "9:50",
+        "EndTime": "10:35"
+      },
+      {
+        "Id": 6,
+        "Caption": "4",
+        "BeginTime": "10:45",
+        "EndTime": "11:30"
+      },
+      {
+        "Id": 7,
+        "Caption": "5",
+        "BeginTime": "11:40",
+        "EndTime": "12:25"
+      },
+      {
+        "Id": 8,
+        "Caption": "6",
+        "BeginTime": "12:35",
+        "EndTime": "13:20"
+      },
+      {
+        "Id": 9,
+        "Caption": "7",
+        "BeginTime": "13:30",
+        "EndTime": "14:15"
+      },
+      {
+        "Id": 10,
+        "Caption": "8",
+        "BeginTime": "14:20",
+        "EndTime": "15:05"
+      },
+      {
+        "Id": 11,
+        "Caption": "9",
+        "BeginTime": "15:10",
+        "EndTime": "15:55"
+      },
+      {
+        "Id": 12,
+        "Caption": "10",
+        "BeginTime": "16:00",
+        "EndTime": "16:45"
+      },
+      {
+        "Id": 13,
+        "Caption": "11",
+        "BeginTime": "16:50",
+        "EndTime": "17:35"
+      },
+      {
+        "Id": 14,
+        "Caption": "12",
+        "BeginTime": "17:40",
+        "EndTime": "18:25"
+      }
+    ],
+    "Days": [
+      {
+        "Atoms": [
+          {
+            "HourId": 2,
+            "GroupIds": [
+              "UX"
+            ],
+            "SubjectId": " 6",
+            "TeacherId": "UY03G",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "politický systém ČR_diskuze",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 3,
+            "GroupIds": [
+              "UX"
+            ],
+            "SubjectId": " 2",
+            "TeacherId": "U000K",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "Opakování učiva 2. ročníku",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 4,
+            "GroupIds": [
+              "UX"
+            ],
+            "SubjectId": " 2",
+            "TeacherId": "U000K",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "Opakování pravopisu",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 5,
+            "GroupIds": [
+              "UX",
+              "UX"
+            ],
+            "SubjectId": "5E",
+            "TeacherId": "U000N",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "ProgeCad kreslit",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 6,
+            "GroupIds": [
+              "UX",
+              "UX"
+            ],
+            "SubjectId": "5E",
+            "TeacherId": "U000N",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "Konstrukční čára",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 7,
+            "GroupIds": [
+              "UX"
+            ],
+            "SubjectId": " 6",
+            "TeacherId": "UY03G",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "aktuality_AI",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 8,
+            "GroupIds": [
+              "UX"
+            ],
+            "SubjectId": "5U",
+            "TeacherId": "UY03J",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "Chyby měření el. veličin",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 10,
+            "GroupIds": [
+              "UX"
+            ],
+            "SubjectId": "5K",
+            "TeacherId": "UU02X",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "Bezpečnost el. zařízení, účinky proudu a napětí, první pomoc",
+            "Assistants": [],
+            "Notice": ""
+          }
+        ],
+        "DayOfWeek": 1,
+        "Date": "2024-09-09T00:00:00+02:00",
+        "DayDescription": "",
+        "DayType": "WorkDay"
+      },
+      {
+        "Atoms": [
+          {
+            "HourId": 2,
+            "GroupIds": [],
+            "SubjectId": null,
+            "TeacherId": null,
+            "RoomId": null,
+            "CycleIds": [],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-10T00:00:00+02:00",
+              "Hours": "0. hod",
+              "ChangeType": "Removed",
+              "Description": "Vyjmuto z rozvrhu (M, Mužíčková Milena)",
+              "Time": "7:00 - 7:45",
+              "TypeAbbrev": null,
+              "TypeName": "Zahájení školního roku"
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": null,
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 3,
+            "GroupIds": [
+              "UX"
+            ],
+            "SubjectId": "5I",
+            "TeacherId": "U000I",
+            "RoomId": "14",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-10T00:00:00+02:00",
+              "Hours": "1. hod",
+              "ChangeType": "Added",
+              "Description": "Přidáno do rozvrhu: A, Malý Luboš, VT2",
+              "Time": "7:55 - 8:40",
+              "TypeAbbrev": null,
+              "TypeName": null
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "Statické vlastnosti reg. obvodů",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 4,
+            "GroupIds": [
+              "UX"
+            ],
+            "SubjectId": "5O",
+            "TeacherId": "U000I",
+            "RoomId": "18",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-10T00:00:00+02:00",
+              "Hours": "2. hod",
+              "ChangeType": "Added",
+              "Description": "Přidáno do rozvrhu: E, Malý Luboš, 4",
+              "Time": "8:50 - 9:35",
+              "TypeAbbrev": null,
+              "TypeName": null
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "Tvarovací obvody",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 5,
+            "GroupIds": [
+              "UX"
+            ],
+            "SubjectId": "1N",
+            "TeacherId": "UX037",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "Běh",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 6,
+            "GroupIds": [
+              "UX"
+            ],
+            "SubjectId": "1N",
+            "TeacherId": "UX037",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "Fotbal",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 7,
+            "GroupIds": [
+              "UX"
+            ],
+            "SubjectId": "5I",
+            "TeacherId": "U000I",
+            "RoomId": "14",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-10T00:00:00+02:00",
+              "Hours": "5. hod",
+              "ChangeType": "Added",
+              "Description": "Přidáno do rozvrhu: A, Malý Luboš, VT2",
+              "Time": "11:40 - 12:25",
+              "TypeAbbrev": null,
+              "TypeName": null
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "Statická charakteristika",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 8,
+            "GroupIds": [
+              "00"
+            ],
+            "SubjectId": " 4",
+            "TeacherId": "UY03G",
+            "RoomId": "18",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-10T00:00:00+02:00",
+              "Hours": "6. hod",
+              "ChangeType": "Added",
+              "Description": "Přidáno do rozvrhu: AJ, Sareilová Silvie, 4",
+              "Time": "12:35 - 13:20",
+              "TypeAbbrev": null,
+              "TypeName": null
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "School and Education",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 9,
+            "GroupIds": [
+              "UX"
+            ],
+            "SubjectId": "5W",
+            "TeacherId": "U000F",
+            "RoomId": "18",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-10T00:00:00+02:00",
+              "Hours": "7. hod",
+              "ChangeType": "Added",
+              "Description": "Přidáno do rozvrhu: ČT, Kynčl Petr, 4",
+              "Time": "13:30 - 14:15",
+              "TypeAbbrev": null,
+              "TypeName": null
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "Tranzistorová logika",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 10,
+            "GroupIds": [],
+            "SubjectId": null,
+            "TeacherId": null,
+            "RoomId": null,
+            "CycleIds": [],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-10T00:00:00+02:00",
+              "Hours": "8. hod",
+              "ChangeType": "Removed",
+              "Description": "Vyjmuto z rozvrhu (ČT, Kynčl Petr)",
+              "Time": "14:20 - 15:05",
+              "TypeAbbrev": null,
+              "TypeName": null
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": null,
+            "Assistants": [],
+            "Notice": ""
+          }
+        ],
+        "DayOfWeek": 2,
+        "Date": "2024-09-10T00:00:00+02:00",
+        "DayDescription": "",
+        "DayType": "WorkDay"
+      },
+      {
+        "Atoms": [
+          {
+            "HourId": 2,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "1O",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-11T00:00:00+02:00",
+              "Hours": "0. hod",
+              "ChangeType": "Added",
+              "Description": "Přidáno do rozvrhu: OV, Dušta Tobiáš, OV 5",
+              "Time": "7:00 - 7:45",
+              "TypeAbbrev": null,
+              "TypeName": null
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "T - BOZP",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 3,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "1O",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-11T00:00:00+02:00",
+              "Hours": "1. hod",
+              "ChangeType": "Added",
+              "Description": "Přidáno do rozvrhu: OV, Dušta Tobiáš, OV 5",
+              "Time": "7:55 - 8:40",
+              "TypeAbbrev": null,
+              "TypeName": null
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "T - BOZP",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 4,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "1O",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-11T00:00:00+02:00",
+              "Hours": "2. hod",
+              "ChangeType": "Added",
+              "Description": "Přidáno do rozvrhu: OV, Dušta Tobiáš, OV 5",
+              "Time": "8:50 - 9:35",
+              "TypeAbbrev": null,
+              "TypeName": null
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "T - BOZP",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 5,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "1O",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-11T00:00:00+02:00",
+              "Hours": "3. hod",
+              "ChangeType": "Added",
+              "Description": "Přidáno do rozvrhu: OV, Dušta Tobiáš, OV 5",
+              "Time": "9:50 - 10:35",
+              "TypeAbbrev": null,
+              "TypeName": null
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "T - BOZP",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 6,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "1O",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-11T00:00:00+02:00",
+              "Hours": "4. hod",
+              "ChangeType": "Added",
+              "Description": "Přidáno do rozvrhu: OV, Dušta Tobiáš, OV 5",
+              "Time": "10:45 - 11:30",
+              "TypeAbbrev": null,
+              "TypeName": null
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "T - BOZP",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 7,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "1O",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-11T00:00:00+02:00",
+              "Hours": "5. hod",
+              "ChangeType": "Added",
+              "Description": "Přidáno do rozvrhu: OV, Dušta Tobiáš, OV 5",
+              "Time": "11:40 - 12:25",
+              "TypeAbbrev": null,
+              "TypeName": null
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "T - BOZP",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 8,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "1O",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": {
+              "ChangeSubject": null,
+              "Day": "2024-09-11T00:00:00+02:00",
+              "Hours": "6. hod",
+              "ChangeType": "Added",
+              "Description": "Přidáno do rozvrhu: OV, Dušta Tobiáš, OV 5",
+              "Time": "12:35 - 13:20",
+              "TypeAbbrev": null,
+              "TypeName": null
+            },
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "T - BOZP",
+            "Assistants": [],
+            "Notice": ""
+          }
+        ],
+        "DayOfWeek": 3,
+        "Date": "2024-09-11T00:00:00+02:00",
+        "DayDescription": "",
+        "DayType": "WorkDay"
+      },
+      {
+        "Atoms": [
+          {
+            "HourId": 2,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 3,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 4,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 5,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 6,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 7,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 8,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03L",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          }
+        ],
+        "DayOfWeek": 4,
+        "Date": "2024-09-12T00:00:00+02:00",
+        "DayDescription": "",
+        "DayType": "WorkDay"
+      },
+      {
+        "Atoms": [
+          {
+            "HourId": 2,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03K",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 3,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03K",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 4,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03K",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 5,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03K",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 6,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03K",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 7,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03K",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          },
+          {
+            "HourId": 8,
+            "GroupIds": [
+              "Z7"
+            ],
+            "SubjectId": "67",
+            "TeacherId": "UY03K",
+            "RoomId": "",
+            "CycleIds": [
+              "0"
+            ],
+            "Change": null,
+            "HomeworkIds": [],
+            "Homeworks": [],
+            "Theme": "",
+            "Assistants": [],
+            "Notice": ""
+          }
+        ],
+        "Date": "2024-09-13T00:00:00+02:00",
+        "DayDescription": "Den vzniku samostatného Československého státu",
+        "DayOfWeek": 5,
+        "DayType": "Celebration"
+      }
+    ],
+    "Classes": [
+      {
+        "Id": "3G",
+        "Abbrev": "R3",
+        "Name": ""
+      }
+    ],
+    "Groups": [
+      {
+        "ClassId": "3G",
+        "Id": "UX",
+        "Abbrev": "R3",
+        "Name": ""
+      },
+      {
+        "ClassId": "3G",
+        "Id": "00",
+        "Abbrev": "R3 AJ1",
+        "Name": " angličtina 1"
+      },
+      {
+        "ClassId": "3G",
+        "Id": "Z7",
+        "Abbrev": "R3 R3/4",
+        "Name": " OV mech. - elektro."
+      }
+    ],
+    "Subjects": [
+      {
+        "Id": " 6",
+        "Abbrev": "ON",
+        "Name": "Občanská nauka"
+      },
+      {
+        "Id": " 2",
+        "Abbrev": "ČJL",
+        "Name": "Český jazyk a literatura"
+      },
+      {
+        "Id": "5E",
+        "Abbrev": "CAD",
+        "Name": "Projektování CAD"
+      },
+      {
+        "Id": "5U",
+        "Abbrev": "EM",
+        "Name": "Elektrická měření"
+      },
+      {
+        "Id": "5K",
+        "Abbrev": "ET",
+        "Name": "Elektrotechnika"
+      },
+      {
+        "Id": "5I",
+        "Abbrev": "A",
+        "Name": "Automatizace"
+      },
+      {
+        "Id": "5O",
+        "Abbrev": "E",
+        "Name": "Elektronika"
+      },
+      {
+        "Id": "1N",
+        "Abbrev": "TV",
+        "Name": "Tělesná výchova"
+      },
+      {
+        "Id": " 4",
+        "Abbrev": "AJ",
+        "Name": "Anglický jazyk"
+      },
+      {
+        "Id": "5W",
+        "Abbrev": "ČT",
+        "Name": "Číslicová technika"
+      },
+      {
+        "Id": "67",
+        "Abbrev": "OV",
+        "Name": "Odborný výcvik"
+      }
+    ],
+    "Teachers": [
+      {
+        "Id": "UY03G",
+        "Abbrev": "Sa",
+        "Name": "Silvie Sareilová"
+      },
+      {
+        "Id": "U000K",
+        "Abbrev": "Ně",
+        "Name": "Mgr. Renata Němcová"
+      },
+      {
+        "Id": "U000N",
+        "Abbrev": "So",
+        "Name": "Ing. Anatolij Sokolan Bc."
+      },
+      {
+        "Id": "UY03J",
+        "Abbrev": "Ke",
+        "Name": "Jiří Kejklíček"
+      },
+      {
+        "Id": "UU02X",
+        "Abbrev": "Dě",
+        "Name": "Věroslav Dědeček"
+      },
+      {
+        "Id": "U000I",
+        "Abbrev": "Ma",
+        "Name": "Ing. Luboš Malý"
+      },
+      {
+        "Id": "UX037",
+        "Abbrev": "Se",
+        "Name": "Aleš Sekot"
+      },
+      {
+        "Id": "U000F",
+        "Abbrev": "Ky",
+        "Name": "Ing. Petr Kynčl"
+      },
+      {
+        "Id": "UY03L",
+        "Abbrev": "Du",
+        "Name": "Tobiáš Dušta"
+      },
+      {
+        "Id": "UY03K",
+        "Abbrev": "St",
+        "Name": "Lubomír Šťastný"
+      }
+    ],
+    "Rooms": [
+      {
+        "Id": "",
+        "Abbrev": "",
+        "Name": ""
+      },
+      {
+        "Id": "14",
+        "Abbrev": "VT2",
+        "Name": ""
+      },
+      {
+        "Id": "18",
+        "Abbrev": "4",
+        "Name": ""
+      },
+      {
+        "Id": "1O",
+        "Abbrev": "OV 5",
+        "Name": ""
+      }
+    ],
+    "Cycles": [
+      {
+        "Id": "0",
+        "Abbrev": "L",
+        "Name": "Lichý týden 1"
+      }
+    ],
+    "Students": []
+  }
+}

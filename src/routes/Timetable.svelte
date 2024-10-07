@@ -1,6 +1,6 @@
 <script>
     import {timetableFetch, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
-    import {formatRemovedSubject, formatTime} from "../lib/format.js"
+    import {formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
     import Loading from "../components/Loading.svelte"
@@ -79,31 +79,37 @@
                     <span>{hour["BeginTime"] + "-" + hour["EndTime"]}</span>
                 </th>
                 {#each Array(5) as _, j}
+                    {@const day=$timetableStore["Days"][j]}
                     <!--check if day is in past or day is today but the hour is in the past-->
                     {@const past=((0 === time.getDay() || j + 1 < time.getDay() || (j + 1 === time.getDay() && time.getTime() > formatTime(hour["EndTime"]).getTime() - 1)) && page === 0) ? "subject-past" : ""}
-                    {@const atom=$timetableStore["Days"][j]["Atoms"].find(t => t["HourId"] === hour["Id"])}
-                    {#if atom && atom["SubjectId"]}
-                        {@const group=$timetableStore["Groups"].find(s => s["Id"] === atom["GroupIds"]?.[0] ?? "#")?.["Abbrev"].replace(" ", "").replace($timetableStore["Classes"][0]["Abbrev"], "") ?? ""}
-                        {@const room=$timetableStore["Rooms"].find(s => s["Id"] === atom["RoomId"])?.["Abbrev"] ?? ""}
-                        {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"])?.["Abbrev"].toUpperCase() ?? "#"}
+                    {@const atom=day["Atoms"].find(t => t["HourId"] === hour["Id"])}
+                    {#if atom}
                         {@const subjectOriginal=
-                            atom["Change"] ?
-                                ($timetablePermanentStore["Subjects"].find(s => s["Id"] ===
-                                    ($timetablePermanentStore["Days"][j]["Atoms"].find(t => {
-                                        return t["HourId"] === atom["HourId"] && (t["CycleIds"]?.[0] === atom["CycleIds"][0] || t["CycleIds"]?.[1] === atom["CycleIds"][0])
-                                    })?.["SubjectId"] ?? "#")
-                                )?.["Abbrev"].toUpperCase() ?? "#") + subjectChange
-                                : ""
+                            ($timetablePermanentStore["Subjects"].find(s => s["Id"] ===
+                                ($timetablePermanentStore["Days"][j]["Atoms"].find(t => {
+                                    return t["HourId"] === atom["HourId"] && t["CycleIds"]?.includes($timetableStore["Cycles"][0]["Id"])
+                                })?.["SubjectId"] ?? "#")
+                            )?.["Abbrev"].toUpperCase() ?? "#")
                         }
-                        {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"])?.["Abbrev"] ?? "none"}
-                        <td style="background-color:var(--subject-{subject})" class={past}>
-                            <div class="flex-atom" style="height:{atomHeight-10}px"> <!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
-                                <div class="flex-between">
-                                    <span>{group}</span>
-                                    <span>{room}</span>
-                                </div>
-                                <h3>{(subjectOriginal !== subject + subjectChange ? subjectOriginal : "") + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
-                                <div class="flex-between">
+                        {#if day["DayType"] !== "WorkDay"} <!--special day-->
+                            <td class={"subject-removed "+past}>
+                                <span></span>
+                                <h3>{subjectOriginal}</h3>
+                                <span>{day["DayType"].toLowerCase()}</span>
+                            </td>
+                        {:else if atom["SubjectId"]} <!--normal atom-->
+                            {@const group=$timetableStore["Groups"].find(s => s["Id"] === atom["GroupIds"]?.[0] ?? "#")?.["Abbrev"].replace(" ", "").replace($timetableStore["Classes"][0]["Abbrev"], "") ?? ""}
+                            {@const room=$timetableStore["Rooms"].find(s => s["Id"] === atom["RoomId"])?.["Abbrev"] ?? ""}
+                            {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"])?.["Abbrev"].toUpperCase() ?? "#"}
+                            {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"])?.["Abbrev"] ?? "none"}
+                            <td style="background-color:var(--subject-{subject})" class={past}>
+                                <div class="flex-atom" style="height:{atomHeight-10}px"> <!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
+                                    <div class="flex-between">
+                                        <span>{group}</span>
+                                        <span>{room}</span>
+                                    </div>
+                                    <h3>{(subjectOriginal !== subject ? subjectOriginal + subjectChange : "") + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
+                                    <div class="flex-between">
                                 <span>
                                     {#if atom["Change"]}
                                         {#if subjectOriginal.includes("#")}
@@ -115,18 +121,19 @@
                                         <svg></svg>
                                     {/if}
                                 </span>
-                                    <span>{teacher}</span>
-                                    <span><svg></svg></span>
+                                        <span>{teacher}</span>
+                                        <span><svg></svg></span>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    {:else if atom && atom["Change"]["ChangeType"] === "Removed"}
-                        <td class={"subject-removed "+past}>
-                            <span></span>
-                            <h3>{formatRemovedSubject(atom["Change"]["Description"])}</h3>
-                            <span>removed</span>
-                        </td>
-                    {:else}
+                            </td>
+                        {:else if atom["Change"]["ChangeType"] === "Removed" || atom["Change"]["ChangeType"] === "Canceled"} <!--atom removed-->
+                            <td class={"subject-removed "+past}>
+                                <span></span>
+                                <h3>{subjectOriginal}</h3>
+                                <span>{atom["Change"]["TypeName"]?.split(" ")[0].toLowerCase() ?? "removed"}</span>
+                            </td>
+                        {/if}
+                    {:else} <!--atom doesnt exist-->
                         <td></td>
                     {/if}
                 {/each}
