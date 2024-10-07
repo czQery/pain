@@ -1,0 +1,45 @@
+{
+  "message": "mňam, mňam, mňam, je to fresh, je to fresh :3",
+  "data": [
+    {
+      "date": 1728259200000,
+      "dish": "Jemná houbařská, Buchtičky s vanilkovým krémem, Ovoce, ochucené mléko, bílá káva, voda"
+    },
+    {
+      "date": 1728345600000,
+      "dish": "Rychlá s krupicí a vejcem, Vařené hovězí, koprová omáčka, houskový knedlík, Černý čaj, šťáva, voda"
+    },
+    {
+      "date": 1728432000000,
+      "dish": "Bramborová s paprikou, Sečuánská kuřecí směs, hrášková rýže, Ovocný čaj, džus, voda"
+    },
+    {
+      "date": 1728518400000,
+      "dish": "Cizrnová, Vepřový řízek, bramborová kaše, citón, kyselá okurka, Džus, zelený čaj, voda"
+    },
+    {
+      "date": 1728604800000,
+      "dish": "Pórková s kapáním, Zapečené těstoviny Chilli con Carne s mletým masem, sýr, Růžový čaj, džus, voda"
+    },
+    {
+      "date": 1728864000000,
+      "dish": "Selská, Rybí filé na zelenině, brambor, česnekový dip, Zelený čaj, šťáva, voda"
+    },
+    {
+      "date": 1728950400000,
+      "dish": "Zeleninová s tarhoňou, Halušky s uzeným masem, zelí, cibulka, Černý čaj, džus, voda"
+    },
+    {
+      "date": 1729036800000,
+      "dish": "Kuřecí vývar s játrovou rýží a zeleninou, Masová koule v rajské omáčce, těstoviny, Ovocný punč, džus, ochucené mléko, voda"
+    },
+    {
+      "date": 1729123200000,
+      "dish": "Hnědá polévka s praženou krupicí, Čočka na kyselo sypaná sýrem, vejce, kyselá okurka, Karamelovník, černý čaj, džus, voda"
+    },
+    {
+      "date": 1729209600000,
+      "dish": "Celerová, Kuřecí stehno na slanině, rýže, Ovocný čaj, ovocný mošt, voda"
+    }
+  ]
+}
