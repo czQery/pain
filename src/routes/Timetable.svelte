@@ -4,9 +4,12 @@
     import {onDestroy, onMount} from "svelte"
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
     import Loading from "../components/Loading.svelte"
+    import Modal from "../components/Modal.svelte";
 
     const hours = 9
     const subjectChange = " > "
+
+    let modal
 
     let time = new Date()
     let interval
@@ -60,6 +63,7 @@
     </nav>
 {/if}
 {#if $timetableStore && $timetablePermanentStore}
+    <Modal bind:modal/>
     <table>
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
