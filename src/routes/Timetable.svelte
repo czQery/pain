@@ -10,6 +10,18 @@
     const subjectChange = " > "
 
     let modal
+    let modalSubject = "#"
+    let modalSubjectColor = "NON"
+    let modalTeacher = "#"
+    let modalTheme = "#"
+    const modalShow = (subject, teacher, description) => {
+        modalSubject = subject["Name"]
+        modalSubjectColor = subject["Abbrev"].toUpperCase()
+        modalTeacher = teacher["Name"]
+        modalTheme = description
+        modal.show()
+        return null
+    }
 
     let time = new Date()
     let interval
@@ -63,7 +75,14 @@
     </nav>
 {/if}
 {#if $timetableStore && $timetablePermanentStore}
-    <Modal bind:modal/>
+    <Modal bind:modal>
+        <h2 style="color:var(--subject-{modalSubjectColor})">{modalSubject}</h2>
+        <h3 style="color:var(--snow)">{modalTeacher}</h3>
+        {#if modalTheme !== ""}
+            <br>
+            <h3 style="color:var(--silver)">{modalTheme}</h3>
+        {/if}
+    </Modal>
     <table>
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
@@ -93,39 +112,39 @@
                                 ($timetablePermanentStore["Days"][j]["Atoms"].find(t => {
                                     return t["HourId"] === atom["HourId"] && t["CycleIds"]?.includes($timetableStore["Cycles"][0]["Id"])
                                 })?.["SubjectId"] ?? "#")
-                            )?.["Abbrev"].toUpperCase() ?? "#")
+                            ) ?? null)
                         }
                         {#if day["DayType"] !== "WorkDay"} <!--special day-->
                             <td class={"subject-removed "+past}>
                                 <span></span>
-                                <h3>{subjectOriginal}</h3>
+                                <h3>{subjectOriginal["Abbrev"].toUpperCase()}</h3>
                                 <span>{day["DayType"].toLowerCase()}</span>
                             </td>
                         {:else if atom["SubjectId"]} <!--normal atom-->
                             {@const group=$timetableStore["Groups"].find(s => s["Id"] === atom["GroupIds"]?.[0] ?? "#")?.["Abbrev"].replace(" ", "").replace($timetableStore["Classes"][0]["Abbrev"], "") ?? ""}
                             {@const room=$timetableStore["Rooms"].find(s => s["Id"] === atom["RoomId"])?.["Abbrev"] ?? ""}
-                            {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"])?.["Abbrev"].toUpperCase() ?? "#"}
-                            {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"])?.["Abbrev"] ?? "none"}
-                            <td style="background-color:var(--subject-{subject})" class={past}>
+                            {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"]) ?? null}
+                            {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? null}
+                            <td style="background-color:var(--subject-{subject['Abbrev'].toUpperCase()})" class={past} on:click={modalShow(subject, teacher, atom["Theme"])}>
                                 <div class="flex-atom" style="height:{atomHeight-10}px"> <!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
                                     <div class="flex-between">
                                         <span>{group}</span>
                                         <span>{room}</span>
                                     </div>
-                                    <h3>{(subjectOriginal !== subject ? subjectOriginal + subjectChange : "") + subject}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
+                                    <h3>{((subjectOriginal?.["Id"] ?? "#") !== subject["Id"] ? subjectOriginal?.["Abbrev"].toUpperCase() ?? "#" + subjectChange : "") + subject["Abbrev"].toUpperCase()}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
                                     <div class="flex-between">
                                 <span>
                                     {#if atom["Change"]}
-                                        {#if subjectOriginal.includes("#")}
-                                            <LucideTriangleAlert/>
-                                        {:else}
+                                        {#if subjectOriginal}
                                             <LucidePencil/>
+                                        {:else}
+                                            <LucideTriangleAlert/>
                                         {/if}
                                         {:else}
                                         <svg></svg>
                                     {/if}
                                 </span>
-                                        <span>{teacher}</span>
+                                        <span>{teacher["Abbrev"]}</span>
                                         <span><svg></svg></span>
                                     </div>
                                 </div>
@@ -133,7 +152,7 @@
                         {:else if atom["Change"]["ChangeType"] === "Removed" || atom["Change"]["ChangeType"] === "Canceled"} <!--atom removed-->
                             <td class={"subject-removed "+past}>
                                 <span></span>
-                                <h3>{subjectOriginal}</h3>
+                                <h3>{subjectOriginal["Abbrev"].toUpperCase()}</h3>
                                 <span>{atom["Change"]["TypeName"]?.split(" ")[0].toLowerCase() ?? "removed"}</span>
                             </td>
                         {/if}

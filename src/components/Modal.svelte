@@ -2,24 +2,39 @@
     export let modal
 </script>
 
-<dialog bind:this={modal}>
-
+<dialog bind:this={modal} on:click={(e) => e.target.tagName === "DIALOG" ? modal.close() : null}>
+    <div class="dialog-block">
+        <slot>
+        </slot>
+    </div>
 </dialog>
 
 <style>
     dialog {
-        width: calc(100% - 20px);
-        max-width: 500px;
-        max-height: 500px;
-        background-color: var(--white);
-        height: calc(100svh - 20px);
         z-index: 30;
-        border-radius: var(--border);
-        opacity: 0.4;
+        margin: 0;
+        padding: 0;
+        border: none;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
 
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
+    dialog[open] {
+        display: flex;
+        width: 100%;
+        height: 100svh;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dialog-block {
+        background-color: var(--black);
+        border: 1px var(--gray) solid;
+        border-radius: var(--border);
+        max-width: calc(100% - 100px);
+        max-height: calc(100svh - 100px);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
     }
 </style>
