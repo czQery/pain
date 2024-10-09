@@ -27,3 +27,7 @@ export const formatAddZero = (num) => {
             return num
     }
 }
+
+export const formatCapitalize = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
