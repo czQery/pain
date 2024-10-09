@@ -94,7 +94,7 @@
             <h3 style="color:var(--snow)">{modalTeacher}</h3>
         {/if}
         {#if modalTheme !== ""}
-            <br>
+            <div style="height:10px"></div>
             <h3 style="color:var(--silver)">{modalTheme}</h3>
         {/if}
     </Modal>
