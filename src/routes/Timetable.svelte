@@ -1,10 +1,10 @@
 <script>
     import {timetableFetch, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
-    import {formatTime} from "../lib/format.js"
+    import {formatCapitalize, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
     import Loading from "../components/Loading.svelte"
-    import Modal from "../components/Modal.svelte";
+    import Modal from "../components/Modal.svelte"
 
     const hours = 9
     const subjectChange = " > "
@@ -15,10 +15,19 @@
     let modalTeacher = "#"
     let modalTheme = "#"
     const modalShow = (subject, teacher, description) => {
-        modalSubject = subject["Name"]
-        modalSubjectColor = subject["Abbrev"].toUpperCase()
-        modalTeacher = teacher["Name"]
-        modalTheme = description
+        if (subject["Name"]) {
+            modalSubject = subject["Name"]
+            modalSubjectColor = subject["Abbrev"].toUpperCase()
+        } else {
+            modalSubject = subject
+            modalSubjectColor = "FREE"
+        }
+        if (teacher) {
+            modalTeacher = teacher["Name"]
+        } else {
+            modalTeacher = ""
+        }
+        modalTheme = formatCapitalize(description.replaceAll("&quot;", "\""))
         modal.show()
         return null
     }
@@ -75,9 +84,15 @@
     </nav>
 {/if}
 {#if $timetableStore && $timetablePermanentStore}
-    <Modal bind:modal>
-        <h2 style="color:var(--subject-{modalSubjectColor})">{modalSubject}</h2>
-        <h3 style="color:var(--snow)">{modalTeacher}</h3>
+    <Modal bind:modal title="Tuition details">
+        {#if modalSubjectColor === "FREE"}
+            <h2 style="background:var(--brand);color:transparent;background-clip:text">{modalSubject}</h2>
+        {:else}
+            <h2 style="color:var(--subject-{modalSubjectColor})">{modalSubject}</h2>
+        {/if}
+        {#if modalTeacher !== ""}
+            <h3 style="color:var(--snow)">{modalTeacher}</h3>
+        {/if}
         {#if modalTheme !== ""}
             <br>
             <h3 style="color:var(--silver)">{modalTheme}</h3>
@@ -115,7 +130,7 @@
                             ) ?? null)
                         }
                         {#if day["DayType"] !== "WorkDay"} <!--special day-->
-                            <td class={"subject-removed "+past}>
+                            <td class={"subject-removed "+past} on:click={modalShow(day["DayType"], null, day["DayDescription"])}>
                                 <span></span>
                                 <h3>{subjectOriginal["Abbrev"].toUpperCase()}</h3>
                                 <span>{day["DayType"].toLowerCase()}</span>
@@ -131,7 +146,7 @@
                                         <span>{group}</span>
                                         <span>{room}</span>
                                     </div>
-                                    <h3>{((subjectOriginal?.["Id"] ?? "#") !== subject["Id"] ? subjectOriginal?.["Abbrev"].toUpperCase() ?? "#" + subjectChange : "") + subject["Abbrev"].toUpperCase()}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
+                                    <h3>{((subjectOriginal?.["Id"] ?? "#") !== subject["Id"] ? (subjectOriginal?.["Abbrev"].toUpperCase() ?? "#") + subjectChange : "") + subject["Abbrev"].toUpperCase()}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
                                     <div class="flex-between">
                                 <span>
                                     {#if atom["Change"]}
@@ -150,7 +165,7 @@
                                 </div>
                             </td>
                         {:else if atom["Change"]["ChangeType"] === "Removed" || atom["Change"]["ChangeType"] === "Canceled"} <!--atom removed-->
-                            <td class={"subject-removed "+past}>
+                            <td class={"subject-removed "+past} on:click={modalShow(atom["Change"]["ChangeType"], null, atom["Change"]["TypeName"] ?? "Unknown reason")}>
                                 <span></span>
                                 <h3>{subjectOriginal["Abbrev"].toUpperCase()}</h3>
                                 <span>{atom["Change"]["TypeName"]?.split(" ")[0].toLowerCase() ?? "removed"}</span>
@@ -195,6 +210,7 @@
     nav :global(svg) {
         height: 25px;
         width: 25px;
+        stroke: var(--white);
     }
 
     table {
@@ -245,6 +261,7 @@
         height: 10px;
         width: 10px;
         stroke-width: 3px; /*default is 2px*/
+        stroke: var(--white);
     }
 
     .subject-past {

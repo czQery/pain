@@ -57,7 +57,7 @@
     }
 
     .canteen-title h2 {
-        background: linear-gradient(145deg, var(--pink) 0%, var(--purple) 100%);
+        background: var(--brand);
         color: transparent;
         background-clip: text;
     }

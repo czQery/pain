@@ -111,6 +111,7 @@
         display: block;
         height: 40px;
         margin: 5px;
+        stroke: var(--white)
     }
 
     footer ul li {
