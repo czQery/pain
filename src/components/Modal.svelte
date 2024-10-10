@@ -26,7 +26,7 @@
         margin: 0;
         padding: 0;
         border: none;
-        background-color: var(--drop);
+        background: var(--brand-milky);
     }
 
     dialog[open] {
