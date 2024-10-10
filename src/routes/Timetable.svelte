@@ -74,11 +74,11 @@
     {@const pageTimeBegin=new Date(new Date().setDate((time.getDate() - time.getDay() + 1) + page * 7))}
     {@const pageTimeEnd=new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + page * 7))}
     <nav>
-        <button on:click={() => setPage("backward")} disabled="{page === 0}">
+        <button on:click={() => setPage("backward")} disabled="{page === 0 || !$timetableStore}">
             <LucideArrowBigLeftDash/>
         </button>
         <h3 style="width:125px;text-align:center">{pageTimeBegin.getDate() + "-" + pageTimeEnd.getDate() + "." + (pageTimeEnd.getMonth() + 1) + "." + pageTimeEnd.getFullYear()}</h3>
-        <button on:click={() => setPage("forward")} disabled="{page === maxPage}">
+        <button on:click={() => setPage("forward")} disabled="{page === maxPage || !$timetableStore}">
             <LucideArrowBigRightDash/>
         </button>
     </nav>
@@ -110,7 +110,7 @@
             <th><h3>FRI</h3></th>
         </tr>
         {#each $timetableStore["Hours"].slice(0, hours) as hour, i}
-            {@const atomHeight=Math.round((((windowHeight - footerHeight - navHeight - cornerHeight) / hours) + Number.EPSILON) * 10) / 10} <!--round the number because different browsers use different precision - the epsilon trick is not perfect but whatever -->
+            {@const atomHeight=Math.round((((Math.max(windowHeight, 660) - footerHeight - navHeight - (cornerHeight + 1)) / hours) + Number.EPSILON) * 10) / 10} <!--round the number because different browsers use different precision - the epsilon trick is not perfect but whatever -->
             <tr style="height:{atomHeight}px">
                 <th class="slim">
                     <h2>{hour["Caption"]}</h2>
@@ -246,6 +246,7 @@
     }
 
     td {
+        box-shadow: inset 0 0 30px 3px rgba(0, 0, 0, .2);
         border: 1px var(--gray) solid;
         font-weight: normal;
         padding: 0;
@@ -288,5 +289,11 @@
     .flex-between {
         display: flex;
         justify-content: space-between;
+    }
+
+    @media screen and (max-height: 660px) {
+        table {
+            overflow-y: auto;
+        }
     }
 </style>
