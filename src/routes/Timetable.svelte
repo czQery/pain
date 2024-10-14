@@ -58,6 +58,7 @@
     }
 
     onMount(async () => {
+        page = 0
         await timetableFetch(page)
         interval = setInterval(() => {
             time = new Date()
@@ -66,6 +67,7 @@
 
     onDestroy(() => {
         clearInterval(interval)
+        timetableStore.set(null)
     })
 </script>
 
@@ -172,7 +174,7 @@
                             </td>
                         {/if}
                     {:else} <!--atom doesnt exist-->
-                        <td></td>
+                        <td style="cursor: default"></td>
                     {/if}
                 {/each}
             </tr>
@@ -250,6 +252,7 @@
         border: 1px var(--gray) solid;
         font-weight: normal;
         padding: 0;
+        cursor: pointer;
     }
 
     th {
