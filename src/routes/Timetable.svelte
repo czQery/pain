@@ -103,7 +103,7 @@
     <table>
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
-                <h3>{$timetableStore["Cycles"][0]["Abbrev"] === "S" ? "EVEN" : "ODD"}</h3>
+                <h3>{($timetableStore["Cycles"][0]?.["Abbrev"] ?? "???") === "S" ? "EVEN" : "ODD"}</h3>
             </th>
             <th><h3>MON</h3></th>
             <th><h3>TUE</h3></th>
@@ -127,7 +127,7 @@
                         {@const subjectOriginal=
                             ($timetablePermanentStore["Subjects"].find(s => s["Id"] ===
                                 ($timetablePermanentStore["Days"][j]["Atoms"].find(t => {
-                                    return t["HourId"] === atom["HourId"] && t["CycleIds"]?.includes($timetableStore["Cycles"][0]["Id"])
+                                    return t["HourId"] === atom["HourId"] && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? "#")
                                 })?.["SubjectId"] ?? "#")
                             ) ?? null)
                         }
