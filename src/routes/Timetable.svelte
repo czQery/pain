@@ -1,5 +1,5 @@
 <script>
-    import {timetableFetch, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
+    import {timetableFetch, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
     import {formatCapitalize, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
@@ -54,12 +54,12 @@
         }
 
         timetableStore.set(null)
-        await timetableFetch(page)
+        await timetableFetch($timetableGroupStore, page)
     }
 
     onMount(async () => {
         page = 0
-        await timetableFetch(page)
+        await timetableFetch($timetableGroupStore, page)
         interval = setInterval(() => {
             time = new Date()
         }, 1000)
@@ -122,7 +122,7 @@
                     {@const day=$timetableStore["Days"][j]}
                     <!--check if day is in past or day is today but the hour is in the past-->
                     {@const past=((0 === time.getDay() || j + 1 < time.getDay() || (j + 1 === time.getDay() && time.getTime() > formatTime(hour["EndTime"]).getTime() - 1)) && page === 0) ? "subject-past" : ""}
-                    {@const atom=day["Atoms"].find(t => t["HourId"] === hour["Id"])}
+                    {@const atom=day?.["Atoms"].find(t => t["HourId"] === hour["Id"])}
                     {#if atom}
                         {@const subjectOriginal=
                             ($timetablePermanentStore["Subjects"].find(s => s["Id"] ===

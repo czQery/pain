@@ -1,5 +1,5 @@
 <script>
-    import {timetableFetch, timetableStore} from "../lib/timetable.js"
+    import {timetableFetch, timetableGroups, timetableGroupStore, timetableStore} from "../lib/timetable.js"
     import Loading from "../components/Loading.svelte"
     import {formatAddZero, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
@@ -29,7 +29,7 @@
 
     onMount(async () => {
         overridden = false
-        await timetableFetch(0)
+        await timetableFetch($timetableGroupStore, 0)
         interval = setInterval(() => {
             time = new Date()
         }, 1000)
@@ -111,7 +111,10 @@
                 <span>Created by</span>
                 <a href="https://qery.cz/l/g_pain">Štěpán Aubrecht</a>
             </div>
-            <span>build: {__CF_PAGES_COMMIT_SHA__ ? "#" + __CF_PAGES_COMMIT_SHA__.slice(0, 7) : "dev"}</span> <!--injected variable by cloudflare-->
+            <div style="text-align: right">
+                <span>build: {__CF_PAGES_COMMIT_SHA__ ? "#" + __CF_PAGES_COMMIT_SHA__.slice(0, 7) : "dev"}</span> <!--injected variable by cloudflare-->
+                <span>group: {timetableGroups.find(g => g["id"] === $timetableGroupStore)?.["name"]}</span>
+            </div>
         </div>
     </div>
 {:else}
