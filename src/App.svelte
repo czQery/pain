@@ -3,7 +3,7 @@
     import Timetable from "./routes/Timetable.svelte"
     import Index from "./routes/Index.svelte"
     import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
-    import {timetablePermanentFetch} from "./lib/timetable.js"
+    import {timetableGroups, timetableGroupStore, timetablePermanentFetch} from "./lib/timetable.js"
     import Countdown from "./routes/Countdown.svelte"
     import {onMount} from "svelte"
     import Canteen from "./routes/Canteen.svelte"
@@ -13,7 +13,15 @@
         document.getElementById("init-loading").style.display = "none"
         document.getElementById("app").style.display = "flex"
 
-        timetablePermanentFetch()
+        let group = localStorage.getItem("group")
+        if (group && timetableGroups.some(g => g["id"] === group)) {
+            timetableGroupStore.set(group)
+        } else {
+            timetableGroupStore.set(timetableGroups[0]["id"])
+            localStorage.setItem("group", timetableGroups[0]["id"]);
+        }
+
+        timetablePermanentFetch($timetableGroupStore ?? "null")
     })
 </script>
 

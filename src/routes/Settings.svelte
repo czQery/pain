@@ -1,23 +1,28 @@
 <script>
+    import {timetableGroups, timetableGroupStore, timetablePermanentFetch} from "../lib/timetable.js";
 </script>
 
 <div id="settings-block">
-    <div>
-        <h3>Zde může být přepínač na tvojí skupinu, stačí když mi pošleš</h3>
-        <h3 style="color: var(--pink)">refresh-token</h3>
-        <h3>z tvého bakaláře na discord @czqery</h3>
+    <div id="settings-group">
+        <label for="group">Group</label>
+        <select id="group" bind:value={$timetableGroupStore} on:change={() => {
+        localStorage.setItem("group", $timetableGroupStore.toString())
+        timetablePermanentFetch($timetableGroupStore)
+    }}>
+            {#each timetableGroups as g}
+                <option value={g["id"]}>
+                    {g["name"]}
+                </option>
+            {/each}
+        </select>
     </div>
-
-    <h3>Vlož příkaz do cmd a nahraď jméno a heslo svými údaji</h3>
+    <div>
+        <span>Zde může být i tvoje třída/skupina stačí když mi pošleš</span>
+        <span style="color: var(--pink)">refresh-token</span>
+        <span>z tvého bakaláře na discord @czqery</span>
+    </div>
 
     <code>curl -d "grant_type=password&client_id=ANDR&username=<strong>jméno</strong>&password=<strong>heslo</strong>&scope=bakalari_api+offline_access+timetable_widget" https://sssenp.bakalari.cz/api/login</code>
-
-    <h3>To vypíše dlouhý text kde by jsi měl najít:</h3>
-    <div>
-        <h3>"refresh-token": "</h3><h3 style="color: var(--pink)">tohle bych poprosil</h3><h3>"</h3>
-    </div>
-
-    <span>*když ti nepůjde příkaz vložit do cmd zkus místo CTRL+V prostě kliknout pravým tlačítkem na myši</span>
 </div>
 
 <style>
@@ -29,9 +34,30 @@
         height: inherit;
         justify-content: center;
         gap: 20px;
+        align-items: center;
     }
 
-    #settings-block h3 {
+    #settings-block span {
         display: inline-block;
+        color: var(--silver);
+    }
+
+    #settings-block code {
+        color: var(--silver);
+    }
+
+    #settings-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 0 0 60px 0;
+    }
+
+    #settings-group select {
+        width: 200px;
+    }
+
+    #settings-group label {
+        margin: 0 0 0 5px;
     }
 </style>

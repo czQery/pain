@@ -132,6 +132,50 @@
             width: fit-content;
         }
 
+        select {
+            border: 1px var(--gray) solid;
+            padding: 5px;
+            line-height: 18px;
+            font-size: 18px;
+            color: var(--snow);
+            background-color: var(--black);
+            border-radius: var(--border);
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+
+            /* Arrow */
+            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1hcnJvdy1kb3duIj48cGF0aCBkPSJNMTIgNXYxNCIvPjxwYXRoIGQ9Im0xOSAxMi03IDctNy03Ii8+PC9zdmc+");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem top 50%;
+            background-size: 0.65rem auto;
+        }
+
+        select:active, select:focus {
+            outline: none;
+            border: 1px var(--white) solid;
+        }
+
+        select option {
+            height: 18px;
+            line-height: 18px;
+            font-size: 18px;
+            background-color: var(--black);
+            color: var(--snow);
+            padding: 5px;
+            border: 1px var(--gray) solid;
+            border-radius: var(--border);
+            margin: 20px 0 0 0;
+        }
+
+        label {
+            height: 18px;
+            line-height: 18px;
+            font-size: 18px;
+            color: var(--white);
+            font-weight: bold;
+        }
+
         a, button {
             transition: var(--transition) all linear;
         }

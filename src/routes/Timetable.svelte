@@ -1,5 +1,5 @@
 <script>
-    import {timetableFetch, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
+    import {timetableFetch, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
     import {formatCapitalize, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
@@ -54,12 +54,12 @@
         }
 
         timetableStore.set(null)
-        await timetableFetch(page)
+        await timetableFetch($timetableGroupStore, page)
     }
 
     onMount(async () => {
         page = 0
-        await timetableFetch(page)
+        await timetableFetch($timetableGroupStore, page)
         interval = setInterval(() => {
             time = new Date()
         }, 1000)
