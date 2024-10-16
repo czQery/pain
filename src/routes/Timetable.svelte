@@ -122,7 +122,7 @@
                     {@const day=$timetableStore["Days"][j]}
                     <!--check if day is in past or day is today but the hour is in the past-->
                     {@const past=((0 === time.getDay() || j + 1 < time.getDay() || (j + 1 === time.getDay() && time.getTime() > formatTime(hour["EndTime"]).getTime() - 1)) && page === 0) ? "subject-past" : ""}
-                    {@const atom=day["Atoms"].find(t => t["HourId"] === hour["Id"])}
+                    {@const atom=day?.["Atoms"].find(t => t["HourId"] === hour["Id"])}
                     {#if atom}
                         {@const subjectOriginal=
                             ($timetablePermanentStore["Subjects"].find(s => s["Id"] ===
