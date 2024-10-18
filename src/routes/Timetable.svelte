@@ -32,7 +32,15 @@
         return null
     }
 
-    let time = new Date()
+    const getTime = () => {
+        let now = new Date()
+        if (now.getDay() === 0) {
+            now = new Date(now.setDate(now.getDate() - 1))
+        }
+        return now
+    }
+
+    let time = getTime()
     let interval
 
     let windowHeight = 0
@@ -41,7 +49,7 @@
     let footerHeight = 50
 
     let page = 0
-    const maxPage = 3
+    const maxPage = (6 - 1)
 
     const setPage = async (a) => {
         switch (a) {
@@ -61,7 +69,7 @@
         page = 0
         await timetableFetch($timetableGroupStore, page)
         interval = setInterval(() => {
-            time = new Date()
+            time = getTime()
         }, 1000)
     })
 
