@@ -1,10 +1,11 @@
 <script>
-    import {timetableFetch, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
+    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
     import {formatCapitalize, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
     import Loading from "../components/Loading.svelte"
     import Modal from "../components/Modal.svelte"
+    import {overrideMasters, overrideRooms} from "../lib/override.js";
 
     const hours = 9
     const subjectChange = " > "
@@ -111,7 +112,7 @@
     <table>
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
-                <h3>{($timetableStore["Cycles"][0]?.["Abbrev"] ?? "???") === "S" ? "EVEN" : "ODD"}</h3>
+                <h3>{$timetableStore["Cycles"][0]?.["Abbrev"] === "S" ? "EVEN" : "ODD"}</h3>
             </th>
             <th><h3>MON</h3></th>
             <th><h3>TUE</h3></th>
@@ -148,27 +149,36 @@
                         {:else if atom["SubjectId"]} <!--normal atom-->
                             {@const group=$timetableStore["Groups"].find(s => s["Id"] === atom["GroupIds"]?.[0] ?? "#")?.["Abbrev"].replace(" ", "").replace($timetableStore["Classes"][0]["Abbrev"], "") ?? ""}
                             {@const room=$timetableStore["Rooms"].find(s => s["Id"] === atom["RoomId"])?.["Abbrev"] ?? ""}
+                            {@const roomOverride=overrideRooms?.[timetableGroups.find(g => g["id"] === $timetableGroupStore)?.["class"]]}
                             {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"]) ?? null}
                             {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? null}
                             <td style="background-color:var(--subject-{subject['Abbrev'].toUpperCase()})" class={past} on:click={modalShow(subject, teacher, atom["Theme"])}>
                                 <div class="flex-atom" style="height:{atomHeight-10}px"> <!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
                                     <div class="flex-between">
                                         <span>{group}</span>
-                                        <span>{room}</span>
+                                        {#if room !== ""}
+                                            <span>{room}</span>
+                                        {:else if subject["Abbrev"].toUpperCase() === "OV"}
+                                            <span>{overrideMasters?.[teacher["Abbrev"]] ?? ""}</span>
+                                        {:else if roomOverride && !roomOverride["ignore"].includes(subject["Abbrev"].toUpperCase())}
+                                            <span>{roomOverride["rooms"][$timetableStore["Cycles"][0]?.["Abbrev"] === "S" ? 1 : 0][j]}</span>
+                                        {:else}
+                                            <span></span>
+                                        {/if}
                                     </div>
                                     <h3>{((subjectOriginal?.["Id"] ?? "#") !== subject["Id"] ? (subjectOriginal?.["Abbrev"].toUpperCase() ?? "#") + subjectChange : "") + subject["Abbrev"].toUpperCase()}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
                                     <div class="flex-between">
-                                <span>
-                                    {#if atom["Change"]}
-                                        {#if subjectOriginal}
-                                            <LucidePencil/>
-                                        {:else}
-                                            <LucideTriangleAlert/>
-                                        {/if}
-                                        {:else}
-                                        <svg></svg>
-                                    {/if}
-                                </span>
+                                        <span>
+                                            {#if atom["Change"]}
+                                                {#if subjectOriginal}
+                                                    <LucidePencil/>
+                                                {:else}
+                                                    <LucideTriangleAlert/>
+                                                {/if}
+                                                {:else}
+                                                <svg></svg>
+                                            {/if}
+                                        </span>
                                         <span>{teacher["Abbrev"]}</span>
                                         <span><svg></svg></span>
                                     </div>

@@ -28,3 +28,19 @@ export const overrideOV = {
         }
     ]
 }
+
+export const overrideMasters = {
+    "Sla": 201
+}
+
+export const overrideRooms = {
+    "R3": {
+        "ignore":
+            ["TV", "CAD", "AJ"],
+        "rooms":
+            [
+                [4, 4, 0, 0, 0], // odd
+                [1, 1, 1, 2, 4], // even
+            ]
+    }
+}

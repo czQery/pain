@@ -4,8 +4,8 @@ export const timetableStore = writable(null)
 export const timetablePermanentStore = writable(null)
 
 export const timetableGroups = [
-    {"id": "ZGY21K", "name": "R3-EM3-OV4", "src": "sa"},
-    {"id": "RGW1X6", "name": "R3-EM1-OV2", "src": "af"}
+    {"id": "ZGY21K", "name": "R3-EM3-OV4", "class": "R3", "src": "sa"},
+    {"id": "RGW1X6", "name": "R3-EM1-OV2", "class": "R3", "src": "af"}
 ]
 export const timetableGroupStore = writable(null)
 
