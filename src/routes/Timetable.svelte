@@ -132,21 +132,21 @@
                     <!--check if day is in past or day is today but the hour is in the past-->
                     {@const past=((0 === time.getDay() || j + 1 < time.getDay() || (j + 1 === time.getDay() && time.getTime() > formatTime(hour["EndTime"]).getTime() - 1)) && page === 0) ? "subject-past" : ""}
                     {@const atom=day?.["Atoms"].find(t => t["HourId"] === hour["Id"])}
-                    {#if atom}
-                        {@const subjectOriginal=
-                            ($timetablePermanentStore["Subjects"].find(s => s["Id"] ===
-                                ($timetablePermanentStore["Days"][j]["Atoms"].find(t => {
-                                    return t["HourId"] === atom["HourId"] && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? "#")
-                                })?.["SubjectId"] ?? "#")
-                            ) ?? null)
-                        }
-                        {#if day["DayType"] !== "WorkDay"} <!--special day-->
-                            <td class={"subject-removed "+past} on:click={modalShow(day["DayType"], null, day["DayDescription"])}>
-                                <span></span>
-                                <h3>{subjectOriginal["Abbrev"].toUpperCase()}</h3>
-                                <span>{day["DayType"].toLowerCase()}</span>
-                            </td>
-                        {:else if atom["SubjectId"]} <!--normal atom-->
+                    {@const subjectOriginal=
+                        ($timetablePermanentStore["Subjects"].find(s => s["Id"] ===
+                            ($timetablePermanentStore["Days"][j]["Atoms"].find(t => {
+                                return t["HourId"] === hour["Id"] && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? "#")
+                            })?.["SubjectId"] ?? "#")
+                        ) ?? null)
+                    }
+                    {#if day["DayType"] !== "WorkDay" && subjectOriginal} <!--special day-->
+                        <td class={"subject-removed "+past} on:click={modalShow(day["DayType"], null, day["DayDescription"])}>
+                            <span></span>
+                            <h3>{subjectOriginal["Abbrev"].toUpperCase()}</h3>
+                            <span>{day["DayType"].toLowerCase()}</span>
+                        </td>
+                    {:else if atom}
+                        {#if atom["SubjectId"]} <!--normal atom-->
                             {@const group=$timetableStore["Groups"].find(s => s["Id"] === atom["GroupIds"]?.[0] ?? "#")?.["Abbrev"].replace(" ", "").replace($timetableStore["Classes"][0]["Abbrev"], "") ?? ""}
                             {@const room=$timetableStore["Rooms"].find(s => s["Id"] === atom["RoomId"])?.["Abbrev"] ?? ""}
                             {@const roomOverride=overrideRooms?.[timetableGroups.find(g => g["id"] === $timetableGroupStore)?.["class"]]}
