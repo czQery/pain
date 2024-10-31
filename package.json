@@ -9,10 +9,10 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.1.2",
     "svelte": "^4.2.19",
-    "vite": "^5.4.9"
+    "vite": "^5.4.10"
   },
   "dependencies": {
-    "browserslist": "^4.24.0",
+    "browserslist": "^4.24.2",
     "lightningcss": "^1.27.0",
     "lucide-svelte": "^0.453.0",
     "path": "^0.12.7",

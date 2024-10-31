@@ -30,6 +30,7 @@ export const overrideOV = {
 }
 
 export const overrideMasters = {
+    "Li": 101,
     "Sla": 201,
     "Št": 202,
     "Zí": 211,
