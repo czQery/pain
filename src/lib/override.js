@@ -50,3 +50,7 @@ export const overrideRooms = {
             ]
     }
 }
+
+export const overrideWeek = (week) => {
+    return week % 2 ? "1" : "2"
+}
