@@ -1,3 +1,5 @@
+import {getWeek} from "./helper.js";
+
 export const formatDay = (date) => {
     const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     return week[date.getDay()]
@@ -28,6 +30,6 @@ export const formatAddZero = (num) => {
     }
 }
 
-export const formatCapitalize = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+export const formatCapitalize = (text) => {
+    return text.charAt(0).toUpperCase() + text.slice(1);
 }

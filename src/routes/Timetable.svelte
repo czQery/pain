@@ -5,7 +5,8 @@
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
     import Loading from "../components/Loading.svelte"
     import Modal from "../components/Modal.svelte"
-    import {overrideMasters, overrideRooms} from "../lib/override.js";
+    import {overrideMasters, overrideRooms, overrideWeek} from "../lib/override.js";
+    import {getWeek} from "../lib/helper.js";
 
     const hours = 9
     const subjectChange = " > "
@@ -95,6 +96,7 @@
     </nav>
 {/if}
 {#if $timetableStore && $timetablePermanentStore}
+    {@const pageWeek=getWeek(new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + page * 7)))}
     <Modal bind:modal title="Tuition details">
         {#if modalSubjectColor === "FREE"}
             <h2 style="background:var(--brand);color:transparent;background-clip:text">{modalSubject}</h2>
@@ -112,7 +114,7 @@
     <table>
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
-                <h3>{$timetableStore["Cycles"][0]?.["Abbrev"] === "S" ? "EVEN" : "ODD"}</h3>
+                <h3>{($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek)) === "2" ? "EVEN" : "ODD"}</h3>
             </th>
             <th><h3>MON</h3></th>
             <th><h3>TUE</h3></th>
@@ -135,7 +137,7 @@
                     {@const subjectOriginal=
                         ($timetablePermanentStore["Subjects"].find(s => s["Id"] ===
                             ($timetablePermanentStore["Days"][j]["Atoms"].find(t => {
-                                return t["HourId"] === hour["Id"] && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? "#")
+                                return t["HourId"] === hour["Id"] && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek))
                             })?.["SubjectId"] ?? "#")
                         ) ?? null)
                     }
@@ -161,7 +163,7 @@
                                         {:else if subject["Abbrev"].toUpperCase() === "OV"}
                                             <span>{overrideMasters?.[teacher["Abbrev"]] ?? ""}</span>
                                         {:else if roomOverride && !roomOverride["ignore"].includes(subject["Abbrev"].toUpperCase())}
-                                            <span>{roomOverride["rooms"][$timetableStore["Cycles"][0]?.["Abbrev"] === "S" ? 1 : 0][j]}</span>
+                                            <span>{roomOverride["rooms"][($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek)) === "2" ? 1 : 0][j]}</span>
                                         {:else}
                                             <span></span>
                                         {/if}
