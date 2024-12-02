@@ -5,8 +5,9 @@
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
     import Loading from "../components/Loading.svelte"
     import Modal from "../components/Modal.svelte"
-    import {overrideMasters, overrideRooms, overrideWeek} from "../lib/override.js";
-    import {getWeek} from "../lib/helper.js";
+    import {overrideMasters, overrideRooms, overrideWeek} from "../lib/override.js"
+    import {getWeek} from "../lib/helper.js"
+    import {cRefresh} from "../lib/const.js";
 
     const hours = 9
     const subjectChange = " > "
@@ -43,6 +44,7 @@
     }
 
     let time = getTime()
+    let refresh = time
     let interval
 
     let windowHeight = 0
@@ -72,6 +74,11 @@
         await timetableFetch($timetableGroupStore, page)
         interval = setInterval(() => {
             time = getTime()
+
+            if (time.getTime() - refresh.getTime() > cRefresh) {
+                timetableFetch($timetableGroupStore, page)
+                refresh = time
+            }
         }, 1000)
     })
 

@@ -1,0 +1,1 @@
+export const cRefresh = 10000 // 10 seconds

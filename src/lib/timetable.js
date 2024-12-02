@@ -11,7 +11,6 @@ export const timetableGroups = [
 export const timetableGroupStore = writable(null)
 
 export const timetableFetch = async (group, page) => {
-
     // generate current week string for cache safety
     const time = new Date()
     const timeNow = new Date(new Date().setDate(time.getDate() - time.getDay() + 1))
