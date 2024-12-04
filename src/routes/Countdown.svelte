@@ -4,8 +4,10 @@
     import {formatAddZero, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
     import {overrideOV} from "../lib/override.js"
+    import {cOffline, cRefresh} from "../lib/const.js";
 
     let time = new Date()
+    let refresh = time.getTime() + cOffline // cOffline run is set always for the next request after the data is already loaded anyway
     let interval
     let overridden = false
 
@@ -32,6 +34,15 @@
         await timetableFetch($timetableGroupStore, 0)
         interval = setInterval(() => {
             time = new Date()
+
+            if (time.getTime() > refresh) {
+                timetableFetch($timetableGroupStore, 0)
+                if (!$timetableStore) {
+                    refresh = time.getTime() + cOffline
+                } else {
+                    refresh = time.getTime() + cRefresh
+                }
+            }
         }, 1000)
     })
 
