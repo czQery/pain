@@ -5,8 +5,9 @@
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
     import Loading from "../components/Loading.svelte"
     import Modal from "../components/Modal.svelte"
-    import {overrideMasters, overrideRooms, overrideWeek} from "../lib/override.js";
-    import {getWeek} from "../lib/helper.js";
+    import {overrideMasters, overrideRooms, overrideWeek} from "../lib/override.js"
+    import {getWeek} from "../lib/helper.js"
+    import {cOffline, cRefresh} from "../lib/const.js";
 
     const hours = 9
     const subjectChange = " > "
@@ -43,6 +44,7 @@
     }
 
     let time = getTime()
+    let refresh = time.getTime() + cOffline // cOffline run is set always for the next request after the data is already loaded anyway
     let interval
 
     let windowHeight = 0
@@ -64,6 +66,7 @@
         }
 
         timetableStore.set(null)
+        refresh = time.getTime() + cOffline
         await timetableFetch($timetableGroupStore, page)
     }
 
@@ -72,6 +75,15 @@
         await timetableFetch($timetableGroupStore, page)
         interval = setInterval(() => {
             time = getTime()
+
+            if (time.getTime() > refresh) {
+                timetableFetch($timetableGroupStore, page)
+                if (!$timetableStore) {
+                    refresh = time.getTime() + cOffline
+                } else {
+                    refresh = time.getTime() + cRefresh
+                }
+            }
         }, 1000)
     })
 

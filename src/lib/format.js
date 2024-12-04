@@ -1,5 +1,3 @@
-import {getWeek} from "./helper.js";
-
 export const formatDay = (date) => {
     const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     return week[date.getDay()]
