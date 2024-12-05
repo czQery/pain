@@ -3,28 +3,41 @@
     import {canteenFetch, canteenStore} from "../lib/canteen.js"
     import Loading from "../components/Loading.svelte"
     import {formatDate, formatDay} from "../lib/format.js"
+    import {cOffline} from "../lib/const.js"
+
+    let time = new Date()
+    let interval
 
     onMount(async () => {
         await canteenFetch()
+
+        interval = setInterval(() => {
+            time = new Date()
+            if (!$canteenStore) {
+                canteenFetch()
+            }
+        }, cOffline)
     })
 </script>
 
 {#if $canteenStore}
     <div id="canteen-block">
-        {#each $canteenStore as day, _}
+        {#each $canteenStore as day, i}
             {@const date=new Date(Number(day["date"]))}
             {@const lines=day["dish"].split(/, (?=[\p{Lu}])/u)}
-            <div class="canteen-day">
-                <div class="canteen-title">
-                    <h2>{formatDay(date)}</h2>
-                    <h3>{"- " + formatDate(date)}</h3>
+            {#if i !== 0 || time.getDate() === date.getDate()} <!--this check only works as correction for day old data-->
+                <div class="canteen-day">
+                    <div class="canteen-title">
+                        <h2>{formatDay(date)}</h2>
+                        <h3>{"- " + formatDate(date)}</h3>
+                    </div>
+                    <div class="canteen-lines">
+                        {#each lines as line, i}
+                            <h3 style="color:var(--{(i === lines.length-1 ? 'silver' : 'snow')})">{line}</h3>
+                        {/each}
+                    </div>
                 </div>
-                <div class="canteen-lines">
-                    {#each lines as line, i}
-                        <h3 style="color:var(--{(i === lines.length-1 ? 'silver' : 'snow')})">{line}</h3>
-                    {/each}
-                </div>
-            </div>
+            {/if}
         {/each}
     </div>
 {:else}
