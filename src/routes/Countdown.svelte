@@ -18,8 +18,15 @@
     const setOverride = (value) => {
         if (value && value["Days"][time.getDay() - 1] && value["Days"][time.getDay() - 1]["Atoms"][0]?.["SubjectId"] === "67") {
             let edit = value
+            let teacher = edit["Days"][time.getDay() - 1]["Atoms"][0]?.["TeacherId"] ?? "#"
+
             edit["Days"][time.getDay() - 1]["Atoms"] = overrideOV["Atoms"]
             edit["Hours"] = overrideOV["Hours"]
+
+            for (const atom of edit["Days"][time.getDay() - 1]["Atoms"]) {
+                atom["TeacherId"] = teacher
+            }
+
             timetableStore.set(edit)
             overridden = true
         }
@@ -36,6 +43,7 @@
             time = new Date()
 
             if (time.getTime() > refresh) {
+                overridden = false
                 timetableFetch($timetableGroupStore, 0)
                 if (!$timetableStore) {
                     refresh = time.getTime() + cOffline
