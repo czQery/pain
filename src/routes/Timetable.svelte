@@ -9,7 +9,8 @@
     import {getWeek} from "../lib/helper.js"
     import {cOffline, cRefresh} from "../lib/const.js";
 
-    const hours = 9
+    //const hours = 9 // 0-8
+    const hours = 10 // 0-9
     const subjectChange = " > "
 
     let modal
@@ -327,7 +328,15 @@
         justify-content: space-between;
     }
 
+    /*hours: 9
     @media screen and (max-height: 660px) {
+        table {
+            overflow-y: auto;
+        }
+    }*/
+
+    /*hours: 10*/
+    @media screen and (max-height: 690px) {
         table {
             overflow-y: auto;
         }
