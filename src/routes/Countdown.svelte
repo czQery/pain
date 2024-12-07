@@ -1,50 +1,25 @@
 <script>
-    import {timetableFetch, timetableGroups, timetableGroupStore, timetableStore} from "../lib/timetable.js"
+    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
     import Loading from "../components/Loading.svelte"
     import {formatAddZero, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
-    import {overrideOV} from "../lib/override.js"
     import {cOffline, cRefresh} from "../lib/const.js";
 
     let time = new Date()
     let refresh = time.getTime() + cOffline // cOffline run is set always for the next request after the data is already loaded anyway
     let interval
-    let overridden = false
 
     const getH = (hour) => formatAddZero(Math.trunc((formatTime(hour).getTime() - time) / 1000 / 3600).toString())
     const getM = (hour) => formatAddZero(Math.trunc((((formatTime(hour).getTime() - time) / 1000) % 3600) / 60).toString())
     const getS = (hour) => formatAddZero(Math.trunc(((formatTime(hour).getTime() - time) / 1000) % 60).toString())
 
-    const setOverride = (value) => {
-        if (value && value["Days"][time.getDay() - 1] && value["Days"][time.getDay() - 1]["Atoms"][0]?.["SubjectId"] === "67") {
-            let edit = value
-            let teacher = edit["Days"][time.getDay() - 1]["Atoms"][0]?.["TeacherId"] ?? "#"
-
-            edit["Days"][time.getDay() - 1]["Atoms"] = overrideOV["Atoms"]
-            edit["Hours"] = overrideOV["Hours"]
-
-            for (const atom of edit["Days"][time.getDay() - 1]["Atoms"]) {
-                atom["TeacherId"] = teacher
-            }
-
-            timetableStore.set(edit)
-            overridden = true
-        }
-    }
-
-    let timetableUnsubscribe = timetableStore.subscribe((value) => {
-        if (!overridden) setOverride(value)
-    })
-
     onMount(async () => {
-        overridden = false
-        await timetableFetch($timetableGroupStore, 0)
+        await timetableFetch($timetableGroupStore, 0, "countdown")
         interval = setInterval(() => {
             time = new Date()
 
             if (time.getTime() > refresh) {
-                overridden = false
-                timetableFetch($timetableGroupStore, 0)
+                timetableFetch($timetableGroupStore, 0, "countdown")
                 if (!$timetableStore) {
                     refresh = time.getTime() + cOffline
                 } else {
@@ -56,12 +31,11 @@
 
     onDestroy(() => {
         clearInterval(interval)
-        timetableUnsubscribe()
         timetableStore.set(null)
     })
 </script>
 
-{#if $timetableStore}
+{#if $timetableStore && $timetablePermanentStore}
     {@const today = $timetableStore["Days"]?.[time.getDay() - 1] ?? null}
     {@const atomBegin=today ? today?.["Atoms"].find(s => s["SubjectId"]) : null}
 
@@ -78,7 +52,7 @@
     {@const atom=today ? today["Atoms"].find(t => t["HourId"] === hour?.["Id"] ?? "#") : null}
     {@const atomNext=today ? today["Atoms"].find(t => t["HourId"] === hourNext?.["Id"] ?? "#") : null}
     {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === (atom?.["SubjectId"] ?? (atomNext?.["SubjectId"] ?? "#")))?.["Abbrev"].toUpperCase() ?? "#"}
-    {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Abbrev"] ?? ""}
+    {@const teacher=$timetablePermanentStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Abbrev"] ?? ""}
 
     {@const hourH=(hour ? getH(hour["EndTime"]) : getH(hourNext?.["BeginTime"] ?? "00"))}
     {@const hourM=(hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00"))}
