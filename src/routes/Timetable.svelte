@@ -68,17 +68,17 @@
 
         timetableStore.set(null)
         refresh = time.getTime() + cOffline
-        await timetableFetch($timetableGroupStore, page)
+        await timetableFetch($timetableGroupStore, page, "timetable")
     }
 
     onMount(async () => {
         page = 0
-        await timetableFetch($timetableGroupStore, page)
+        await timetableFetch($timetableGroupStore, page, "timetable")
         interval = setInterval(() => {
             time = getTime()
 
             if (time.getTime() > refresh) {
-                timetableFetch($timetableGroupStore, page)
+                timetableFetch($timetableGroupStore, page, "timetable")
                 if (!$timetableStore) {
                     refresh = time.getTime() + cOffline
                 } else {
@@ -166,7 +166,7 @@
                             {@const room=$timetableStore["Rooms"].find(s => s["Id"] === atom["RoomId"])?.["Abbrev"] ?? ""}
                             {@const roomOverride=overrideRooms?.[timetableGroups.find(g => g["id"] === $timetableGroupStore)?.["class"]]}
                             {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"]) ?? null}
-                            {@const teacher=$timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? null}
+                            {@const teacher=$timetablePermanentStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? null}
                             <td style="background-color:var(--subject-{subject['Abbrev'].toUpperCase()})" class={past} on:click={modalShow(subject, teacher, atom["Theme"])}>
                                 <div class="flex-atom" style="height:{atomHeight-10}px"> <!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
                                     <div class="flex-between">
@@ -174,7 +174,7 @@
                                         {#if room !== ""}
                                             <span>{room}</span>
                                         {:else if subject["Abbrev"].toUpperCase() === "OV"}
-                                            <span>{overrideMasters?.[teacher["Abbrev"]] ?? ""}</span>
+                                            <span>{overrideMasters?.[teacher?.["Id"]] ?? ""}</span>
                                         {:else if roomOverride && !roomOverride["ignore"].includes(subject["Abbrev"].toUpperCase())}
                                             <span>{roomOverride["rooms"][($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek)) === "2" ? 1 : 0][j]}</span>
                                         {:else}
@@ -194,7 +194,7 @@
                                                 <svg></svg>
                                             {/if}
                                         </span>
-                                        <span>{teacher["Abbrev"]}</span>
+                                        <span>{teacher?.["Abbrev"] ?? "#"}</span>
                                         <span><svg></svg></span>
                                     </div>
                                 </div>
