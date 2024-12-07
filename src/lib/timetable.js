@@ -52,7 +52,7 @@ export const timetableFetch = async (group, page, override) => {
                 }
             case "timetable":
                 let edit = data["data"]
-                let week = getWeek(new Date(new Date().setDate(time.getDate() - time.getDay() + 5)))
+                let week = getWeek(new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + page * 7)))
                 let ov = overrideOVGroup[group][week % 2 === 0 ? 1 : 0]
 
                 for (let i = 0; i < 5; i++) {
