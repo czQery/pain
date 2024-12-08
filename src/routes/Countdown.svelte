@@ -3,7 +3,38 @@
     import Loading from "../components/Loading.svelte"
     import {formatAddZero, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
-    import {cOffline, cRefresh} from "../lib/const.js";
+    import {cOffline, cRefresh} from "../lib/const.js"
+    import Sparticles from "sparticles"
+
+    let sparticles = {
+        "composition": "source-over",
+        "count": 60,
+        "speed": 1,
+        "parallax": 20,
+        "direction": 190,
+        "xVariance": 5,
+        "yVariance": 5,
+        "rotate": true,
+        "rotation": 0.9,
+        "alphaSpeed": 0,
+        "alphaVariance": 2,
+        "minAlpha": 0.4,
+        "maxAlpha": 1,
+        "minSize": 2,
+        "maxSize": 12,
+        "style": "fill",
+        "bounce": false,
+        "drift": 2,
+        "glow": 10,
+        "twinkle": false,
+        "color": ["#8f8f8f"],
+        "shape": "circle",
+        "imageUrl": "",
+    }
+
+    const addSparticles = (node) => {
+        new Sparticles(node, sparticles)
+    }
 
     let time = new Date()
     let refresh = time.getTime() + cOffline // cOffline run is set always for the next request after the data is already loaded anyway
@@ -57,7 +88,7 @@
     {@const hourH=(hour ? getH(hour["EndTime"]) : getH(hourNext?.["BeginTime"] ?? "00"))}
     {@const hourM=(hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00"))}
     {@const hourS=(hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00"))}
-    <div id="countdown-block">
+    <div id="countdown-block" use:addSparticles>
         <div></div>
         <div id="countdown-center">
             <div id="countdown-clock">
@@ -115,12 +146,22 @@
 {/if}
 
 <style>
+    #countdown-block :global(.sparticles) {
+        position: absolute;
+        width: 100%;
+        height: calc(100svh - 50px);
+    }
+
     #countdown-block {
         display: flex;
         height: 100%;
         width: 100%;
         flex-direction: column;
         justify-content: space-between;
+    }
+
+    #countdown-center, #countdown-footer {
+        z-index: 10;
     }
 
     #countdown-center {
