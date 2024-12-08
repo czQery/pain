@@ -53,7 +53,11 @@ export const timetableFetch = async (group, page, override) => {
             case "timetable":
                 let edit = data["data"]
                 let week = getWeek(new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + page * 7)))
-                let ov = overrideOVGroup[group][week % 2 === 0 ? 1 : 0]
+                let ov = overrideOVGroup[group][(week) % 2 === 0 ? 1 : 0]
+
+                if (time.getDay() === 0) {
+                    ov = overrideOVGroup[group][(week) % 2 === 0 ? 0 : 1] // swap week polarity. could be week-- but it would break on new year eve
+                }
 
                 for (let i = 0; i < 5; i++) {
                     if (!edit["Days"][i]["Atoms"] || !ov[i]) { // check if day exists both in bakalaři and override
