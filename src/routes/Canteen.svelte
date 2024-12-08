@@ -23,9 +23,11 @@
 {#if $canteenStore}
     <div id="canteen-block">
         {#each $canteenStore as day, i}
+            <!--DEBUG
+            <h3>{time.getDate() + "." + time.getMonth() + "-" + date.getDate() + "." + date.getMonth()}</h3>-->
             {@const date=new Date(Number(day["date"]))}
             {@const lines=day["dish"].split(/, (?=[\p{Lu}])/u)}
-            {#if i !== 0 || time.getDate() === date.getDate()} <!--this check only works as correction for day old data-->
+            {#if time.getMonth() < date.getMonth() || (time.getMonth() === date.getMonth() && time.getDate() <= date.getDate())} <!--date correction-->
                 <div class="canteen-day">
                     <div class="canteen-title">
                         <h2>{formatDay(date)}</h2>
