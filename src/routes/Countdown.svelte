@@ -179,6 +179,7 @@
 
     #countdown-clock * {
         animation: var(--animation-scale);
+        will-change: transform;
     }
 
     #countdown-footer {
