@@ -202,7 +202,7 @@
                         {:else if atom["Change"]["ChangeType"] === "Removed" || atom["Change"]["ChangeType"] === "Canceled"} <!--atom removed-->
                             <td class={"subject-removed "+past} on:click={modalShow(atom["Change"]["ChangeType"], null, atom["Change"]["TypeName"] ?? "Unknown reason")}>
                                 <span></span>
-                                <h3>{subjectOriginal["Abbrev"].toUpperCase()}</h3>
+                                <h3>{subjectOriginal?.["Abbrev"].toUpperCase() ?? "#"}</h3>
                                 <span>{atom["Change"]["TypeName"]?.split(" ")[0].toLowerCase() ?? "removed"}</span>
                             </td>
                         {/if}
