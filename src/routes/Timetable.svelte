@@ -166,7 +166,7 @@
                             {@const room=$timetableStore["Rooms"].find(s => s["Id"] === atom["RoomId"])?.["Abbrev"] ?? ""}
                             {@const roomOverride=overrideRooms?.[timetableGroups.find(g => g["id"] === $timetableGroupStore)?.["class"]]}
                             {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"]) ?? null}
-                            {@const teacher=$timetablePermanentStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? null}
+                            {@const teacher=$timetablePermanentStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? $timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? null}
                             <td style="background-color:var(--subject-{subject['Abbrev'].toUpperCase()})" class={past} on:click={modalShow(subject, teacher, atom["Theme"])}>
                                 <div class="flex-atom" style="height:{atomHeight-10}px"> <!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
                                     <div class="flex-between">
