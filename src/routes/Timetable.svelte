@@ -7,7 +7,7 @@
     import Modal from "../components/Modal.svelte"
     import {overrideMasters, overrideRooms, overrideWeek} from "../lib/override.js"
     import {getWeek} from "../lib/helper.js"
-    import {cOffline, cRefresh} from "../lib/const.js";
+    import {cOffline, cRefresh} from "../lib/const.js"
 
     //const hours = 9 // 0-8
     const hours = 10 // 0-9
