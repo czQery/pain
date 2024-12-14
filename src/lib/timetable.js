@@ -1,6 +1,6 @@
 import {writable} from "svelte/store"
-import {overrideOV, overrideOVGroup} from "./override.js";
-import {getWeek} from "./helper.js";
+import {overrideOV, overrideOVGroup} from "./override.js"
+import {getWeek} from "./helper.js"
 
 export const timetableStore = writable(null)
 export const timetablePermanentStore = writable(null)
