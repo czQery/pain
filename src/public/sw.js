@@ -9,7 +9,6 @@ self.addEventListener("message", (event) => {
 })
 
 workbox.core.clientsClaim()
-workbox.navigationPreload.enable()
 workbox.routing.registerRoute(
     new RegExp('/*'),
     new workbox.strategies.NetworkFirst({
