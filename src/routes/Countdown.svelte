@@ -5,6 +5,8 @@
     import {onDestroy, onMount} from "svelte"
     import {cOffline, cRefresh} from "../lib/const.js"
     import Sparticles from "sparticles"
+    import {overrideWeek} from "../lib/override.js";
+    import {getWeek} from "../lib/helper.js";
 
     let sparticles = {
         "composition": "source-over",
@@ -80,8 +82,16 @@
         return hourBegin - time >= 0 && today?.["Atoms"].find(s => s["HourId"] === t["Id"] && s["SubjectId"]) && t["Id"] >= (atomBegin?.["HourId"] ?? 0)
     })}
 
-    {@const atom=today ? today["Atoms"].find(t => t["HourId"] === hour?.["Id"] ?? "#") : null}
-    {@const atomNext=today ? today["Atoms"].find(t => t["HourId"] === hourNext?.["Id"] ?? "#") : null}
+    {@const atomOriginal=$timetablePermanentStore["Days"][time.getDay() - 1]["Atoms"].find(t => {
+        return t["HourId"] === (hour?.["Id"] ?? "#") && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(getWeek(time)))
+    })}
+    {@const atomOriginalNext=$timetablePermanentStore["Days"][time.getDay() - 1]["Atoms"].find(t => {
+        return t["HourId"] === (hourNext?.["Id"] ?? "#") && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(getWeek(time)))
+    })}
+
+    {@const atom=(today?.["Atoms"].find(t => t["HourId"] === (hour?.["Id"] ?? "#") && (t["Change"] === null || t["SubjectId"] !== (atomOriginal?.["SubjectId"] ?? "#") || t["TeacherId"] !== (atomOriginal?.["TeacherId"] ?? "#"))) ?? null)}
+    {@const atomNext=(today?.["Atoms"].find(t => t["HourId"] === (hourNext?.["Id"] ?? "#") && (t["Change"] === null || t["SubjectId"] !== (atomOriginalNext?.["SubjectId"] ?? "#") || t["TeacherId"] !== (atomOriginalNext?.["TeacherId"] ?? "#"))) ?? null)}
+
     {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === (atom?.["SubjectId"] ?? (atomNext?.["SubjectId"] ?? "#")))?.["Abbrev"].toUpperCase() ?? "#"}
     {@const teacher=$timetablePermanentStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Abbrev"] ?? $timetableStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Abbrev"] ?? ""}
 
@@ -127,8 +137,8 @@
             {/if}
             <!--DEBUG
             <span>{subject}</span>
-            <span>{hour?.["Caption"] + " - " + atom?.["SubjectId"]}</span>
-            <span>{hourNext?.["Caption"] + " - " + atomNext?.["SubjectId"]}</span>-->
+            <span>{"HOUR - " +hour?.["Caption"] + " - " + atom?.["SubjectId"]}</span>
+            <span>{"NEXT - " +hourNext?.["Caption"] + " - " + atomNext?.["SubjectId"]}</span>-->
         </div>
         <div id="countdown-footer">
             <div>
