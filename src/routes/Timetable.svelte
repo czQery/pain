@@ -146,14 +146,11 @@
                     {@const day=$timetableStore["Days"][j]}
                     <!--check if day is in past or day is today but the hour is in the past-->
                     {@const past=((0 === time.getDay() || j + 1 < time.getDay() || (j + 1 === time.getDay() && time.getTime() > formatTime(hour["EndTime"]).getTime() - 1)) && page === 0) ? "subject-past" : ""}
-                    {@const atom=day?.["Atoms"].find(t => t["HourId"] === hour["Id"])}
-                    {@const subjectOriginal=
-                        ($timetablePermanentStore["Subjects"].find(s => s["Id"] ===
-                            ($timetablePermanentStore["Days"][j]["Atoms"].find(t => {
-                                return t["HourId"] === hour["Id"] && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek))
-                            })?.["SubjectId"] ?? "#")
-                        ) ?? null)
-                    }
+                    {@const atomOriginal=$timetablePermanentStore["Days"][j]["Atoms"].find(t => {
+                        return t["HourId"] === hour["Id"] && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek))
+                    })}
+                    {@const subjectOriginal=($timetablePermanentStore["Subjects"].find(s => s["Id"] === (atomOriginal?.["SubjectId"] ?? "#")) ?? null)}
+                    {@const atom=(day?.["Atoms"].find(t => t["HourId"] === hour["Id"] && (t["Change"] === null || t["SubjectId"] !== (atomOriginal?.["SubjectId"] ?? "#") || t["TeacherId"] !== (atomOriginal?.["TeacherId"] ?? "#"))) ?? null)}
                     {#if day["DayType"] !== "WorkDay" && subjectOriginal} <!--special day-->
                         <td class={"subject-removed "+past} on:click={modalShow(day["DayType"], null, day["DayDescription"])}>
                             <span></span>
