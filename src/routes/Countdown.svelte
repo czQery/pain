@@ -82,10 +82,10 @@
         return hourBegin - time >= 0 && today?.["Atoms"].find(s => s["HourId"] === t["Id"] && s["SubjectId"]) && t["Id"] >= (atomBegin?.["HourId"] ?? 0)
     })}
 
-    {@const atomOriginal=$timetablePermanentStore["Days"][time.getDay() - 1]["Atoms"].find(t => {
+    {@const atomOriginal=$timetablePermanentStore["Days"][time.getDay() - 1]?.["Atoms"].find(t => {
         return t["HourId"] === (hour?.["Id"] ?? "#") && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(getWeek(time)))
     })}
-    {@const atomOriginalNext=$timetablePermanentStore["Days"][time.getDay() - 1]["Atoms"].find(t => {
+    {@const atomOriginalNext=$timetablePermanentStore["Days"][time.getDay() - 1]?.["Atoms"].find(t => {
         return t["HourId"] === (hourNext?.["Id"] ?? "#") && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(getWeek(time)))
     })}
 
