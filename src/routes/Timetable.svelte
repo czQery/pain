@@ -2,7 +2,7 @@
     import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
     import {formatCapitalize, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
-    import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
+    import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideMessageSquareText, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
     import Loading from "../components/Loading.svelte"
     import Modal from "../components/Modal.svelte"
     import {overrideMasters, overrideRooms, overrideWeek} from "../lib/override.js"
@@ -187,12 +187,18 @@
                                                 {:else}
                                                     <LucideTriangleAlert/>
                                                 {/if}
-                                                {:else}
+                                            {:else}
                                                 <svg></svg>
                                             {/if}
                                         </span>
                                         <span>{teacher?.["Abbrev"] ?? "#"}</span>
-                                        <span><svg></svg></span>
+                                        <span>
+                                            {#if atom["Theme"]}
+                                                <LucideMessageSquareText/>
+                                            {:else}
+                                                <svg></svg>
+                                            {/if}
+                                        </span>
                                     </div>
                                 </div>
                             </td>
