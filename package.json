@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "browserslist": "^4.24.4",
-    "lightningcss": "^1.29.0",
+    "lightningcss": "^1.29.1",
     "lucide-svelte": "^0.453.0",
     "path": "^0.12.7",
     "sparticles": "^1.3.1",
