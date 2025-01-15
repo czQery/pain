@@ -14,6 +14,7 @@
     onMount(async () => {
         await canteenFetch()
 
+        if (interval) clearInterval(interval)
         interval = setInterval(() => {
             time = new Date()
             if (!$canteenStore) {

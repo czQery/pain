@@ -10,6 +10,7 @@
     let error = false
 
     onMount(() => {
+        if (interval) clearInterval(interval)
         setInterval(() => {
             error = (new Date().getTime() > start.getTime() + timeToError)
         }, 1000)

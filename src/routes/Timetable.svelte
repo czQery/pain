@@ -5,7 +5,7 @@
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideMessageSquareText, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
     import Loading from "../components/Loading.svelte"
     import Modal from "../components/Modal.svelte"
-    import {overrideMasters, overrideRooms, overrideWeek} from "../lib/override.js"
+    import {overrideMasters, overrideOV, overrideRooms, overrideWeek} from "../lib/override.js"
     import {getWeek} from "../lib/helper.js"
     import {cOffline, cRefresh} from "../lib/const.js"
 
@@ -74,6 +74,8 @@
     onMount(async () => {
         page = 0
         await timetableFetch($timetableGroupStore, page, "timetable")
+
+        if (interval) clearInterval(interval)
         interval = setInterval(() => {
             time = getTime()
 
@@ -150,7 +152,9 @@
                         return t["HourId"] === hour["Id"] && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek))
                     })}
                     {@const subjectOriginal=($timetablePermanentStore["Subjects"].find(s => s["Id"] === (atomOriginal?.["SubjectId"] ?? "#")) ?? null)}
-                    {@const atom=(day?.["Atoms"].find(t => t["HourId"] === hour["Id"] && (t["Change"] === null || t["SubjectId"] !== (atomOriginal?.["SubjectId"] ?? "#") || t["TeacherId"] !== (atomOriginal?.["TeacherId"] ?? "#"))) ?? null)}
+
+                    <!--atom duplicate edge case: there must not be change or subject OV, or there must be a real change => subject or teacher is changed-->
+                    {@const atom=(day?.["Atoms"].find(t => t["HourId"] === hour["Id"] && (t["Change"] === null || t["SubjectId"] === overrideOV["Atoms"][0]["SubjectId"] || t["SubjectId"] !== (atomOriginal?.["SubjectId"] ?? "#") || t["TeacherId"] !== (atomOriginal?.["TeacherId"] ?? "#"))) ?? null)}
                     {#if day["DayType"] !== "WorkDay" && subjectOriginal} <!--special day-->
                         <td class={"subject-removed "+past} on:click={modalShow(day["DayType"], null, day["DayDescription"])}>
                             <span></span>
