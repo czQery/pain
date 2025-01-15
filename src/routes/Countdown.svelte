@@ -48,6 +48,7 @@
 
     onMount(async () => {
         await timetableFetch($timetableGroupStore, 0, "countdown")
+        if (interval) clearInterval(interval)
         interval = setInterval(() => {
             time = new Date()
 
