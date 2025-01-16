@@ -100,7 +100,7 @@
     {@const hourM=(hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00"))}
     {@const hourS=(hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00"))}
     <div id="countdown-block" use:addSparticles>
-        <div></div>
+        <div style="display:block;height:56px"></div>
         <div id="countdown-center">
             <div id="countdown-clock">
                 {#if subject !== "#" && hourH !== "00"}
@@ -196,13 +196,21 @@
     #countdown-footer {
         display: flex;
         padding: 10px;
+        height: 56px;
         align-items: end;
         justify-content: space-between;
     }
 
+    #countdown-footer div {
+        height: 36px;
+        display: flex;
+        flex-direction: column;
+    }
+
     #countdown-footer span, #countdown-footer a {
         font-size: 15px;
-        line-height: 15px;
+        line-height: 18px;
+        display: inline-block;
         text-decoration: none;
         color: var(--snow);
     }
