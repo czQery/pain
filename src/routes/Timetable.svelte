@@ -154,7 +154,7 @@
                     {@const subjectOriginal=($timetablePermanentStore["Subjects"].find(s => s["Id"] === (atomOriginal?.["SubjectId"] ?? "#")) ?? null)}
 
                     <!--atom duplicate edge case: there must not be change or subject OV, or there must be a real change => subject or teacher is changed-->
-                    {@const atom=(day?.["Atoms"].find(t => t["HourId"] === hour["Id"] && (t["Change"] === null || t["SubjectId"] === overrideOV["Atoms"][0]["SubjectId"] || t["SubjectId"] !== (atomOriginal?.["SubjectId"] ?? "#") || t["TeacherId"] !== (atomOriginal?.["TeacherId"] ?? "#"))) ?? null)}
+                    {@const atom=(day?.["Atoms"].find(t => t["HourId"] === hour["Id"] && (t["Change"] === null || t["SubjectId"] === overrideOV["Atoms"][0]["SubjectId"] || t["SubjectId"] !== (atomOriginal?.["SubjectId"] ?? "#") || t["TeacherId"] !== (atomOriginal?.["TeacherId"] ?? "#") || t["RoomId"] !== (atomOriginal?.["RoomId"] ?? "#"))) ?? null)}
                     {#if day["DayType"] !== "WorkDay" && subjectOriginal} <!--special day-->
                         <td class={"subject-removed "+past} on:click={modalShow(day["DayType"], null, day["DayDescription"])}>
                             <span></span>
