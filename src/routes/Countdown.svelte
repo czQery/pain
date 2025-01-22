@@ -1,12 +1,12 @@
 <script>
-    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
+    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.svelte.js"
     import Loading from "../components/Loading.svelte"
     import {formatAddZero, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
     import {cOffline, cRefresh} from "../lib/const.js"
     import Sparticles from "sparticles"
-    import {overrideWeek} from "../lib/override.js";
-    import {getWeek} from "../lib/helper.js";
+    import {overrideWeek} from "../lib/override.js"
+    import {getWeek} from "../lib/helper.js"
 
     let sparticles = {
         "composition": "source-over",
@@ -31,14 +31,16 @@
         "twinkle": false,
         "color": ["#8f8f8f"],
         "shape": "circle",
-        "imageUrl": "",
+        "imageUrl": ""
     }
 
     const addSparticles = (node) => {
         new Sparticles(node, sparticles)
     }
 
-    let time = new Date()
+    let time = $state(new Date())
+
+    // svelte-ignore state_referenced_locally
     let refresh = time.getTime() + cOffline // cOffline run is set always for the next request after the data is already loaded anyway
     let interval
 

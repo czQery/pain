@@ -7,7 +7,7 @@
     let start = new Date()
     let interval
 
-    let error = false
+    let error = $state(false)
 
     onMount(() => {
         if (interval) clearInterval(interval)

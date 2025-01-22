@@ -1,5 +1,5 @@
 <script>
-    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
+    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.svelte.js"
     import {formatCapitalize, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideMessageSquareText, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
@@ -13,11 +13,11 @@
     const hours = 10 // 0-9
     const subjectChange = " > "
 
-    let modal
-    let modalSubject = "#"
-    let modalSubjectColor = "NON"
-    let modalTeacher = "#"
-    let modalTheme = "#"
+    let modal = $state()
+    let modalSubject = $state("#")
+    let modalSubjectColor = $state("NON")
+    let modalTeacher = $state("#")
+    let modalTheme = $state("#")
     const modalShow = (subject, teacher, description) => {
         if (subject["Name"]) {
             modalSubject = subject["Name"]
@@ -44,16 +44,18 @@
         return now
     }
 
-    let time = getTime()
+    let time = $state(getTime())
+
+    // svelte-ignore state_referenced_locally
     let refresh = time.getTime() + cOffline // cOffline run is set always for the next request after the data is already loaded anyway
     let interval
 
-    let windowHeight = 0
-    let cornerHeight = 0
-    let navHeight = 40
-    let footerHeight = 50
+    let windowHeight = $state(0)
+    let cornerHeight = $state(0)
+    let navHeight = $state(40)
+    let footerHeight = $state(50)
 
-    let page = 0
+    let page = $state(0)
     const maxPage = (6 - 1)
 
     const setPage = async (a) => {
@@ -101,11 +103,11 @@
     {@const pageTimeBegin=new Date(new Date().setDate((time.getDate() - time.getDay() + 1) + page * 7))}
     {@const pageTimeEnd=new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + page * 7))}
     <nav>
-        <button on:click={() => setPage("backward")} disabled="{page === 0 || !$timetableStore}">
+        <button onclick={() => setPage("backward")} disabled="{page === 0 || !$timetableStore}">
             <LucideArrowBigLeftDash/>
         </button>
         <h3 style="width:125px;text-align:center">{pageTimeBegin.getDate() + "-" + pageTimeEnd.getDate() + "." + (pageTimeEnd.getMonth() + 1) + "." + pageTimeEnd.getFullYear()}</h3>
-        <button on:click={() => setPage("forward")} disabled="{page === maxPage || !$timetableStore}">
+        <button onclick={() => setPage("forward")} disabled="{page === maxPage || !$timetableStore}">
             <LucideArrowBigRightDash/>
         </button>
     </nav>
@@ -127,6 +129,7 @@
         {/if}
     </Modal>
     <table>
+        <thead>
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
                 <h3>{($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek)) === "2" ? "EVEN" : "ODD"}</h3>
@@ -137,6 +140,8 @@
             <th><h3>THU</h3></th>
             <th><h3>FRI</h3></th>
         </tr>
+        </thead>
+        <tbody>
         {#each $timetableStore["Hours"].slice(0, hours) as hour, i}
             {@const atomHeight=Math.round((((Math.max(windowHeight, 660) - footerHeight - navHeight - (cornerHeight + 1)) / hours) + Number.EPSILON) * 10) / 10} <!--round the number because different browsers use different precision - the epsilon trick is not perfect but whatever -->
             <tr style="height:{atomHeight}px">
@@ -156,7 +161,7 @@
                     <!--atom duplicate edge case: there must not be change or subject OV, or there must be a real change => subject or teacher is changed-->
                     {@const atom=(day?.["Atoms"].find(t => t["HourId"] === hour["Id"] && (t["Change"] === null || t["SubjectId"] === overrideOV["Atoms"][0]["SubjectId"] || t["SubjectId"] !== (atomOriginal?.["SubjectId"] ?? "#") || t["TeacherId"] !== (atomOriginal?.["TeacherId"] ?? "#") || t["RoomId"] !== (atomOriginal?.["RoomId"] ?? "#"))) ?? null)}
                     {#if day["DayType"] !== "WorkDay" && subjectOriginal} <!--special day-->
-                        <td class={"subject-removed "+past} on:click={modalShow(day["DayType"], null, day["DayDescription"])}>
+                        <td class={"subject-removed "+past} onclick={() => modalShow(day["DayType"], null, day["DayDescription"])}>
                             <span></span>
                             <h3>{subjectOriginal["Abbrev"].toUpperCase()}</h3>
                             <span>{day["DayType"].toLowerCase()}</span>
@@ -168,7 +173,7 @@
                             {@const roomOverride=overrideRooms?.[timetableGroups.find(g => g["id"] === $timetableGroupStore)?.["class"]]}
                             {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"]) ?? null}
                             {@const teacher=$timetablePermanentStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? $timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? null}
-                            <td style="background-color:var(--subject-{subject['Abbrev'].toUpperCase()})" class={past} on:click={modalShow(subject, teacher, atom["Theme"])}>
+                            <td style="background-color:var(--subject-{subject['Abbrev'].toUpperCase()})" class={past} onclick={()=>modalShow(subject, teacher, atom["Theme"])}>
                                 <div class="flex-atom" style="height:{atomHeight-10}px"> <!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
                                     <div class="flex-between">
                                         <span>{group}</span>
@@ -207,7 +212,7 @@
                                 </div>
                             </td>
                         {:else if atom["Change"]["ChangeType"] === "Removed" || atom["Change"]["ChangeType"] === "Canceled"} <!--atom removed-->
-                            <td class={"subject-removed "+past} on:click={modalShow(atom["Change"]["ChangeType"], null, atom["Change"]["TypeName"] ?? "Unknown reason")}>
+                            <td class={"subject-removed "+past} onclick={() => modalShow(atom["Change"]["ChangeType"], null, atom["Change"]["TypeName"] ?? "Unknown reason")}>
                                 <span></span>
                                 <h3>{subjectOriginal?.["Abbrev"].toUpperCase() ?? "#"}</h3>
                                 <span>{atom["Change"]["TypeName"]?.split(" ")[0].toLowerCase() ?? "removed"}</span>
@@ -219,6 +224,7 @@
                 {/each}
             </tr>
         {/each}
+        </tbody>
     </table>
 {:else}
     <Loading/>

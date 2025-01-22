@@ -1,5 +1,5 @@
 export const formatDay = (date) => {
-    const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     return week[date.getDay()]
 }
 
@@ -29,5 +29,5 @@ export const formatAddZero = (num) => {
 }
 
 export const formatCapitalize = (text) => {
-    return text.charAt(0).toUpperCase() + text.slice(1);
+    return text.charAt(0).toUpperCase() + text.slice(1)
 }

@@ -1,13 +1,13 @@
 <script>
-    import {Link, Route, Router} from "svelte-routing"
+    import {Link, Route, Router} from "svelte5-router"
     import Timetable from "./routes/Timetable.svelte"
     import Index from "./routes/Index.svelte"
     import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
-    import {timetableGroups, timetableGroupStore, timetablePermanentFetch} from "./lib/timetable.js"
+    import {timetableGroups, timetableGroupStore, timetablePermanentFetch} from "./lib/timetable.svelte.js"
     import Countdown from "./routes/Countdown.svelte"
     import {onMount} from "svelte"
     import Canteen from "./routes/Canteen.svelte"
-    import Settings from "./routes/Settings.svelte";
+    import Settings from "./routes/Settings.svelte"
 
     onMount(() => {
         document.getElementById("init-loading").style.display = "none"
@@ -18,7 +18,7 @@
             timetableGroupStore.set(group)
         } else {
             timetableGroupStore.set(timetableGroups[0]["id"])
-            localStorage.setItem("group", timetableGroups[0]["id"]);
+            localStorage.setItem("group", timetableGroups[0]["id"])
         }
 
         timetablePermanentFetch($timetableGroupStore ?? "null")
