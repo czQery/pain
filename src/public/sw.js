@@ -10,7 +10,7 @@ self.addEventListener("message", (event) => {
 
 workbox.core.clientsClaim()
 workbox.routing.registerRoute(
-    new RegExp('/*'),
+    new RegExp("/*"),
     new workbox.strategies.NetworkFirst({
         cacheName: CACHE,
         networkTimeoutSeconds: 1,
@@ -20,8 +20,8 @@ workbox.routing.registerRoute(
         plugins: [
             new workbox.expiration.ExpirationPlugin({
                 maxEntries: 100,
-                purgeOnQuotaError: true,
-            }),
-        ],
+                purgeOnQuotaError: true
+            })
+        ]
     })
 )

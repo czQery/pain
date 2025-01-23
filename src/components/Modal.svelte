@@ -1,21 +1,23 @@
 <script>
     import {LucideX} from "lucide-svelte"
 
-    export let modal
-    export let title = "Alert"
+    let {modal = $bindable(), title = "Alert", children} = $props()
 </script>
 
-<dialog bind:this={modal} on:click={(e) => e.target.tagName === "DIALOG" ? modal.close() : null}>
+
+<!--svelte-ignore a11y_no_noninteractive_element_interactions-->
+<dialog bind:this={modal} onclick={(e) => e.target.tagName === "DIALOG" ? modal.close() : null} onkeydown={(e) => {if(e.keyCode === 27)modal.close()}} aria-label="Close">
     <div class="dialog-block">
         <header>
             <h3 style="color:var(--silver)">{title}</h3>
-            <button on:click={modal.close()}>
+            <button onclick={modal.close()}>
                 <LucideX/>
             </button>
         </header>
         <div>
-            <slot>
-            </slot>
+            {#if children}
+                {@render children()}
+            {/if}
         </div>
     </div>
 </dialog>

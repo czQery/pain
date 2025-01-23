@@ -38,7 +38,7 @@ export const overrideRooms = {
         "rooms":
             [
                 [4, 4, 0, 0, 0], // odd
-                [1, 1, 1, 2, 4], // even
+                [1, 1, 1, 2, 4] // even
             ]
     }
 }
@@ -51,17 +51,17 @@ export const overrideMasters = {
     "UX03D": 211, // Zí
     "UV02Z": 302, // Šm
     "UY03L": 303, // Du
-    "UW033": 306, // Da
+    "UW033": 306 // Da
 }
 
-export const overrideCanteen =  {
+export const overrideCanteen = {
     "UJ01Z": [
         ["7:50", "7:40", "7:30", "7:30", "7:20"],
-        [null,   "9:20", "9:10", "8:20", null  ]
+        [null, "9:20", "9:10", "8:20", null]
     ],
     "UW035": [
         ["8:50", "8:10", "8:20", "8:20", "7:40"],
-        ["7:40", null,   "8:00", "9:00", "8:50"]
+        ["7:40", null, "8:00", "9:00", "8:50"]
     ],
     "UY03L": [
         ["7:30", "7:20", "9:20", "9:00", "9:00"],
@@ -80,15 +80,15 @@ export const overrideCanteen =  {
         ["8:10", "7:50", "7:40", "7:30", "8:00"]
     ],
     "U0014": [
-        [null,   null,    null,  "8:10", "8:00"],
-        [null,   null,    null,  null,     null],
+        [null, null, null, "8:10", "8:00"],
+        [null, null, null, null, null]
     ],
     "UY03K": [
         ["9:10", "8:30", "8:50", "8:00", "8:10"],
         ["9:20", "8:00", "8:20", "8:40", "9:00"]
     ],
     "UW034": [
-        ["8:40", "8:40", "8:30",   null, "8:20"],
+        ["8:40", "8:40", "8:30", null, "8:20"],
         ["8:00", "7:40", "7:20", "9:20", "9:10"]
     ]
 }
@@ -96,15 +96,15 @@ export const overrideCanteen =  {
 export const overrideOVGroup = {
     "ZGY21K": [ // R3-EM3-OV4
         [null, null, "UW035", "UW033", "UW034"], // odd
-        [null, null, null, null, null], // even 4->1->2
+        [null, null, null, null, null] // even 4->1->2
     ],
     "ZGW1WS": [ // R3-EM2-OV3
         [null, null, "UJ01Z", "UX03D", "U0014"], // odd
-        [null, null, null, null, null], // even 3->4->1
+        [null, null, null, null, null] // even 3->4->1
     ],
     "RGW1X6": [ // R3-EM1-OV2
         [null, null, "UY03L", "UY03L", "UY03K"], // odd
-        [null, null, null, null, null], // even 2->3->4
+        [null, null, null, null, null] // even 2->3->4
     ]
 }
 

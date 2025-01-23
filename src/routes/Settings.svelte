@@ -1,14 +1,14 @@
 <script>
-    import {timetableGroups, timetableGroupStore, timetablePermanentFetch} from "../lib/timetable.js";
+    import {timetableGroups, timetableGroupStore, timetablePermanentFetch} from "../lib/timetable.svelte.js"
 </script>
 
 <div id="settings-block">
     <div id="settings-group">
         <label for="group">Group</label>
-        <select id="group" bind:value={$timetableGroupStore} on:change={() => {
-        localStorage.setItem("group", $timetableGroupStore.toString())
-        timetablePermanentFetch($timetableGroupStore)
-    }}>
+        <select id="group" bind:value={$timetableGroupStore} onchange={() => {
+            localStorage.setItem("group", $timetableGroupStore.toString())
+            timetablePermanentFetch($timetableGroupStore)
+        }}>
             {#each timetableGroups as g}
                 <option value={g["id"]}>
                     {g["name"]}

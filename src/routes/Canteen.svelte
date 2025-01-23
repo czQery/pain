@@ -1,5 +1,5 @@
 <script>
-    import {timetableGroupStore, timetablePermanentStore} from "../lib/timetable.js"
+    import {timetableGroupStore, timetablePermanentStore} from "../lib/timetable.svelte.js"
     import {onMount} from "svelte"
     import {canteenFetch, canteenStore} from "../lib/canteen.js"
     import Loading from "../components/Loading.svelte"
@@ -8,7 +8,7 @@
     import {overrideCanteen, overrideOVGroup} from "../lib/override.js"
     import {getWeek} from "../lib/helper.js"
 
-    let time = new Date()
+    let time = $state(new Date())
     let interval
 
     onMount(async () => {
