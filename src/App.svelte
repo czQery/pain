@@ -1,13 +1,26 @@
 <script>
-    import {Link, Route, Router} from "svelte5-router"
-    import Timetable from "./routes/Timetable.svelte"
-    import Index from "./routes/Index.svelte"
+    import {active, link} from "@dvcol/svelte-simple-router/router"
+    import {RouterContext, RouterView} from "@dvcol/svelte-simple-router/components"
     import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
     import {timetableGroups, timetableGroupStore, timetablePermanentFetch} from "./lib/timetable.svelte.js"
     import Countdown from "./routes/Countdown.svelte"
     import {onMount} from "svelte"
     import Canteen from "./routes/Canteen.svelte"
+    import Timetable from "./routes/Timetable.svelte"
     import Settings from "./routes/Settings.svelte"
+
+    let navDone = () => undefined
+    const navStart = () => {
+        const {promise: navStarting, resolve: navDoneInternal} = Promise.withResolvers()
+        navDone = navDoneInternal
+
+        const {promise: viewStarting, resolve: viewDone} = Promise.withResolvers()
+        document.startViewTransition(async () => {
+            viewDone()
+            await navStarting
+        })
+        return viewStarting
+    }
 
     onMount(() => {
         document.getElementById("init-loading").style.display = "none"
@@ -23,41 +36,82 @@
 
         timetablePermanentFetch($timetableGroupStore ?? "null")
     })
+
+    const routes = [
+        {
+            name: "countdown",
+            path: "/countdown",
+            component: Countdown
+        },
+        {
+            name: "timetable",
+            path: "/timetable",
+            component: Timetable
+        },
+        {
+            name: "canteen",
+            path: "/canteen",
+            component: Canteen
+        },
+        {
+            name: "settings",
+            path: "/settings",
+            component: Settings
+        },
+        {
+            name: "index",
+            path: "*",
+            redirect: {
+                name: "countdown"
+            }
+        }
+    ]
+
+    const options = {
+        routes
+    }
+
 </script>
 
-<Router>
+<RouterContext {options}>
     <main class="container">
-        <Route path="/countdown" component={Countdown}/>
-        <Route path="/timetable" component={Timetable}/>
-        <Route path="/canteen" component={Canteen}/>
-        <Route path="/settings" component={Settings}/>
-        <Route component={Index}></Route>
+        <RouterView onChange={
+        async () => {
+            navDone()?.()
+            return navStart()
+        }} onError={
+        () => {
+            navDone()?.()
+        }} onLoaded={
+        () => {
+            navDone()?.()
+        }}/>
     </main>
     <footer>
         <ul>
             <li>
-                <Link to="/countdown">
+                <a use:link use:active href="/countdown">
                     <LucideClock/>
-                </Link>
+                </a>
             </li>
             <li>
-                <Link to="/timetable">
+                <a use:link use:active href="/timetable">
                     <LucideCalendarRange/>
-                </Link>
+                </a>
             </li>
             <li>
-                <Link to="/canteen">
+                <a use:link use:active href="/canteen">
                     <LucideUtensilsCrossed/>
-                </Link>
+                </a>
             </li>
             <li>
-                <Link to="/settings">
+                <a use:link use:active href="/settings">
                     <LucideSettings/>
-                </Link>
+                </a>
             </li>
         </ul>
     </footer>
-</Router>
+</RouterContext>
 
 <style>
     main {
@@ -82,6 +136,8 @@
         --subject-ON: #851049;
         --subject-OV: #885d4c;
         --subject-TV: #f5980c;
+
+        view-transition-name: router;
     }
 
     footer {
@@ -90,6 +146,8 @@
         user-select: none;
         outline: 1px var(--gray) solid;
         z-index: 20;
+        background-color: var(--black);
+        view-transition-name: disabled;
     }
 
     footer ul {
@@ -111,15 +169,19 @@
         width: inherit;
     }
 
-    footer :global(a:active svg) {
-        animation: var(--animation-scale);
-    }
-
     footer :global(svg) {
         display: block;
         height: 40px;
         margin: 5px;
-        stroke: var(--white)
+        stroke: var(--white);
+    }
+
+    footer :global(a[data-active="true"] svg) {
+        stroke: var(--purple);
+    }
+
+    footer :global(a:active svg) {
+        animation: var(--animation-scale);
     }
 
     footer ul li {
