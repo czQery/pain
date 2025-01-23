@@ -11,6 +11,8 @@
 
     let navDone = () => undefined
     const navStart = () => {
+        if (!document.startViewTransition) return
+
         const {promise: navStarting, resolve: navDoneInternal} = Promise.withResolvers()
         navDone = navDoneInternal
 
@@ -136,8 +138,10 @@
         --subject-ON: #851049;
         --subject-OV: #885d4c;
         --subject-TV: #f5980c;
+    }
 
-        view-transition-name: router;
+    ::view-transition-group(app-footer) {
+        animation-duration: 0s !important;
     }
 
     footer {
@@ -147,7 +151,7 @@
         outline: 1px var(--gray) solid;
         z-index: 20;
         background-color: var(--black);
-        view-transition-name: disabled;
+        view-transition-name: app-footer;
     }
 
     footer ul {

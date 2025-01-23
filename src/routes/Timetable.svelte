@@ -59,6 +59,18 @@
     const maxPage = (6 - 1)
 
     const setPage = async (a) => {
+        const {promise: pageStarting, resolve: pageDone} = Promise.withResolvers()
+        const {promise: viewStarting, resolve: viewDone} = Promise.withResolvers()
+
+        if (document.startViewTransition) {
+            document.startViewTransition(async () => {
+                viewDone()
+                await pageStarting
+            })
+
+            await viewStarting
+        }
+
         switch (a) {
             case "backward":
                 --page
@@ -71,6 +83,7 @@
         timetableStore.set(null)
         refresh = time.getTime() + cOffline
         await timetableFetch($timetableGroupStore, page, "timetable")
+        pageDone()
     }
 
     onMount(async () => {
@@ -231,12 +244,17 @@
 {/if}
 
 <style>
+    ::view-transition-group(timetable-nav) {
+        animation-duration: 0s !important;
+    }
+
     nav {
         display: flex;
         width: 100%;
         height: 40px;
         justify-content: space-evenly;
         align-items: center;
+        view-transition-name: timetable-nav;
     }
 
     nav button {

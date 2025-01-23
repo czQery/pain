@@ -64,14 +64,8 @@
             overflow: clip;
         }
 
-        ::view-transition-group(router) {
+        ::view-transition-group(*) {
             animation-duration: 0.25s;
-        }
-
-        ::view-transition-group(disabled),
-        ::view-transition-old(disabled),
-        ::view-transition-new(disabled) {
-            animation-duration: 0s !important;
         }
 
         ::-webkit-scrollbar {
