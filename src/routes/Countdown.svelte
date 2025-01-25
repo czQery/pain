@@ -38,6 +38,7 @@
         new Sparticles(node, sparticles)
     }
 
+    let animate = $state("false")
     let time = $state(new Date())
 
     // svelte-ignore state_referenced_locally
@@ -50,6 +51,11 @@
 
     onMount(async () => {
         await timetableFetch($timetableGroupStore, 0, "countdown")
+
+        setTimeout(async () => {
+            if (animate) animate = "true"
+        }, 500) // yeah, it's stupid but if it works who cares, it's just an animation
+
         if (interval) clearInterval(interval)
         interval = setInterval(() => {
             time = new Date()
@@ -104,7 +110,7 @@
     <div id="countdown-block" use:addSparticles>
         <div style="display:block;height:56px"></div>
         <div id="countdown-center">
-            <div id="countdown-clock">
+            <div id="countdown-clock" data-animate={animate}>
                 {#if subject !== "#" && hourH !== "00"}
                     {#key hourH}
                         <h1>{hourH}</h1>
@@ -193,6 +199,10 @@
     #countdown-clock * {
         animation: var(--animation-scale);
         will-change: transform;
+    }
+
+    #countdown-clock[data-animate="false"] * {
+        animation-duration: 0s !important;
     }
 
     #countdown-footer {
