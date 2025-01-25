@@ -78,7 +78,7 @@ export const timetableFetch = async (group, page, override) => {
         }
 
         timetableStore.set(data["data"])
-    } catch (e) {
+    } catch {
         // fail quietly
     }
 }

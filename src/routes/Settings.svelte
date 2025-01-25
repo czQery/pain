@@ -1,5 +1,5 @@
 <script>
-    import {timetableGroups, timetableGroupStore, timetablePermanentFetch} from "../lib/timetable.svelte.js"
+    import {timetableGroups, timetableGroupStore, timetablePermanentFetch} from "../lib/timetable.js"
 </script>
 
 <div id="settings-block">

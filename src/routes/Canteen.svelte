@@ -1,6 +1,6 @@
 <script>
-    import {timetableGroupStore, timetablePermanentStore} from "../lib/timetable.svelte.js"
-    import {onMount} from "svelte"
+    import {timetableGroupStore, timetablePermanentStore} from "../lib/timetable.js"
+    import {onDestroy, onMount} from "svelte"
     import {canteenFetch, canteenStore} from "../lib/canteen.js"
     import Loading from "../components/Loading.svelte"
     import {formatDate, formatDay} from "../lib/format.js"
@@ -12,8 +12,6 @@
     let interval
 
     onMount(async () => {
-        await canteenFetch()
-
         if (interval) clearInterval(interval)
         interval = setInterval(() => {
             time = new Date()
@@ -21,6 +19,10 @@
                 canteenFetch()
             }
         }, cOffline)
+    })
+
+    onDestroy(() => {
+        clearInterval(interval)
     })
 </script>
 

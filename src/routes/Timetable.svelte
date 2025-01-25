@@ -1,5 +1,5 @@
 <script>
-    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.svelte.js"
+    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
     import {formatCapitalize, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideMessageSquareText, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
@@ -87,15 +87,29 @@
     }
 
     onMount(async () => {
-        page = 0
-        await timetableFetch($timetableGroupStore, page, "timetable")
-
         if (interval) clearInterval(interval)
-        interval = setInterval(() => {
+        interval = setInterval(async () => {
             time = getTime()
 
             if (time.getTime() > refresh) {
-                timetableFetch($timetableGroupStore, page, "timetable")
+                const {promise: pageStarting, resolve: pageDone} = Promise.withResolvers()
+                const {promise: viewStarting, resolve: viewDone} = Promise.withResolvers()
+
+                if (!$timetableStore) {
+                    if (document.startViewTransition) {
+                        document.startViewTransition(async () => {
+                            viewDone()
+                            await pageStarting
+                        })
+
+                        await viewStarting
+                    }
+                }
+
+                timetableFetch($timetableGroupStore, page, "timetable").then(() => {
+                    pageDone()
+                })
+
                 if (!$timetableStore) {
                     refresh = time.getTime() + cOffline
                 } else {
@@ -106,6 +120,7 @@
     })
 
     onDestroy(() => {
+        page = 0
         clearInterval(interval)
         timetableStore.set(null)
     })

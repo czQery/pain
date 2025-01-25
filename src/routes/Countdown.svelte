@@ -1,5 +1,5 @@
 <script>
-    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.svelte.js"
+    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
     import Loading from "../components/Loading.svelte"
     import {formatAddZero, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
@@ -8,7 +8,7 @@
     import {overrideWeek} from "../lib/override.js"
     import {getWeek} from "../lib/helper.js"
 
-    let sparticles = {
+    const sparticles = {
         "composition": "source-over",
         "count": 60,
         "speed": 1,
@@ -50,8 +50,6 @@
     const getS = (hour) => formatAddZero(Math.trunc(((formatTime(hour).getTime() - time) / 1000) % 60).toString())
 
     onMount(async () => {
-        await timetableFetch($timetableGroupStore, 0, "countdown")
-
         setTimeout(async () => {
             if (animate) animate = "true"
         }, 500) // yeah, it's stupid but if it works who cares, it's just an animation
@@ -72,6 +70,7 @@
     })
 
     onDestroy(() => {
+        animate = "false"
         clearInterval(interval)
         timetableStore.set(null)
     })
@@ -198,11 +197,12 @@
 
     #countdown-clock * {
         animation: var(--animation-scale);
+        animation-duration: 0s;
         will-change: transform;
     }
 
-    #countdown-clock[data-animate="false"] * {
-        animation-duration: 0s !important;
+    #countdown-clock[data-animate="true"] * {
+        animation-duration: 50ms !important;
     }
 
     #countdown-footer {
