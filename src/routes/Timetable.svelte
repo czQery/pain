@@ -259,10 +259,6 @@
 {/if}
 
 <style>
-    ::view-transition-group(timetable-nav) {
-        animation-duration: 0s !important;
-    }
-
     nav {
         display: flex;
         width: 100%;
