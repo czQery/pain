@@ -2,12 +2,10 @@
     import {active, link} from "@dvcol/svelte-simple-router/router"
     import {RouterContext, RouterView} from "@dvcol/svelte-simple-router/components"
     import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
-    import {timetableGroups, timetableGroupStore, timetablePermanentFetch} from "./lib/timetable.svelte.js"
-    import Countdown from "./routes/Countdown.svelte"
+    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentFetch} from "./lib/timetable.js"
     import {onMount} from "svelte"
-    import Canteen from "./routes/Canteen.svelte"
-    import Timetable from "./routes/Timetable.svelte"
     import Settings from "./routes/Settings.svelte"
+    import {canteenFetch} from "./lib/canteen.js"
 
     let navDone = () => undefined
     const navStart = () => {
@@ -43,17 +41,26 @@
         {
             name: "countdown",
             path: "/countdown",
-            component: Countdown
+            component: async () => {
+                await timetableFetch($timetableGroupStore, 0, "countdown")
+                return import("./routes/Countdown.svelte")
+            }
         },
         {
             name: "timetable",
             path: "/timetable",
-            component: Timetable
+            component: async () => {
+                await timetableFetch($timetableGroupStore, 0, "timetable")
+                return import("./routes/Timetable.svelte")
+            }
         },
         {
             name: "canteen",
             path: "/canteen",
-            component: Canteen
+            component: async () => {
+                await canteenFetch()
+                return import("./routes/Canteen.svelte")
+            }
         },
         {
             name: "settings",
@@ -122,6 +129,7 @@
         align-items: center;
         flex-direction: column;
         height: calc(100svh - 50px);
+        background-color: var(--black);
 
         --subject-NON: var(--silver);
 
