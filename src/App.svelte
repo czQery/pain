@@ -130,6 +130,7 @@
         flex-direction: column;
         height: calc(100svh - 50px);
         background-color: var(--black);
+        view-transition-name: app-main;
 
         --subject-NON: var(--silver);
 
