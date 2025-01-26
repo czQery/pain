@@ -38,7 +38,7 @@
         new Sparticles(node, sparticles)
     }
 
-    let animate = $state("false")
+    let animate = $state(false)
     let time = $state(new Date())
 
     // svelte-ignore state_referenced_locally
@@ -51,7 +51,7 @@
 
     onMount(async () => {
         setTimeout(async () => {
-            if (animate) animate = "true"
+            animate = true
         }, 500) // yeah, it's stupid but if it works who cares, it's just an animation
 
         if (interval) clearInterval(interval)
@@ -70,7 +70,7 @@
     })
 
     onDestroy(() => {
-        animate = "false"
+        animate = false
         clearInterval(interval)
         timetableStore.set(null)
     })

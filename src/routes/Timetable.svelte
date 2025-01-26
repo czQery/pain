@@ -45,6 +45,7 @@
     }
 
     let time = $state(getTime())
+    let animate = $state(false)
 
     // svelte-ignore state_referenced_locally
     let refresh = time.getTime() + cOffline // cOffline run is set always for the next request after the data is already loaded anyway
@@ -87,6 +88,9 @@
     }
 
     onMount(async () => {
+        setTimeout(async () => {
+            animate = true
+        }, 500)
         if (interval) clearInterval(interval)
         interval = setInterval(async () => {
             time = getTime()
@@ -120,6 +124,7 @@
     })
 
     onDestroy(() => {
+        animate = false
         page = 0
         clearInterval(interval)
         timetableStore.set(null)
@@ -156,7 +161,7 @@
             <h3 style="color:var(--silver)">{modalTheme}</h3>
         {/if}
     </Modal>
-    <table>
+    <table style="view-transition-name:{(animate) ? 'timetable' : 'none'};">
         <thead>
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
@@ -265,7 +270,6 @@
         height: 40px;
         justify-content: space-evenly;
         align-items: center;
-        view-transition-name: timetable-nav;
     }
 
     nav button {
@@ -288,6 +292,18 @@
         height: 25px;
         width: 25px;
         stroke: var(--white);
+    }
+
+    ::view-transition-group(timetable) {
+        animation-duration: 50ms;
+    }
+
+    ::view-transition-old(timetable) {
+        animation: 50ms linear both fade-out;
+    }
+
+    ::view-transition-new(timetable) {
+        animation: 50ms linear both fade-in;
     }
 
     table {
