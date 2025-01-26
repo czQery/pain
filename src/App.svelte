@@ -7,6 +7,8 @@
     import Settings from "./routes/Settings.svelte"
     import {canteenFetch} from "./lib/canteen.js"
 
+    let viewAnimate = $state(false)
+
     let navDone = () => undefined
     const navStart = () => {
         if (!document.startViewTransition) return
@@ -83,17 +85,24 @@
 </script>
 
 <RouterContext {options}>
-    <main class="container">
+    <main class="container" style="view-transition-name:{(viewAnimate) ? 'app' : 'none'};">
         <RouterView onChange={
         async () => {
             navDone()?.()
+            viewAnimate = true
             return navStart()
         }} onError={
         () => {
             navDone()?.()
+            setTimeout(async () => {
+                viewAnimate = false
+            }, 200)
         }} onLoaded={
         () => {
             navDone()?.()
+            setTimeout(async () => {
+                viewAnimate = false
+            }, 200)
         }}/>
     </main>
     <footer>
@@ -123,6 +132,18 @@
 </RouterContext>
 
 <style>
+    ::view-transition-group(app) {
+        animation-duration: 240ms;
+    }
+
+    ::view-transition-old(app) {
+        animation: 50ms linear both fade-out;
+    }
+
+    ::view-transition-new(app) {
+        animation: 150ms linear 90ms both fade-in;
+    }
+
     main {
         display: flex;
         width: 100%;
@@ -130,7 +151,6 @@
         flex-direction: column;
         height: calc(100svh - 50px);
         background-color: var(--black);
-        view-transition-name: app-main;
 
         --subject-NON: var(--silver);
 
@@ -149,10 +169,6 @@
         --subject-TV: #f5980c;
     }
 
-    ::view-transition-group(app-footer) {
-        animation-duration: 0s !important;
-    }
-
     footer {
         height: 50px;
         width: 100%;
@@ -160,7 +176,6 @@
         outline: 1px var(--gray) solid;
         z-index: 20;
         background-color: var(--black);
-        view-transition-name: app-footer;
     }
 
     footer ul {

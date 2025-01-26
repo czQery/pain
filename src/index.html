@@ -64,8 +64,10 @@
             overflow: clip;
         }
 
-        ::view-transition-group(*) {
-            animation-duration: 0.15s;
+        ::view-transition-old(root),
+        ::view-transition-new(root),
+        ::view-transition-group(root) {
+            animation: none;
         }
 
         ::-webkit-scrollbar {
@@ -254,6 +256,18 @@
         @keyframes scale {
             to {
                 transform: scale(110%);
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fade-out {
+            to {
+                opacity: 0;
             }
         }
     </style>
