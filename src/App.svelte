@@ -150,7 +150,6 @@
         align-items: center;
         flex-direction: column;
         height: calc(100svh - 50px);
-        background-color: var(--black);
 
         --subject-NON: var(--silver);
 
