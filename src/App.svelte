@@ -2,16 +2,22 @@
     import {active, link} from "@dvcol/svelte-simple-router/router"
     import {RouterContext, RouterView} from "@dvcol/svelte-simple-router/components"
     import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
-    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentFetch} from "./lib/timetable.js"
+    import {timetableGroups, timetableGroupStore} from "./lib/timetable.js"
+    import {preload} from "./lib/preload.js"
     import {onMount} from "svelte"
     import Settings from "./routes/Settings.svelte"
-    import {canteenFetch} from "./lib/canteen.js"
+    import Countdown from "./routes/Countdown.svelte"
+    import Timetable from "./routes/Timetable.svelte"
+    import Canteen from "./routes/Canteen.svelte"
 
     let viewAnimate = $state(false)
 
     let navDone = () => undefined
     const navStart = () => {
+        navDone()?.()
+
         if (!document.startViewTransition) return
+        viewAnimate = true
 
         const {promise: navStarting, resolve: navDoneInternal} = Promise.withResolvers()
         navDone = navDoneInternal
@@ -24,7 +30,14 @@
         return viewStarting
     }
 
-    onMount(() => {
+    const navEnd = () => {
+        navDone()?.()
+        setTimeout(async () => {
+            viewAnimate = false
+        }, 200)
+    }
+
+    onMount(async () => {
         document.getElementById("init-loading").style.display = "none"
         document.getElementById("app").style.display = "flex"
 
@@ -36,33 +49,24 @@
             localStorage.setItem("group", timetableGroups[0]["id"])
         }
 
-        timetablePermanentFetch($timetableGroupStore ?? "null")
+        preload($timetableGroupStore.toString())
     })
 
     const routes = [
         {
             name: "countdown",
             path: "/countdown",
-            component: async () => {
-                await timetableFetch($timetableGroupStore, 0, "countdown")
-                return import("./routes/Countdown.svelte")
-            }
+            component: Countdown
         },
         {
             name: "timetable",
             path: "/timetable",
-            component: async () => {
-                await timetableFetch($timetableGroupStore, 0, "timetable")
-                return import("./routes/Timetable.svelte")
-            }
+            component: Timetable
         },
         {
             name: "canteen",
             path: "/canteen",
-            component: async () => {
-                await canteenFetch()
-                return import("./routes/Canteen.svelte")
-            }
+            component: Canteen
         },
         {
             name: "settings",
@@ -88,21 +92,13 @@
     <main class="container" style="view-transition-name:{(viewAnimate) ? 'app' : 'none'};">
         <RouterView onChange={
         async () => {
-            navDone()?.()
-            viewAnimate = true
             return navStart()
         }} onError={
         () => {
-            navDone()?.()
-            setTimeout(async () => {
-                viewAnimate = false
-            }, 200)
+            navEnd()
         }} onLoaded={
         () => {
-            navDone()?.()
-            setTimeout(async () => {
-                viewAnimate = false
-            }, 200)
+            navEnd()
         }}/>
     </main>
     <footer>
