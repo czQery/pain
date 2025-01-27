@@ -1,5 +1,6 @@
 <script>
-    import {timetableGroups, timetableGroupStore, timetablePermanentFetch} from "../lib/timetable.js"
+    import {timetableGroups, timetableGroupStore} from "../lib/timetable.js"
+    import {preload} from "../lib/preload.js"
 </script>
 
 <div id="settings-block">
@@ -7,7 +8,7 @@
         <label for="group">Group</label>
         <select id="group" bind:value={$timetableGroupStore} onchange={() => {
             localStorage.setItem("group", $timetableGroupStore.toString())
-            timetablePermanentFetch($timetableGroupStore)
+            preload($timetableGroupStore.toString())
         }}>
             {#each timetableGroups as g}
                 <option value={g["id"]}>

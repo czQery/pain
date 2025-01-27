@@ -1,5 +1,5 @@
 <script>
-    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
+    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePageStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
     import {formatCapitalize, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideMessageSquareText, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
@@ -56,7 +56,6 @@
     let navHeight = $state(40)
     let footerHeight = $state(50)
 
-    let page = $state(0)
     const maxPage = (6 - 1)
 
     const setPage = async (a) => {
@@ -71,6 +70,8 @@
 
             await viewStarting
         }
+
+        let page = $timetablePageStore
 
         switch (a) {
             case "backward":
@@ -91,6 +92,7 @@
         setTimeout(async () => {
             animate = true
         }, 500)
+
         if (interval) clearInterval(interval)
         interval = setInterval(async () => {
             time = getTime()
@@ -110,7 +112,7 @@
                     }
                 }
 
-                timetableFetch($timetableGroupStore, page, "timetable").then(() => {
+                timetableFetch($timetableGroupStore, $timetablePageStore, "timetable").then(() => {
                     pageDone()
                 })
 
@@ -125,28 +127,26 @@
 
     onDestroy(() => {
         animate = false
-        page = 0
         clearInterval(interval)
-        timetableStore.set(null)
     })
 </script>
 
 <svelte:window bind:innerHeight={windowHeight}/>
 {#if $timetablePermanentStore}
-    {@const pageTimeBegin=new Date(new Date().setDate((time.getDate() - time.getDay() + 1) + page * 7))}
-    {@const pageTimeEnd=new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + page * 7))}
+    {@const pageTimeBegin=new Date(new Date().setDate((time.getDate() - time.getDay() + 1) + $timetablePageStore * 7))}
+    {@const pageTimeEnd=new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + $timetablePageStore * 7))}
     <nav>
-        <button onclick={() => setPage("backward")} disabled="{page === 0 || !$timetableStore}">
+        <button onclick={() => setPage("backward")} disabled="{$timetablePageStore === 0 || !$timetableStore}">
             <LucideArrowBigLeftDash/>
         </button>
         <h3 style="width:125px;text-align:center">{pageTimeBegin.getDate() + "-" + pageTimeEnd.getDate() + "." + (pageTimeEnd.getMonth() + 1) + "." + pageTimeEnd.getFullYear()}</h3>
-        <button onclick={() => setPage("forward")} disabled="{page === maxPage || !$timetableStore}">
+        <button onclick={() => setPage("forward")} disabled="{$timetablePageStore === maxPage || !$timetableStore}">
             <LucideArrowBigRightDash/>
         </button>
     </nav>
 {/if}
 {#if $timetableStore && $timetablePermanentStore}
-    {@const pageWeek=getWeek(new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + page * 7)))}
+    {@const pageWeek=getWeek(new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + $timetablePageStore * 7)))}
     <Modal bind:modal title="Tuition details">
         {#if modalSubjectColor === "FREE"}
             <h2 style="background:var(--brand);color:transparent;background-clip:text">{modalSubject}</h2>
@@ -185,7 +185,7 @@
                 {#each Array(5) as _, j}
                     {@const day=$timetableStore["Days"][j]}
                     <!--check if day is in past or day is today but the hour is in the past-->
-                    {@const past=((0 === time.getDay() || j + 1 < time.getDay() || (j + 1 === time.getDay() && time.getTime() > formatTime(hour["EndTime"]).getTime() - 1)) && page === 0) ? "subject-past" : ""}
+                    {@const past=((0 === time.getDay() || j + 1 < time.getDay() || (j + 1 === time.getDay() && time.getTime() > formatTime(hour["EndTime"]).getTime() - 1)) && $timetablePageStore === 0) ? "subject-past" : ""}
                     {@const atomOriginal=$timetablePermanentStore["Days"][j]["Atoms"].find(t => {
                         return t["HourId"] === hour["Id"] && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek))
                     })}
@@ -295,15 +295,15 @@
     }
 
     ::view-transition-group(timetable) {
-        animation-duration: 50ms;
+        animation-duration: 10ms;
     }
 
     ::view-transition-old(timetable) {
-        animation: 50ms linear both fade-out;
+        animation: 10ms linear both fade-out;
     }
 
     ::view-transition-new(timetable) {
-        animation: 50ms linear both fade-in;
+        animation: 10ms linear both fade-in;
     }
 
     table {

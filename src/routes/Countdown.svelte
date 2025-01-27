@@ -1,14 +1,13 @@
 <script>
-    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
+    import {timetableCountdownStore, timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore} from "../lib/timetable.js"
     import Loading from "../components/Loading.svelte"
     import {formatAddZero, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
     import {cOffline, cRefresh} from "../lib/const.js"
-    import Sparticles from "sparticles"
     import {overrideWeek} from "../lib/override.js"
     import {getWeek} from "../lib/helper.js"
 
-    const sparticles = {
+    /*const sparticles = {
         "composition": "source-over",
         "count": 60,
         "speed": 1,
@@ -36,7 +35,7 @@
 
     const addSparticles = (node) => {
         new Sparticles(node, sparticles)
-    }
+    }*/
 
     let animate = $state(false)
     let time = $state(new Date())
@@ -60,7 +59,7 @@
 
             if (time.getTime() > refresh) {
                 timetableFetch($timetableGroupStore, 0, "countdown")
-                if (!$timetableStore) {
+                if (!$timetableCountdownStore) {
                     refresh = time.getTime() + cOffline
                 } else {
                     refresh = time.getTime() + cRefresh
@@ -72,41 +71,41 @@
     onDestroy(() => {
         animate = false
         clearInterval(interval)
-        timetableStore.set(null)
     })
 </script>
 
-{#if $timetableStore && $timetablePermanentStore}
-    {@const today = $timetableStore["Days"]?.[time.getDay() - 1] ?? null}
+{#if $timetableCountdownStore && $timetablePermanentStore}
+    {@const today = $timetableCountdownStore["Days"]?.[time.getDay() - 1] ?? null}
     {@const atomBegin=today ? today?.["Atoms"].find(s => s["SubjectId"]) : null}
 
-    {@const hour=$timetableStore["Hours"].find(t => {
+    {@const hour=$timetableCountdownStore["Hours"].find(t => {
         let hourBegin = formatTime(t["BeginTime"])
         let hourEnd = formatTime(t["EndTime"])
         return time - hourBegin >= 0 && hourEnd - time >= 0 && today?.["Atoms"].find(s => s["HourId"] === t["Id"] && s["SubjectId"]) // check if current hour has atom else use hourNext
     })}
-    {@const hourNext=$timetableStore["Hours"].find(t => {
+    {@const hourNext=$timetableCountdownStore["Hours"].find(t => {
         let hourBegin = formatTime(t["BeginTime"])
         return hourBegin - time >= 0 && today?.["Atoms"].find(s => s["HourId"] === t["Id"] && s["SubjectId"]) && t["Id"] >= (atomBegin?.["HourId"] ?? 0)
     })}
 
     {@const atomOriginal=$timetablePermanentStore["Days"][time.getDay() - 1]?.["Atoms"].find(t => {
-        return t["HourId"] === (hour?.["Id"] ?? "#") && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(getWeek(time)))
+        return t["HourId"] === (hour?.["Id"] ?? "#") && t["CycleIds"]?.includes($timetableCountdownStore["Cycles"][0]?.["Id"] ?? overrideWeek(getWeek(time)))
     })}
     {@const atomOriginalNext=$timetablePermanentStore["Days"][time.getDay() - 1]?.["Atoms"].find(t => {
-        return t["HourId"] === (hourNext?.["Id"] ?? "#") && t["CycleIds"]?.includes($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(getWeek(time)))
+        return t["HourId"] === (hourNext?.["Id"] ?? "#") && t["CycleIds"]?.includes($timetableCountdownStore["Cycles"][0]?.["Id"] ?? overrideWeek(getWeek(time)))
     })}
 
     {@const atom=(today?.["Atoms"].find(t => t["HourId"] === (hour?.["Id"] ?? "#") && (t["Change"] === null || t["SubjectId"] !== (atomOriginal?.["SubjectId"] ?? "#") || t["TeacherId"] !== (atomOriginal?.["TeacherId"] ?? "#") || t["RoomId"] !== (atomOriginal?.["RoomId"] ?? "#"))) ?? null)}
     {@const atomNext=(today?.["Atoms"].find(t => t["HourId"] === (hourNext?.["Id"] ?? "#") && (t["Change"] === null || t["SubjectId"] !== (atomOriginalNext?.["SubjectId"] ?? "#") || t["TeacherId"] !== (atomOriginalNext?.["TeacherId"] ?? "#") || t["RoomId"] !== (atomOriginal?.["RoomId"] ?? "#"))) ?? null)}
 
-    {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === (atom?.["SubjectId"] ?? (atomNext?.["SubjectId"] ?? "#")))?.["Abbrev"].toUpperCase() ?? "#"}
-    {@const teacher=$timetablePermanentStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Abbrev"] ?? $timetableStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Abbrev"] ?? ""}
+    {@const subject=$timetableCountdownStore["Subjects"].find(s => s["Id"] === (atom?.["SubjectId"] ?? (atomNext?.["SubjectId"] ?? "#")))?.["Abbrev"].toUpperCase() ?? "#"}
+    {@const teacher=$timetablePermanentStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Abbrev"] ?? $timetableCountdownStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Abbrev"] ?? ""}
 
     {@const hourH=(hour ? getH(hour["EndTime"]) : getH(hourNext?.["BeginTime"] ?? "00"))}
     {@const hourM=(hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00"))}
     {@const hourS=(hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00"))}
-    <div id="countdown-block" use:addSparticles>
+    <!--<div id="countdown-block" use:addSparticles>-->
+    <div id="countdown-block">
         <div style="display:block;height:56px"></div>
         <div id="countdown-center">
             <div id="countdown-clock" data-animate={animate}>

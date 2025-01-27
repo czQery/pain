@@ -3,7 +3,9 @@ import {overrideOV, overrideOVGroup} from "./override.js"
 import {getWeek} from "./helper.js"
 
 export const timetableStore = writable(null)
+export const timetablePageStore = writable(0)
 export const timetablePermanentStore = writable(null)
+export const timetableCountdownStore = writable(null)
 
 export const timetableGroups = [
     {"id": "ZGY21K", "name": "R3-EM3-OV4", "class": "R3", "src": "sa"},
@@ -74,10 +76,18 @@ export const timetableFetch = async (group, page, override) => {
                 }
 
                 data["data"] = edit
-                break
         }
 
-        timetableStore.set(data["data"])
+
+        switch (override) {
+            case "countdown":
+                timetableCountdownStore.set(data["data"])
+                return
+            case "timetable":
+                timetablePageStore.set(page)
+                timetableStore.set(data["data"])
+                return
+        }
     } catch {
         // fail quietly
     }
