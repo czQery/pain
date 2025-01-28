@@ -45,9 +45,9 @@
             --brand-milky: linear-gradient(145deg, rgba(223, 193, 246, 0.4) 0%, rgba(129, 110, 164, 0.4) 100%);
             --border: 5px;
             --transition: 0.1s;
-            --hover: opacity(0.4);
+            --hover: 0.4;
             --animation-rotate: rotate 1.5s cubic-bezier(.79, .14, .15, .86) infinite;
-            --animation-blend: blend 1s cubic-bezier(.6, -0.28, .74, .05) 1;
+            --animation-fade-in: fade-in 1s cubic-bezier(.6, -0.28, .74, .05) 1;
             --animation-scale: 50ms reverse scale;
         }
 
@@ -182,20 +182,28 @@
             font-weight: bold;
         }
 
-        a, button {
-            transition: var(--transition) all linear;
+        a svg, button svg {
+            will-change: transform, opacity, stroke;
+            transition: var(--transition) opacity linear;
         }
 
         button:disabled,
         button[disabled] {
-            filter: var(--hover);
             cursor: default !important;
+        }
+
+        button:disabled svg,
+        button[disabled] svg {
+            opacity: var(--hover);
         }
 
         @media (hover: hover) and (pointer: fine) {
             a:hover, button:hover {
                 cursor: pointer;
-                filter: var(--hover);
+            }
+
+            a:hover svg, button:hover svg {
+                opacity: var(--hover);
             }
         }
 
@@ -210,7 +218,7 @@
             display: none;
             height: 100svh;
             width: 100%;
-            animation: var(--animation-blend);
+            animation: var(--animation-fade-in);
         }
 
         #init-loading div {
@@ -241,15 +249,6 @@
         @keyframes rotate {
             100% {
                 transform: rotate(360deg);
-            }
-        }
-
-        @keyframes blend {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
             }
         }
 

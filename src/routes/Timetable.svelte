@@ -277,7 +277,6 @@
         padding: 0;
         width: 40px;
         height: 40px;
-        will-change: transform, opacity;
     }
 
     nav button:active :global(svg) {

@@ -191,7 +191,6 @@
         display: flex;
         justify-content: center;
         width: inherit;
-        will-change: opacity;
     }
 
     footer :global(svg) {
@@ -199,7 +198,6 @@
         stroke: var(--white);
         margin: 13px 0;
         display: block;
-        will-change: transform, stroke;
     }
 
     footer :global(a[data-active="true"] svg) {

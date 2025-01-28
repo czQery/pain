@@ -10,7 +10,7 @@
     <div class="dialog-block">
         <header>
             <h3 style="color:var(--silver)">{title}</h3>
-            <button onclick={modal.close()}>
+            <button onclick={() => modal.close()}>
                 <LucideX/>
             </button>
         </header>
