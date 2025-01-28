@@ -37,7 +37,7 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
-        animation: var(--animation-blend);
+        animation: var(--animation-fade-in);
     }
 
     #loading :global(svg) {
