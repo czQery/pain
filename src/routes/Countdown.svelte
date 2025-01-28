@@ -111,13 +111,13 @@
             <div id="countdown-clock" data-animate={animate}>
                 {#if subject !== "#" && hourH !== "00"}
                     {#key hourH}
-                        <h1>{hourH}</h1>
+                        <h1 style="will-change:transform">{hourH}</h1>
                     {/key}
                     <h1 style="color:var(--silver)">:</h1>
                 {/if}
                 {#if subject !== "#"}
                     {#key hourM}
-                        <h1>{hourM}</h1>
+                        <h1 style="will-change:transform">{hourM}</h1>
                     {/key}
                 {:else}
                     <h1>00</h1>
@@ -125,7 +125,7 @@
                 <h1 style="color:var(--silver)">:</h1>
                 {#if subject !== "#"}
                     {#key hourS}
-                        <h1>{hourS}</h1>
+                        <h1 style="will-change:transform">{hourS}</h1>
                     {/key}
                 {:else}
                     <h1>00</h1>
@@ -186,6 +186,7 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+        overflow: hidden;
     }
 
     #countdown-clock {
@@ -197,7 +198,6 @@
     #countdown-clock * {
         animation: var(--animation-scale);
         animation-duration: 0s;
-        will-change: transform;
     }
 
     #countdown-clock[data-animate="true"] * {
