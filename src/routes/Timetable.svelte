@@ -45,7 +45,6 @@
     }
 
     let time = $state(getTime())
-    let animate = $state(false)
 
     // svelte-ignore state_referenced_locally
     let refresh = time.getTime() + cOffline // cOffline run is set always for the next request after the data is already loaded anyway
@@ -89,10 +88,6 @@
     }
 
     onMount(async () => {
-        setTimeout(async () => {
-            animate = true
-        }, 500)
-
         if (interval) clearInterval(interval)
         interval = setInterval(async () => {
             time = getTime()
@@ -126,7 +121,6 @@
     })
 
     onDestroy(() => {
-        animate = false
         clearInterval(interval)
     })
 </script>
@@ -161,7 +155,7 @@
             <h3 style="color:var(--silver)">{modalTheme}</h3>
         {/if}
     </Modal>
-    <table style="view-transition-name:{(animate) ? 'timetable' : 'none'};">
+    <table>
         <thead>
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
@@ -270,6 +264,7 @@
         height: 40px;
         justify-content: space-evenly;
         align-items: center;
+        overflow: hidden;
     }
 
     nav button {
@@ -282,6 +277,7 @@
         padding: 0;
         width: 40px;
         height: 40px;
+        will-change: transform, opacity;
     }
 
     nav button:active :global(svg) {
@@ -294,18 +290,6 @@
         stroke: var(--white);
     }
 
-    ::view-transition-group(timetable) {
-        animation-duration: 10ms;
-    }
-
-    ::view-transition-old(timetable) {
-        animation: 10ms linear both fade-out;
-    }
-
-    ::view-transition-new(timetable) {
-        animation: 10ms linear both fade-in;
-    }
-
     table {
         display: block;
         border-collapse: collapse;
@@ -313,6 +297,7 @@
         overflow-y: clip;
         max-width: 100%;
         border-left: 1px var(--gray) solid; /*.slim border*/
+        will-change: contents;
     }
 
     tr th, tr td {
@@ -323,7 +308,6 @@
 
     tr .slim {
         min-width: 80px;
-        position: -webkit-sticky;
         position: sticky;
         left: 0;
         background-color: var(--black);
@@ -361,7 +345,7 @@
     }
 
     .subject-past {
-        filter: brightness(0.4);
+        opacity: 0.4;
     }
 
     .subject-removed {

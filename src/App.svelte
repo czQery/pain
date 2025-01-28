@@ -129,7 +129,7 @@
 
 <style>
     ::view-transition-group(app) {
-        animation-duration: 240ms;
+        animation-duration: 150ms;
     }
 
     ::view-transition-old(app) {
@@ -137,7 +137,7 @@
     }
 
     ::view-transition-new(app) {
-        animation: 150ms linear 90ms both fade-in;
+        animation: 100ms cubic-bezier(1.000, 0.700, 1.000, 1.000) 50ms both fade-in;
     }
 
     main {
@@ -146,6 +146,7 @@
         align-items: center;
         flex-direction: column;
         height: calc(100svh - 50px);
+        overflow: hidden;
 
         --subject-NON: var(--silver);
 
@@ -190,13 +191,15 @@
         display: flex;
         justify-content: center;
         width: inherit;
+        will-change: opacity;
     }
 
     footer :global(svg) {
-        display: block;
-        height: 40px;
-        margin: 5px;
+        height: 24px;
         stroke: var(--white);
+        margin: 13px 0;
+        display: block;
+        will-change: transform, stroke;
     }
 
     footer :global(a[data-active="true"] svg) {
