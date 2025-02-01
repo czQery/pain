@@ -133,7 +133,7 @@
         <button onclick={() => setPage("backward")} disabled="{$timetablePageStore === 0 || !$timetableStore}">
             <LucideArrowBigLeftDash/>
         </button>
-        <h3 style="width:125px;text-align:center">{pageTimeBegin.getDate() + "-" + pageTimeEnd.getDate() + "." + (pageTimeEnd.getMonth() + 1) + "." + pageTimeEnd.getFullYear()}</h3>
+        <h3 style="width:125px;text-align:center">{pageTimeEnd.toLocaleString("en-us", {month: "short"}) + " " + pageTimeEnd.getFullYear()}</h3>
         <button onclick={() => setPage("forward")} disabled="{$timetablePageStore === maxPage || !$timetableStore}">
             <LucideArrowBigRightDash/>
         </button>
@@ -160,12 +160,28 @@
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
                 <h3>{($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek)) === "2" ? "EVEN" : "ODD"}</h3>
+                <span>{pageWeek}</span>
             </th>
-            <th><h3>MON</h3></th>
-            <th><h3>TUE</h3></th>
-            <th><h3>WED</h3></th>
-            <th><h3>THU</h3></th>
-            <th><h3>FRI</h3></th>
+            <th>
+                <h3>MON</h3>
+                <span>{new Date(new Date().setDate((time.getDate() - time.getDay() + 1) + $timetablePageStore * 7)).getDate()}</span>
+            </th>
+            <th>
+                <h3>TUE</h3>
+                <span>{new Date(new Date().setDate((time.getDate() - time.getDay() + 2) + $timetablePageStore * 7)).getDate()}</span>
+            </th>
+            <th>
+                <h3>WED</h3>
+                <span>{new Date(new Date().setDate((time.getDate() - time.getDay() + 3) + $timetablePageStore * 7)).getDate()}</span>
+            </th>
+            <th>
+                <h3>THU</h3>
+                <span>{new Date(new Date().setDate((time.getDate() - time.getDay() + 4) + $timetablePageStore * 7)).getDate()}</span>
+            </th>
+            <th>
+                <h3>FRI</h3>
+                <span>{new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + $timetablePageStore * 7)).getDate()}</span>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -336,6 +352,10 @@
         border: 1px var(--gray) solid;
         padding: 10px;
         font-weight: bold;
+    }
+
+    thead tr th {
+        padding: 5px;
     }
 
     td :global(svg) {
