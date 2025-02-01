@@ -52,8 +52,8 @@
 
     let windowHeight = $state(0)
     let cornerHeight = $state(0)
-    let navHeight = $state(40)
-    let footerHeight = $state(50)
+    const navHeight = 40
+    const footerHeight = 50
 
     const maxPage = (6 - 1)
 
@@ -296,7 +296,9 @@
         overflow-y: clip;
         max-width: 100%;
         border-left: 1px var(--gray) solid; /*.slim border*/
-        will-change: contents;
+        will-change: contents, scroll-position;
+        table-layout: fixed;
+        white-space: nowrap;
     }
 
     tr th, tr td {

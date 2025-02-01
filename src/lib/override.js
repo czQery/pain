@@ -6,7 +6,7 @@ export const overrideOV = {
             "RoomId": "",
             "SubjectId": "67",
             "TeacherId": "#",
-            "Change": null,
+            "Change": null
         },
         {
             "HourId": 3,
@@ -14,7 +14,7 @@ export const overrideOV = {
             "RoomId": "",
             "SubjectId": "67",
             "TeacherId": "#",
-            "Change": null,
+            "Change": null
         }
     ],
     "Hours": [
