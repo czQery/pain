@@ -1,6 +1,6 @@
 <script>
     import {timetableFetch, timetableGroups, timetableGroupStore, timetablePageStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
-    import {formatCapitalize, formatTime} from "../lib/format.js"
+    import {formatCapitalize, formatOrdinalNumber, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideMessageSquareText, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
     import Loading from "../components/Loading.svelte"
@@ -9,8 +9,8 @@
     import {getWeek} from "../lib/helper.js"
     import {cOffline, cRefresh} from "../lib/const.js"
 
-    //const hours = 9 // 0-8
-    const hours = 10 // 0-9
+    const hours = 9 // 0-8
+    //const hours = 10 // 0-9
     const subjectChange = " > "
 
     let modal = $state()
@@ -44,6 +44,10 @@
         return now
     }
 
+    const getDateTime = (offset) => {
+        return new Date(new Date().setDate((time.getDate() - time.getDay() + offset) + $timetablePageStore * 7))
+    }
+
     let time = $state(getTime())
 
     // svelte-ignore state_referenced_locally
@@ -52,8 +56,8 @@
 
     let windowHeight = $state(0)
     let cornerHeight = $state(0)
-    let navHeight = $state(40)
-    let footerHeight = $state(50)
+    const navHeight = 40
+    const footerHeight = 50
 
     const maxPage = (6 - 1)
 
@@ -127,20 +131,24 @@
 
 <svelte:window bind:innerHeight={windowHeight}/>
 {#if $timetablePermanentStore}
-    {@const pageTimeBegin=new Date(new Date().setDate((time.getDate() - time.getDay() + 1) + $timetablePageStore * 7))}
-    {@const pageTimeEnd=new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + $timetablePageStore * 7))}
+
     <nav>
         <button onclick={() => setPage("backward")} disabled="{$timetablePageStore === 0 || !$timetableStore}">
             <LucideArrowBigLeftDash/>
         </button>
-        <h3 style="width:125px;text-align:center">{pageTimeBegin.getDate() + "-" + pageTimeEnd.getDate() + "." + (pageTimeEnd.getMonth() + 1) + "." + pageTimeEnd.getFullYear()}</h3>
+        {#if $timetablePageStore === 0}
+            <h3 style="width:125px;text-align:center">{time.toLocaleString("en-us", {month: "short"}) + " " + time.getFullYear()}</h3>
+        {:else}
+            {@const pageTime=getDateTime(1)}
+            <h3 style="width:125px;text-align:center">{pageTime.toLocaleString("en-us", {month: "short"}) + " " + pageTime.getFullYear()}</h3>
+        {/if}
         <button onclick={() => setPage("forward")} disabled="{$timetablePageStore === maxPage || !$timetableStore}">
             <LucideArrowBigRightDash/>
         </button>
     </nav>
 {/if}
 {#if $timetableStore && $timetablePermanentStore}
-    {@const pageWeek=getWeek(new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + $timetablePageStore * 7)))}
+    {@const pageWeek=getWeek(getDateTime(5))}
     <Modal bind:modal title="Tuition details">
         {#if modalSubjectColor === "FREE"}
             <h2 style="background:var(--brand);color:transparent;background-clip:text">{modalSubject}</h2>
@@ -160,12 +168,28 @@
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
                 <h3>{($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek)) === "2" ? "EVEN" : "ODD"}</h3>
+                <span>{formatOrdinalNumber(pageWeek) + " week"}</span>
             </th>
-            <th><h3>MON</h3></th>
-            <th><h3>TUE</h3></th>
-            <th><h3>WED</h3></th>
-            <th><h3>THU</h3></th>
-            <th><h3>FRI</h3></th>
+            <th>
+                <h3>MON</h3>
+                <span>{getDateTime(1).getDate() + ". " + (getDateTime(1).getMonth() + 1) + "."}</span>
+            </th>
+            <th>
+                <h3>TUE</h3>
+                <span>{getDateTime(2).getDate() + ". " + (getDateTime(2).getMonth() + 1) + "."}</span>
+            </th>
+            <th>
+                <h3>WED</h3>
+                <span>{getDateTime(3).getDate() + ". " + (getDateTime(3).getMonth() + 1) + "."}</span>
+            </th>
+            <th>
+                <h3>THU</h3>
+                <span>{getDateTime(4).getDate() + ". " + (getDateTime(4).getMonth() + 1) + "."}</span>
+            </th>
+            <th>
+                <h3>FRI</h3>
+                <span>{getDateTime(5).getDate() + ". " + (getDateTime(5).getMonth() + 1) + "."}</span>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -214,7 +238,7 @@
                                             <span></span>
                                         {/if}
                                     </div>
-                                    <h3>{((subjectOriginal?.["Id"] ?? "#") !== subject["Id"] ? (subjectOriginal?.["Abbrev"].toUpperCase() ?? "#") + subjectChange : "") + subject["Abbrev"].toUpperCase()}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
+                                    <h3>{(((subjectOriginal?.["Id"] ?? "#") !== subject["Id"] && atom["LessonRelease"] !== "override") ? (subjectOriginal?.["Abbrev"].toUpperCase() ?? "#") + subjectChange : "") + subject["Abbrev"].toUpperCase()}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
                                     <div class="flex-between">
                                         <span>
                                             {#if atom["Change"]}
@@ -296,7 +320,9 @@
         overflow-y: clip;
         max-width: 100%;
         border-left: 1px var(--gray) solid; /*.slim border*/
-        will-change: contents;
+        will-change: contents, scroll-position;
+        table-layout: fixed;
+        white-space: nowrap;
     }
 
     tr th, tr td {
@@ -336,6 +362,10 @@
         font-weight: bold;
     }
 
+    thead tr th {
+        padding: 5px;
+    }
+
     td :global(svg) {
         height: 10px;
         width: 10px;
@@ -369,17 +399,17 @@
         justify-content: space-between;
     }
 
-    /*hours: 9
+    /*hours: 9*/
     @media screen and (max-height: 660px) {
         table {
             overflow-y: auto;
         }
-    }*/
+    }
 
     /*hours: 10*/
-    @media screen and (max-height: 690px) {
+    /*@media screen and (max-height: 690px) {
         table {
             overflow-y: auto;
         }
-    }
+    }*/
 </style>

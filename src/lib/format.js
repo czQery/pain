@@ -31,3 +31,9 @@ export const formatAddZero = (num) => {
 export const formatCapitalize = (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1)
 }
+
+export const formatOrdinalNumber = (n) => {
+    let s = ["th", "st", "nd", "rd"]
+    let v = n % 100
+    return n + (s[(v - 20) % 10] || s[v] || s[0])
+}
