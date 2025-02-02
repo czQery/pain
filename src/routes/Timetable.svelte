@@ -1,6 +1,6 @@
 <script>
     import {timetableFetch, timetableGroups, timetableGroupStore, timetablePageStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
-    import {formatCapitalize, formatTime} from "../lib/format.js"
+    import {formatCapitalize, formatOrdinalNumber, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
     import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideMessageSquareText, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
     import Loading from "../components/Loading.svelte"
@@ -42,6 +42,10 @@
             now = new Date(now.setDate(now.getDate() - 1))
         }
         return now
+    }
+
+    const getDateTime = (offset) => {
+        return new Date(new Date().setDate((time.getDate() - time.getDay() + offset) + $timetablePageStore * 7))
     }
 
     let time = $state(getTime())
@@ -127,20 +131,24 @@
 
 <svelte:window bind:innerHeight={windowHeight}/>
 {#if $timetablePermanentStore}
-    {@const pageTimeBegin=new Date(new Date().setDate((time.getDate() - time.getDay() + 1) + $timetablePageStore * 7))}
-    {@const pageTimeEnd=new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + $timetablePageStore * 7))}
+
     <nav>
         <button onclick={() => setPage("backward")} disabled="{$timetablePageStore === 0 || !$timetableStore}">
             <LucideArrowBigLeftDash/>
         </button>
-        <h3 style="width:125px;text-align:center">{pageTimeEnd.toLocaleString("en-us", {month: "short"}) + " " + pageTimeEnd.getFullYear()}</h3>
+        {#if $timetablePageStore === 0}
+            <h3 style="width:125px;text-align:center">{time.toLocaleString("en-us", {month: "short"}) + " " + time.getFullYear()}</h3>
+        {:else}
+            {@const pageTime=getDateTime(1)}
+            <h3 style="width:125px;text-align:center">{pageTime.toLocaleString("en-us", {month: "short"}) + " " + pageTime.getFullYear()}</h3>
+        {/if}
         <button onclick={() => setPage("forward")} disabled="{$timetablePageStore === maxPage || !$timetableStore}">
             <LucideArrowBigRightDash/>
         </button>
     </nav>
 {/if}
 {#if $timetableStore && $timetablePermanentStore}
-    {@const pageWeek=getWeek(new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + $timetablePageStore * 7)))}
+    {@const pageWeek=getWeek(getDateTime(5))}
     <Modal bind:modal title="Tuition details">
         {#if modalSubjectColor === "FREE"}
             <h2 style="background:var(--brand);color:transparent;background-clip:text">{modalSubject}</h2>
@@ -160,27 +168,27 @@
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
                 <h3>{($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek)) === "2" ? "EVEN" : "ODD"}</h3>
-                <span>{pageWeek}</span>
+                <span>{formatOrdinalNumber(pageWeek) + " week"}</span>
             </th>
             <th>
                 <h3>MON</h3>
-                <span>{new Date(new Date().setDate((time.getDate() - time.getDay() + 1) + $timetablePageStore * 7)).getDate()}</span>
+                <span>{getDateTime(1).getDate() + ". " + (getDateTime(1).getMonth() + 1) + "."}</span>
             </th>
             <th>
                 <h3>TUE</h3>
-                <span>{new Date(new Date().setDate((time.getDate() - time.getDay() + 2) + $timetablePageStore * 7)).getDate()}</span>
+                <span>{getDateTime(2).getDate() + ". " + (getDateTime(2).getMonth() + 1) + "."}</span>
             </th>
             <th>
                 <h3>WED</h3>
-                <span>{new Date(new Date().setDate((time.getDate() - time.getDay() + 3) + $timetablePageStore * 7)).getDate()}</span>
+                <span>{getDateTime(3).getDate() + ". " + (getDateTime(3).getMonth() + 1) + "."}</span>
             </th>
             <th>
                 <h3>THU</h3>
-                <span>{new Date(new Date().setDate((time.getDate() - time.getDay() + 4) + $timetablePageStore * 7)).getDate()}</span>
+                <span>{getDateTime(4).getDate() + ". " + (getDateTime(4).getMonth() + 1) + "."}</span>
             </th>
             <th>
                 <h3>FRI</h3>
-                <span>{new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + $timetablePageStore * 7)).getDate()}</span>
+                <span>{getDateTime(5).getDate() + ". " + (getDateTime(5).getMonth() + 1) + "."}</span>
             </th>
         </tr>
         </thead>
