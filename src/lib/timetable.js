@@ -62,16 +62,36 @@ export const timetableFetch = async (group, page, override) => {
                 }
 
                 for (let i = 0; i < 5; i++) {
-                    if (!edit["Days"][i]["Atoms"] || !ov[i]) { // check if day exists both in bakalaři and override
+                    if (!edit["Days"][i]["Atoms"]) { // check if day exists in bakalaři
                         continue
                     }
 
-                    for (let atom of edit["Days"][i]["Atoms"]) {
-                        if (atom["SubjectId"] !== "67") { // check if atom is OV
+                    let h7 = null
+                    let h8 = null
+
+                    for (let j = 0; j < edit["Days"][i]["Atoms"].length; j++) {
+                        if (ov[i] && edit["Days"][i]["Atoms"][j]["SubjectId"] === "67") { // check if atom is OV and exist in override
+                            edit["Days"][i]["Atoms"][j]["TeacherId"] = ov[i]
                             continue
                         }
 
-                        atom["TeacherId"] = ov[i]
+                        // move 9th and 8th hour so its starts from 7th
+                        switch (edit["Days"][i]["Atoms"][j]["HourId"]) {
+                            case 9:
+                                h7 = j
+                                break
+                            case 10:
+                                h8 = j
+                                break
+                            case 11:
+                                if (h7 === null) {
+                                    edit["Days"][i]["Atoms"][h8]["HourId"]--
+                                    edit["Days"][i]["Atoms"][h8]["LessonRelease"] = "override"
+                                    edit["Days"][i]["Atoms"][j]["HourId"]--
+                                    edit["Days"][i]["Atoms"][j]["LessonRelease"] = "override"
+                                }
+                                break
+                        }
                     }
                 }
 

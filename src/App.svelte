@@ -49,7 +49,7 @@
             localStorage.setItem("group", timetableGroups[0]["id"])
         }
 
-        preload($timetableGroupStore.toString())
+        preload($timetableGroupStore.toString()).then()
     })
 
     const routes = [

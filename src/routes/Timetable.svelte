@@ -9,8 +9,8 @@
     import {getWeek} from "../lib/helper.js"
     import {cOffline, cRefresh} from "../lib/const.js"
 
-    //const hours = 9 // 0-8
-    const hours = 10 // 0-9
+    const hours = 9 // 0-8
+    //const hours = 10 // 0-9
     const subjectChange = " > "
 
     let modal = $state()
@@ -238,7 +238,7 @@
                                             <span></span>
                                         {/if}
                                     </div>
-                                    <h3>{((subjectOriginal?.["Id"] ?? "#") !== subject["Id"] ? (subjectOriginal?.["Abbrev"].toUpperCase() ?? "#") + subjectChange : "") + subject["Abbrev"].toUpperCase()}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
+                                    <h3>{(((subjectOriginal?.["Id"] ?? "#") !== subject["Id"] && atom["LessonRelease"] !== "override") ? (subjectOriginal?.["Abbrev"].toUpperCase() ?? "#") + subjectChange : "") + subject["Abbrev"].toUpperCase()}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
                                     <div class="flex-between">
                                         <span>
                                             {#if atom["Change"]}
@@ -399,17 +399,17 @@
         justify-content: space-between;
     }
 
-    /*hours: 9
+    /*hours: 9*/
     @media screen and (max-height: 660px) {
         table {
             overflow-y: auto;
         }
-    }*/
+    }
 
     /*hours: 10*/
-    @media screen and (max-height: 690px) {
+    /*@media screen and (max-height: 690px) {
         table {
             overflow-y: auto;
         }
-    }
+    }*/
 </style>
