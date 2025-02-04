@@ -9,6 +9,7 @@
     import Countdown from "./routes/Countdown.svelte"
     import Timetable from "./routes/Timetable.svelte"
     import Canteen from "./routes/Canteen.svelte"
+    import {umami} from "./lib/umami.js"
 
     let viewAnimate = $state(false)
 
@@ -37,7 +38,7 @@
         }, 200)
     }
 
-    onMount(async () => {
+    onMount(() => {
         document.getElementById("init-loading").style.display = "none"
         document.getElementById("app").style.display = "flex"
 
@@ -49,7 +50,8 @@
             localStorage.setItem("group", timetableGroups[0]["id"])
         }
 
-        preload($timetableGroupStore.toString()).then()
+        preload($timetableGroupStore.toString())
+        umami($timetableGroupStore.toString())
     })
 
     const routes = [

@@ -1,7 +1,7 @@
 import {timetableCountdownStore, timetableFetch, timetablePermanentFetch, timetablePermanentStore, timetableStore} from "./timetable.js"
 import {canteenFetch, canteenStore} from "./canteen.js"
 
-export const preload = async (group) => {
+export const preload = (group) => {
     timetablePermanentStore.set(null)
     timetableCountdownStore.set(null)
     timetableStore.set(null)

@@ -1,6 +1,7 @@
 <script>
     import {timetableGroups, timetableGroupStore} from "../lib/timetable.js"
     import {preload} from "../lib/preload.js"
+    import {umami} from "../lib/umami.js"
 </script>
 
 <div id="settings-block">
@@ -9,6 +10,7 @@
         <select id="group" bind:value={$timetableGroupStore} onchange={() => {
             localStorage.setItem("group", $timetableGroupStore.toString())
             preload($timetableGroupStore.toString())
+            umami($timetableGroupStore.toString())
         }}>
             {#each timetableGroups as g}
                 <option value={g["id"]}>
