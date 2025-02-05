@@ -2,7 +2,7 @@
     import {active, link} from "@dvcol/svelte-simple-router/router"
     import {RouterContext, RouterView} from "@dvcol/svelte-simple-router/components"
     import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
-    import {timetableGroups, timetableGroupStore} from "./lib/timetable.js"
+    import {timetableGroups, timetableGroupStore, timetablePermanentStore} from "./lib/timetable.js"
     import {preload} from "./lib/preload.js"
     import {onMount} from "svelte"
     import Settings from "./routes/Settings.svelte"
@@ -10,8 +10,10 @@
     import Timetable from "./routes/Timetable.svelte"
     import Canteen from "./routes/Canteen.svelte"
     import {umami} from "./lib/umami.js"
+    import {cOffline} from "./lib/const.js"
 
     let viewAnimate = $state(false)
+    let interval
 
     let navDone = () => undefined
     const navStart = () => {
@@ -39,6 +41,7 @@
     }
 
     onMount(() => {
+        if (interval) clearInterval(interval)
         document.getElementById("init-loading").style.display = "none"
         document.getElementById("app").style.display = "flex"
 
@@ -52,6 +55,14 @@
 
         preload($timetableGroupStore.toString())
         umami($timetableGroupStore.toString())
+
+        interval = setInterval(() => {
+            if (!$timetablePermanentStore) {
+                timetablePermanentFetch($timetableGroupStore.toString())
+            } else {
+                clearInterval(interval)
+            }
+        }, cOffline)
     })
 
     const routes = [
