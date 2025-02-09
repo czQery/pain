@@ -62,18 +62,6 @@
     const maxPage = (6 - 1)
 
     const setPage = async (a) => {
-        const {promise: pageStarting, resolve: pageDone} = Promise.withResolvers()
-        const {promise: viewStarting, resolve: viewDone} = Promise.withResolvers()
-
-        if (document.startViewTransition) {
-            document.startViewTransition(async () => {
-                viewDone()
-                await pageStarting
-            })
-
-            await viewStarting
-        }
-
         let page = $timetablePageStore
 
         switch (a) {
@@ -88,7 +76,6 @@
         timetableStore.set(null)
         refresh = time.getTime() + cOffline
         await timetableFetch($timetableGroupStore, page, "timetable")
-        pageDone()
     }
 
     onMount(async () => {
@@ -97,24 +84,7 @@
             time = getTime()
 
             if (time.getTime() > refresh) {
-                const {promise: pageStarting, resolve: pageDone} = Promise.withResolvers()
-                const {promise: viewStarting, resolve: viewDone} = Promise.withResolvers()
-
-                if (!$timetableStore) {
-                    if (document.startViewTransition) {
-                        document.startViewTransition(async () => {
-                            viewDone()
-                            await pageStarting
-                        })
-
-                        await viewStarting
-                    }
-                }
-
-                timetableFetch($timetableGroupStore, $timetablePageStore, "timetable").then(() => {
-                    pageDone()
-                })
-
+                timetableFetch($timetableGroupStore, $timetablePageStore, "timetable").then()
                 if (!$timetableStore) {
                     refresh = time.getTime() + cOffline
                 } else {
