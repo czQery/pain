@@ -53,7 +53,8 @@ export const overrideMasters = {
     "UX03D": 211, // Zí
     "UV02Z": 302, // Šm
     "UY03L": 303, // Du
-    "UW033": 306 // Da
+    "UW033": 306, // Da
+    "UW034": 306  //No
 }
 
 export const overrideCanteen = {
