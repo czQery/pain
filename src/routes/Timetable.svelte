@@ -1,8 +1,9 @@
 <script>
     import {timetableFetch, timetableGroups, timetableGroupStore, timetablePageStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
+    import {canteenStore} from "../lib/canteen.js"
     import {formatCapitalize, formatOrdinalNumber, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
-    import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideMessageSquareText, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
+    import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideCookingPot, LucideMessageSquareText, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
     import Loading from "../components/Loading.svelte"
     import Modal from "../components/Modal.svelte"
     import {overrideMasters, overrideOV, overrideRooms, overrideWeek} from "../lib/override.js"
@@ -12,6 +13,7 @@
     const hours = 9 // 0-8
     //const hours = 10 // 0-9
     const subjectChange = " > "
+    const days = ["MON", "TUE", "WED", "THU", "FRI"]
 
     let modal = $state()
     let modalSubject = $state("#")
@@ -36,7 +38,7 @@
         return null
     }
 
-    const getTime = () => {
+    const getNewTime = () => {
         let now = new Date()
         if (now.getDay() === 0) {
             now = new Date(now.setDate(now.getDate() - 1))
@@ -44,11 +46,14 @@
         return now
     }
 
-    const getDateTime = (offset) => {
-        return new Date(new Date().setDate((time.getDate() - time.getDay() + offset) + $timetablePageStore * 7))
+    const getNewDateTime = (offset) => {
+        let now = getNewTime()
+        let date = new Date(new Date().setDate((now.getDate() - now.getDay() + offset) + $timetablePageStore * 7))
+        date.setUTCHours(0, 0, 0, 0)
+        return date
     }
 
-    let time = $state(getTime())
+    let time = $state(getNewTime())
 
     // svelte-ignore state_referenced_locally
     let refresh = time.getTime() + cOffline // cOffline run is set always for the next request after the data is already loaded anyway
@@ -81,7 +86,7 @@
     onMount(async () => {
         if (interval) clearInterval(interval)
         interval = setInterval(async () => {
-            time = getTime()
+            time = getNewTime()
 
             if (time.getTime() > refresh) {
                 timetableFetch($timetableGroupStore, $timetablePageStore, "timetable").then()
@@ -101,7 +106,6 @@
 
 <svelte:window bind:innerHeight={windowHeight}/>
 {#if $timetablePermanentStore}
-
     <nav>
         <button onclick={() => setPage("backward")} disabled="{$timetablePageStore === 0 || !$timetableStore}">
             <LucideArrowBigLeftDash/>
@@ -109,7 +113,7 @@
         {#if $timetablePageStore === 0}
             <h3 style="width:125px;text-align:center">{time.toLocaleString("en-us", {month: "short"}) + " " + time.getFullYear()}</h3>
         {:else}
-            {@const pageTime=getDateTime(1)}
+            {@const pageTime=getNewDateTime(1)}
             <h3 style="width:125px;text-align:center">{pageTime.toLocaleString("en-us", {month: "short"}) + " " + pageTime.getFullYear()}</h3>
         {/if}
         <button onclick={() => setPage("forward")} disabled="{$timetablePageStore === maxPage || !$timetableStore}">
@@ -118,7 +122,7 @@
     </nav>
 {/if}
 {#if $timetableStore && $timetablePermanentStore}
-    {@const pageWeek=getWeek(getDateTime(5))}
+    {@const pageWeek=getWeek(getNewDateTime(5))}
     <Modal bind:modal title="Tuition details">
         {#if modalSubjectColor === "FREE"}
             <h2 style="background:var(--brand);color:transparent;background-clip:text">{modalSubject}</h2>
@@ -140,26 +144,21 @@
                 <h3>{($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek)) === "2" ? "EVEN" : "ODD"}</h3>
                 <span>{formatOrdinalNumber(pageWeek) + " week"}</span>
             </th>
-            <th>
-                <h3>MON</h3>
-                <span>{getDateTime(1).getDate() + ". " + (getDateTime(1).getMonth() + 1) + "."}</span>
-            </th>
-            <th>
-                <h3>TUE</h3>
-                <span>{getDateTime(2).getDate() + ". " + (getDateTime(2).getMonth() + 1) + "."}</span>
-            </th>
-            <th>
-                <h3>WED</h3>
-                <span>{getDateTime(3).getDate() + ". " + (getDateTime(3).getMonth() + 1) + "."}</span>
-            </th>
-            <th>
-                <h3>THU</h3>
-                <span>{getDateTime(4).getDate() + ". " + (getDateTime(4).getMonth() + 1) + "."}</span>
-            </th>
-            <th>
-                <h3>FRI</h3>
-                <span>{getDateTime(5).getDate() + ". " + (getDateTime(5).getMonth() + 1) + "."}</span>
-            </th>
+            {#each days as day, i}
+                <th>
+                    <h3>{day}</h3>
+                    <span>{getNewDateTime(i + 1).getDate() + ". " + (getNewDateTime(i + 1).getMonth() + 1) + "."}</span>
+                    {#if $canteenStore}
+                        {@const dish=$canteenStore.find(s => s["date"] === getNewDateTime(i + 1).getTime())}
+                        {#if dish && dish["dish"] === "Nevaří se"}
+                            <span class="day-canteen">
+                                <span class="day-canteen-shape"></span>
+                                <LucideCookingPot/>
+                            </span>
+                        {/if}
+                    {/if}
+                </th>
+            {/each}
         </tr>
         </thead>
         <tbody>
@@ -334,6 +333,7 @@
 
     thead tr th {
         padding: 5px;
+        position: relative;
     }
 
     td :global(svg) {
@@ -341,6 +341,35 @@
         width: 10px;
         stroke-width: 3px; /*default is 2px*/
         stroke: var(--white);
+    }
+
+    .day-canteen {
+        justify-content: center;
+        align-items: center;
+        width: 10px;
+        height: 15px;
+        display: flex;
+        position: absolute;
+        top: 39px;
+        left: 50%;
+        transform: translate(-50%);
+        box-shadow: 0 5px 20px 1px rgba(0, 0, 0, 1);
+    }
+
+    .day-canteen-shape {
+        width: 40px;
+        height: 15px;
+        position: absolute;
+        background: var(--brand);
+        clip-path: polygon(0 0, 20% 100%, 80% 100%, 100% 0);
+    }
+
+    .day-canteen :global(svg) {
+        height: 10px;
+        width: 10px;
+        stroke-width: 3px;
+        stroke: var(--white);
+        z-index: 5;
     }
 
     .subject-past {
