@@ -354,6 +354,7 @@
         left: 50%;
         transform: translate(-50%);
         box-shadow: 0 5px 20px 1px rgba(0, 0, 0, 1);
+        z-index: 4;
     }
 
     .day-canteen-shape {
