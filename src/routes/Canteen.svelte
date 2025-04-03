@@ -68,6 +68,7 @@
         align-items: center;
         gap: 20px;
         will-change: scroll-position;
+        z-index: 10;
     }
 
     .canteen-day {

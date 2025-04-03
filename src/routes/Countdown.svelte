@@ -6,6 +6,7 @@
     import {cOffline, cRefresh} from "../lib/const.js"
     import {overrideWeek} from "../lib/override.js"
     import {getWeek} from "../lib/helper.js"
+    import Banner from "../components/Banner.svelte"
 
     /*const sparticles = {
         "composition": "source-over",
@@ -106,7 +107,9 @@
     {@const hourS=(hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00"))}
     <!--<div id="countdown-block" use:addSparticles>-->
     <div id="countdown-block">
-        <div style="display:block;height:56px"></div>
+        <div id="countdown-header">
+            <Banner/>
+        </div>
         <div id="countdown-center">
             <div id="countdown-clock" data-animate={animate}>
                 {#if subject !== "#" && hourH !== "00"}
@@ -163,11 +166,11 @@
 {/if}
 
 <style>
-    #countdown-block :global(.sparticles) {
+    /*#countdown-block :global(.sparticles) {
         position: absolute;
         width: 100%;
         height: calc(100svh - 50px);
-    }
+    }*/
 
     #countdown-block {
         display: flex;
@@ -175,6 +178,10 @@
         width: 100%;
         flex-direction: column;
         justify-content: space-between;
+        z-index: 5;
+
+        --header: 92px;
+        --footer: 56px;
     }
 
     #countdown-center, #countdown-footer {
@@ -187,6 +194,7 @@
         flex-direction: column;
         gap: 10px;
         overflow: hidden;
+        margin-bottom: var(--header);
     }
 
     #countdown-clock {
@@ -204,10 +212,20 @@
         animation-duration: 50ms !important;
     }
 
+    #countdown-header {
+        height: calc(var(--header) + 2 * 20);
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        display: block;
+        animation: hide 1s 5s normal both;
+    }
+
     #countdown-footer {
         display: flex;
         padding: 10px;
-        height: 56px;
+        height: var(--footer);
         align-items: end;
         justify-content: space-between;
     }
@@ -230,5 +248,14 @@
         background: var(--brand);
         color: transparent;
         background-clip: text;
+    }
+
+    @keyframes hide {
+        from {
+            transform: translateY(0);
+        }
+        to {
+            transform: translateY(-150%);
+        }
     }
 </style>
