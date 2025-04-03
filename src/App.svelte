@@ -2,7 +2,7 @@
     import {active, link} from "@dvcol/svelte-simple-router/router"
     import {RouterContext, RouterView} from "@dvcol/svelte-simple-router/components"
     import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
-    import {timetableGroups, timetableGroupStore, timetablePermanentStore} from "./lib/timetable.js"
+    import {timetableGroups, timetableGroupStore, timetablePermanentFetch, timetablePermanentStore} from "./lib/timetable.js"
     import {preload} from "./lib/preload.js"
     import {onMount} from "svelte"
     import Settings from "./routes/Settings.svelte"

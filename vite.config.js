@@ -12,17 +12,21 @@ export default defineConfig({
     css: {
         transformer: "lightningcss",
         lightningcss: {
-            targets: browserslistToTargets(browserslist(">= 0.25%")),
-        },
+            targets: browserslistToTargets(browserslist(">= 0.25%"))
+        }
+    },
+    server: {
+        port: 8080,
+        allowedHosts: true
     },
     build: {
         cssMinify: "lightningcss",
         target: "esnext",
         outDir: "../dist",
-        emptyOutDir: true,
+        emptyOutDir: true
     },
     define: {
         __CF_PAGES_COMMIT_SHA__: JSON.stringify(process.env.CF_PAGES_COMMIT_SHA)
     },
-    plugins: [svelte()],
+    plugins: [svelte()]
 })

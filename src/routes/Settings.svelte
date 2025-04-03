@@ -33,7 +33,7 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        padding: 30px;
+        padding: 20px;
         height: inherit;
         justify-content: center;
         gap: 20px;
