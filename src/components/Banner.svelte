@@ -3,7 +3,7 @@
     import {onDestroy, onMount} from "svelte"
     import {cOffline} from "../lib/const.js"
     import {newsFetch, newsStore} from "../lib/news.js"
-    import {formatDate, formatDay} from "../lib/format.js"
+    import {formatOrdinalNumber} from "../lib/format.js"
 
     let canvas
     let blurData = $derived(new ImageData(decodeBlurHash($newsStore ? $newsStore[0]["blur"] : "", 32, 32), 32, 32))
@@ -32,8 +32,13 @@
 </script>
 
 <a id="banner" href={$newsStore ? $newsStore[0]["link"] : ""}>
-    <h2>{formatDay(time)}</h2>
-    <h3>{formatDate(time)}</h3>
+    <div id="banner-date">
+        <h2>{formatOrdinalNumber(time.getDate())}</h2>
+        <div id="banner-date-month">
+            <h4>of</h4>
+            <h3>{time.toLocaleString("en-us", {month: "long"})}</h3>
+        </div>
+    </div>
     <div id="banner-news">
         <h4>NEWS:</h4>
         <span>{$newsStore ? $newsStore[0]["title"] : ""}</span>
@@ -72,6 +77,7 @@
         inset: -1px;
         border-radius: var(--border);
         animation: 3s spin linear infinite;
+        transition: opacity 0.5s;
     }
 
     #banner::before {
@@ -93,12 +99,35 @@
         z-index: 15;
     }
 
-    #banner h2 {
+    #banner-date {
+        display: flex;
+        justify-content: start;
+        gap: 5px;
+    }
+
+    #banner-date h2 {
+        font-size: 40px;
+        line-height: 34px;
+        color: var(--white);
+    }
+
+    #banner-date-month {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        height: 34px;
+    }
+
+    #banner-date-month h3 {
         color: var(--snow);
     }
 
-    #banner h3 {
+    #banner-date-month h4 {
         color: var(--silver);
+        font-size: 10px;
+        line-height: 10px;
+        height: 16px;
+        align-content: end;
     }
 
     #banner-news {

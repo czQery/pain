@@ -213,13 +213,13 @@
     }
 
     #countdown-header {
-        height: calc(var(--header) + 2 * 20);
+        height: calc(var(--header) - (2 * 10));
         width: 100%;
         max-width: 800px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 10px;
         display: block;
-        animation: hide 1s 5s normal both;
+        /*animation: hide 1s 5s normal both;*/
     }
 
     #countdown-footer {
