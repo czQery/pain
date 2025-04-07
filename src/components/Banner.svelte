@@ -3,7 +3,7 @@
     import {onDestroy, onMount} from "svelte"
     import {cOffline} from "../lib/const.js"
     import {newsFetch, newsStore} from "../lib/news.js"
-    import {formatOrdinalNumber} from "../lib/format.js"
+    import {formatDate, formatDay} from "../lib/format.js"
 
     let canvas
     let blurData = $derived(new ImageData(decodeBlurHash($newsStore ? $newsStore[0]["blur"] : "", 32, 32), 32, 32))
@@ -33,17 +33,20 @@
 
 <a id="banner" href={$newsStore ? $newsStore[0]["link"] : ""}>
     <div id="banner-date">
-        <h2>{formatOrdinalNumber(time.getDate())}</h2>
-        <div id="banner-date-month">
-            <h4>of</h4>
-            <h3>{time.toLocaleString("en-us", {month: "long"})}</h3>
+        <div id="banner-date-current">
+            <h2>{formatDay(time)}</h2>
+            <h3>{"- " + formatDate(time)}</h3>
         </div>
+        <h3 id="banner-date-extra"></h3>
     </div>
-    <div id="banner-news">
-        <h4>NEWS:</h4>
-        <span>{$newsStore ? $newsStore[0]["title"] : ""}</span>
-    </div>
-    <canvas id="banner-blur" bind:this={canvas} width="32" height="32"></canvas>
+    {#if $newsStore}
+        {@const ago = Math.floor((time - (new Date($newsStore[0]["date"]))) / 86_400_000).toString()}
+        <div id="banner-news">
+            <h4>{ago === "0" ? "Today: " : (ago + "d ago: ")}</h4>
+            <span>{$newsStore[0]["title"]}</span>
+        </div>
+        <canvas id="banner-blur" bind:this={canvas} width="32" height="32"></canvas>
+    {/if}
 </a>
 
 <style>
@@ -77,7 +80,6 @@
         inset: -1px;
         border-radius: var(--border);
         animation: 3s spin linear infinite;
-        transition: opacity 0.5s;
     }
 
     #banner::before {
@@ -100,34 +102,29 @@
     }
 
     #banner-date {
+        justify-content: space-between;
+        gap: 5px;
         display: flex;
-        justify-content: start;
+        width: 100%;
+        align-items: baseline;
+    }
+
+    #banner-date-current {
+        display: flex;
+        align-items: baseline;
         gap: 5px;
     }
 
-    #banner-date h2 {
-        font-size: 40px;
-        line-height: 34px;
+    #banner-date-current h2 {
         color: var(--white);
     }
 
-    #banner-date-month {
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        height: 34px;
-    }
-
-    #banner-date-month h3 {
-        color: var(--snow);
-    }
-
-    #banner-date-month h4 {
+    #banner-date-current h3 {
         color: var(--silver);
-        font-size: 10px;
-        line-height: 10px;
-        height: 16px;
-        align-content: end;
+    }
+
+    #banner-date-extra {
+        color: var(--silver);
     }
 
     #banner-news {
@@ -141,7 +138,8 @@
     }
 
     #banner-news h4 {
-        color: var(--silver);
+        color: var(--snow);
+        white-space: nowrap;
         font-size: 15px;
         line-height: 18px;
     }
