@@ -32,13 +32,21 @@
 </script>
 
 <a id="banner" href={$newsStore ? $newsStore[0]["link"] : ""}>
-    <h2>{formatDay(time)}</h2>
-    <h3>{formatDate(time)}</h3>
-    <div id="banner-news">
-        <h4>NEWS:</h4>
-        <span>{$newsStore ? $newsStore[0]["title"] : ""}</span>
+    <div id="banner-date">
+        <div id="banner-date-current">
+            <h2>{formatDay(time)}</h2>
+            <h3>{"- " + formatDate(time)}</h3>
+        </div>
+        <h3 id="banner-date-extra"></h3>
     </div>
-    <canvas id="banner-blur" bind:this={canvas} width="32" height="32"></canvas>
+    {#if $newsStore}
+        {@const ago = Math.floor((time - (new Date($newsStore[0]["date"]))) / 86_400_000).toString()}
+        <div id="banner-news">
+            <h4>{ago === "0" ? "Today: " : (ago + "d ago: ")}</h4>
+            <span>{$newsStore[0]["title"]}</span>
+        </div>
+        <canvas id="banner-blur" bind:this={canvas} width="32" height="32"></canvas>
+    {/if}
 </a>
 
 <style>
@@ -93,11 +101,29 @@
         z-index: 15;
     }
 
-    #banner h2 {
-        color: var(--snow);
+    #banner-date {
+        justify-content: space-between;
+        gap: 5px;
+        display: flex;
+        width: 100%;
+        align-items: baseline;
     }
 
-    #banner h3 {
+    #banner-date-current {
+        display: flex;
+        align-items: baseline;
+        gap: 5px;
+    }
+
+    #banner-date-current h2 {
+        color: var(--white);
+    }
+
+    #banner-date-current h3 {
+        color: var(--silver);
+    }
+
+    #banner-date-extra {
         color: var(--silver);
     }
 
@@ -112,7 +138,8 @@
     }
 
     #banner-news h4 {
-        color: var(--silver);
+        color: var(--snow);
+        white-space: nowrap;
         font-size: 15px;
         line-height: 18px;
     }

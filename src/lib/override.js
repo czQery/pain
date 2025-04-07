@@ -98,16 +98,16 @@ export const overrideCanteen = {
 
 export const overrideOVGroup = {
     "ZGY21K": [ // R3-EM3-OV4
-        [null, null, "UW035", "UW033", "UW034"], // odd
-        [null, null, null, null, null] // even 4->1->2
+        [null, null, "UV02Z", "UV02Z", "UX03D"], // odd
+        [null, null, null, null, null] // even 4->1->2->3
     ],
     "ZGW1WS": [ // R3-EM2-OV3
-        [null, null, "UJ01Z", "UX03D", "U0014"], // odd
-        [null, null, null, null, null] // even 3->4->1
+        [null, null, "UW035", "UW033", "UW034"], // odd
+        [null, null, null, null, null] // even 3->4->1->2
     ],
     "RGW1X6": [ // R3-EM1-OV2
-        [null, null, "UY03L", "UY03L", "UY03K"], // odd
-        [null, null, null, null, null] // even 2->3->4
+        [null, null, "UJ01Z", "UX03D", "U0014"], // odd
+        [null, null, null, null, null] // even 2->3->4->1
     ]
 }
 

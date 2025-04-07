@@ -180,7 +180,7 @@
         justify-content: space-between;
         z-index: 5;
 
-        --header: 92px;
+        --header: 88px;
         --footer: 56px;
     }
 
@@ -194,7 +194,7 @@
         flex-direction: column;
         gap: 10px;
         overflow: hidden;
-        margin-bottom: var(--header);
+        margin-bottom: calc(var(--header) - var(--footer));
     }
 
     #countdown-clock {
@@ -213,13 +213,13 @@
     }
 
     #countdown-header {
-        height: calc(var(--header) + 2 * 20);
+        height: var(--header);
         width: 100%;
         max-width: 800px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 10px;
         display: block;
-        animation: hide 1s 5s normal both;
+        /*animation: hide 1s 5s normal both;*/
     }
 
     #countdown-footer {
