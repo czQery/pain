@@ -11,9 +11,6 @@
     import Canteen from "./routes/Canteen.svelte"
     import {umami} from "./lib/umami.js"
     import {cOffline} from "./lib/const.js"
-    import {registerSW} from "virtual:pwa-register"
-
-    registerSW({immediate: true})
 
     let viewAnimate = $state(false)
     let interval

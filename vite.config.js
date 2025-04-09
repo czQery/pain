@@ -38,13 +38,15 @@ export default defineConfig({
             injectRegister: "inline",
             registerType: "autoUpdate",
             workbox: {
-                globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+                clientsClaim: true,
+                skipWaiting: true,
+                globPatterns: ["**/*.{js,css,html,ico,woff2,png,svg}"],
                 runtimeCaching: [
                     {
                         urlPattern: /^.*\/api\/.*/i,
                         handler: "NetworkFirst",
                         options: {
-                            cacheName: "api",
+                            cacheName: "api-cache",
                             expiration: {
                                 maxEntries: 50,
                                 purgeOnQuotaError: true
