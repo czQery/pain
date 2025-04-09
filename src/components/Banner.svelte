@@ -112,6 +112,8 @@
     #banner-date-current {
         display: flex;
         align-items: baseline;
+        white-space: nowrap;
+        overflow: hidden;
         gap: 5px;
     }
 
