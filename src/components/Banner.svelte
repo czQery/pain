@@ -6,7 +6,7 @@
     import {formatDate, formatDay} from "../lib/format.js"
 
     let canvas
-    let blurData = $derived(new ImageData(decodeBlurHash($newsStore ? $newsStore[0]["blur"] : "", 32, 32), 32, 32))
+    let blurData = $derived(new ImageData(decodeBlurHash($newsStore ? $newsStore["blur"] : "", 32, 32), 32, 32))
 
     let time = $state(new Date())
     let interval
@@ -31,22 +31,22 @@
     })
 </script>
 
-<a id="banner" href={$newsStore ? $newsStore[0]["link"] : ""}>
+<a id="banner" href={$newsStore ? $newsStore["link"] : ""}>
     <div id="banner-date">
         <div id="banner-date-current">
             <h2>{formatDay(time)}</h2>
             <h3>{"- " + formatDate(time)}</h3>
         </div>
-        <h3 id="banner-date-extra"></h3>
+        <h3 id="banner-date-extra">{$newsStore ? (Math.round($newsStore["temp"]) + "°") : ""}</h3>
     </div>
     {#if $newsStore}
-        {@const ago = Math.floor((time - (new Date($newsStore[0]["date"]))) / 86_400_000).toString()}
+        {@const ago = Math.floor((time - (new Date($newsStore["date"]))) / 86_400_000).toString()}
         <div id="banner-news">
             <h4>{ago === "0" ? "Today: " : (ago + "d ago: ")}</h4>
-            <span>{$newsStore[0]["title"]}</span>
+            <span>{$newsStore["title"]}</span>
         </div>
-        <canvas id="banner-blur" bind:this={canvas} width="32" height="32"></canvas>
     {/if}
+    <canvas id="banner-blur" bind:this={canvas} width="32" height="32"></canvas>
 </a>
 
 <style>
