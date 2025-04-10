@@ -11,6 +11,7 @@
     import Canteen from "./routes/Canteen.svelte"
     import {umami} from "./lib/umami.js"
     import {cOffline} from "./lib/const.js"
+    import {ttlCleanCache} from "./lib/ttl.js"
 
     let viewAnimate = $state(false)
     let interval
@@ -55,6 +56,7 @@
 
         preload($timetableGroupStore.toString())
         umami($timetableGroupStore.toString())
+        ttlCleanCache()
 
         interval = setInterval(() => {
             if (!$timetablePermanentStore) {
