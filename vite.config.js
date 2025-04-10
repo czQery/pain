@@ -53,7 +53,7 @@ export default defineConfig({
                 clientsClaim: true,
                 skipWaiting: true,
                 cleanupOutdatedCaches: true,
-                globPatterns: ["**/*.{js,css,html,ico,txt,woff2,png,svg}"],
+                globPatterns: ["**/*.{js,css,html,ico,txt,woff2,webp,png,svg}"],
                 runtimeCaching: [
                     {
                         urlPattern: /^.*\/api\/.*/i,
@@ -107,25 +107,39 @@ export default defineConfig({
                 ],
                 "screenshots": [
                     {
-                        "src": "/img/sc-countdown.png",
+                        "src": "/img/sc/narrow-countdown.webp",
                         "sizes": "750x1334",
-                        "type": "image/png"
+                        "type": "image/webp",
+                        "form_factor": "narrow"
                     },
                     {
-                        "src": "/img/sc-timetable.png",
+                        "src": "/img/sc/narrow-timetable.webp",
                         "sizes": "750x1334",
-                        "type": "image/png"
+                        "type": "image/webp",
+                        "form_factor": "narrow"
                     },
                     {
-                        "src": "/img/sc-countdown-wide.png",
-                        "sizes": "1024x720",
-                        "type": "image/png",
+                        "src": "/img/sc/narrow-canteen.webp",
+                        "sizes": "750x1334",
+                        "type": "image/webp",
+                        "form_factor": "narrow"
+                    },
+                    {
+                        "src": "/img/sc/wide-countdown.webp",
+                        "sizes": "1920x1080",
+                        "type": "image/webp",
                         "form_factor": "wide"
                     },
                     {
-                        "src": "/img/sc-timetable-wide.png",
-                        "sizes": "1024x720",
-                        "type": "image/png",
+                        "src": "/img/sc/wide-timetable.webp",
+                        "sizes": "1920x1080",
+                        "type": "image/webp",
+                        "form_factor": "wide"
+                    },
+                    {
+                        "src": "/img/sc/wide-canteen.webp",
+                        "sizes": "1920x1080",
+                        "type": "image/webp",
                         "form_factor": "wide"
                     }
                 ]
