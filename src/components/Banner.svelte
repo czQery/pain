@@ -1,7 +1,7 @@
 <script>
     import {decodeBlurHash} from "fast-blurhash"
     import {onDestroy, onMount} from "svelte"
-    import {cOffline} from "../lib/const.js"
+    import {cOffline, cRefresh} from "../lib/const.js"
     import {newsFetch, newsStore} from "../lib/news.js"
     import {formatDate, formatDay} from "../lib/format.js"
 
@@ -11,6 +11,9 @@
     let time = $state(new Date())
     let interval
 
+    // svelte-ignore state_referenced_locally
+    let refresh = time.getTime() + cOffline
+
     $effect(() => {
         if (!canvas) return
         canvas.getContext("2d").putImageData(blurData, 0, 0)
@@ -18,12 +21,18 @@
 
     onMount(async () => {
         if (interval) clearInterval(interval)
-        interval = setInterval(() => {
+        interval = setInterval(async () => {
             time = new Date()
-            if (!$newsStore) {
+
+            if (time.getTime() > refresh) {
                 newsFetch()
+                if (!$newsStore) {
+                    refresh = time.getTime() + cOffline
+                } else {
+                    refresh = time.getTime() + cRefresh
+                }
             }
-        }, cOffline)
+        }, 1000)
     })
 
     onDestroy(() => {
@@ -70,6 +79,7 @@
         padding: 10px;
         align-items: start;
         text-decoration: none;
+        will-change: background-image;
     }
 
     #banner::after, #banner::before {
@@ -80,6 +90,7 @@
         inset: -1px;
         border-radius: var(--border);
         animation: 3s spin linear infinite;
+        will-change: transform;
     }
 
     #banner::before {

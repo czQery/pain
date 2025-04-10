@@ -4,6 +4,7 @@ import {svelte} from "@sveltejs/vite-plugin-svelte"
 import {browserslistToTargets} from "lightningcss"
 import browserslist from "browserslist"
 import {VitePWA} from "vite-plugin-pwa"
+import {ViteMinifyPlugin} from "vite-plugin-minify"
 
 const root = resolve(__dirname, "src")
 
@@ -21,16 +22,27 @@ export default defineConfig({
         allowedHosts: true
     },
     build: {
+        minify: "terser",
         cssMinify: "lightningcss",
         target: "esnext",
         outDir: "../dist",
-        emptyOutDir: true
+        emptyOutDir: true,
+        sourcemap: false,
+        terserOptions: {
+            mangle: {
+                toplevel: true
+            },
+            output: {
+                comments: false
+            }
+        }
     },
     define: {
         __CF_PAGES_COMMIT_SHA__: JSON.stringify(process.env.CF_PAGES_COMMIT_SHA)
     },
     plugins: [
         svelte(),
+        ViteMinifyPlugin(),
         VitePWA({
             devOptions: {
                 enabled: true
@@ -40,6 +52,7 @@ export default defineConfig({
             workbox: {
                 clientsClaim: true,
                 skipWaiting: true,
+                cleanupOutdatedCaches: true,
                 globPatterns: ["**/*.{js,css,html,ico,txt,woff2,png,svg}"],
                 runtimeCaching: [
                     {
@@ -47,6 +60,7 @@ export default defineConfig({
                         handler: "NetworkFirst",
                         options: {
                             cacheName: "api-cache",
+                            networkTimeoutSeconds: 1,
                             expiration: {
                                 maxEntries: 50,
                                 purgeOnQuotaError: true
