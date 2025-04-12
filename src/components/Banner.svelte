@@ -163,6 +163,7 @@
         font-size: 15px;
         line-height: 18px;
         overflow: hidden;
+        text-overflow: ellipsis;
         text-align: start;
         animation: typewriter 1.5s steps(60) 0s 1 normal both;
     }
