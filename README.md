@@ -1,2 +1,4 @@
 # Pain
-- no ts 😢, data from Bakaláři are not reliable anyway so it doesn't matter.
+
+- neříkej au, dokud nezakopneš :3
+- aneb ti co ví, tak ví
