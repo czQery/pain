@@ -1,5 +1,5 @@
 <script>
-    import {timetableFetch, timetableGroups, timetableGroupStore, timetablePageStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
+    import {timetableFetch, timetablePageStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
     import {canteenStore} from "../lib/canteen.js"
     import {formatCapitalize, formatOrdinalNumber, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
@@ -9,6 +9,7 @@
     import {overrideMasters, overrideOV, overrideRooms, overrideWeek} from "../lib/override.js"
     import {getWeek} from "../lib/helper.js"
     import {cOffline, cRefresh} from "../lib/const.js"
+    import {source, sourceSchoolStore, sourceGroupStore} from "../lib/var.js"
 
     const hours = 9 // 0-8
     //const hours = 10 // 0-9
@@ -80,7 +81,7 @@
 
         timetableStore.set(null)
         refresh = time.getTime() + cOffline
-        await timetableFetch($timetableGroupStore, page, "timetable")
+        await timetableFetch($sourceGroupStore, page, "timetable")
     }
 
     onMount(async () => {
@@ -89,7 +90,7 @@
             time = getNewTime()
 
             if (time.getTime() > refresh) {
-                timetableFetch($timetableGroupStore, $timetablePageStore, "timetable").then()
+                timetableFetch($sourceGroupStore, $timetablePageStore, "timetable").then()
                 if (!$timetableStore) {
                     refresh = time.getTime() + cOffline
                 } else {
@@ -190,7 +191,7 @@
                         {#if atom["SubjectId"]} <!--normal atom-->
                             {@const group=$timetableStore["Groups"].find(s => s["Id"] === atom["GroupIds"]?.[0] ?? "#")?.["Abbrev"].replace(" ", "").replace($timetableStore["Classes"][0]["Abbrev"], "") ?? ""}
                             {@const room=$timetableStore["Rooms"].find(s => s["Id"] === atom["RoomId"])?.["Abbrev"] ?? ""}
-                            {@const roomOverride=overrideRooms?.[timetableGroups.find(g => g["id"] === $timetableGroupStore)?.["class"]]}
+                            {@const roomOverride=overrideRooms?.[source[$sourceSchoolStore.toString()].find(g => g["id"] === $sourceGroupStore)?.["class"]]}
                             {@const subject=$timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"]) ?? null}
                             {@const teacher=$timetablePermanentStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? $timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? null}
                             <td style="background-color:var(--subject-{subject['Abbrev'].toUpperCase()})" class={past} onclick={()=>modalShow(subject, teacher, atom["Theme"])}>

@@ -1,5 +1,5 @@
 <script>
-    import {timetableCountdownStore, timetableFetch, timetableGroups, timetableGroupStore, timetablePermanentStore} from "../lib/timetable.js"
+    import {timetableCountdownStore, timetableFetch, timetablePermanentStore} from "../lib/timetable.js"
     import Loading from "../components/Loading.svelte"
     import {formatAddZero, formatTime} from "../lib/format.js"
     import {onDestroy, onMount} from "svelte"
@@ -7,6 +7,7 @@
     import {overrideWeek} from "../lib/override.js"
     import {getWeek} from "../lib/helper.js"
     import Banner from "../components/Banner.svelte"
+    import {source, sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
 
     /*const sparticles = {
         "composition": "source-over",
@@ -59,7 +60,7 @@
             time = new Date()
 
             if (time.getTime() > refresh) {
-                timetableFetch($timetableGroupStore, 0, "countdown")
+                timetableFetch($sourceGroupStore, 0, "countdown")
                 if (!$timetableCountdownStore) {
                     refresh = time.getTime() + cOffline
                 } else {
@@ -157,7 +158,7 @@
             </div>
             <div style="text-align: right">
                 <span>build: {__CF_PAGES_COMMIT_SHA__ ? "#" + __CF_PAGES_COMMIT_SHA__.slice(0, 7) : "dev"}</span> <!--injected variable by cloudflare-->
-                <span>group: {timetableGroups.find(g => g["id"] === $timetableGroupStore)?.["name"]}</span>
+                <span>group: {source[$sourceSchoolStore.toString()].find(g => g["id"] === $sourceGroupStore)?.["name"]}</span>
             </div>
         </div>
     </div>

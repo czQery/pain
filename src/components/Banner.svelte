@@ -4,6 +4,7 @@
     import {cOffline, cRefresh} from "../lib/const.js"
     import {newsFetch, newsStore} from "../lib/news.js"
     import {formatDate, formatDay} from "../lib/format.js"
+    import {sourceSchoolStore} from "../lib/var.js"
 
     let canvas
     let blurData = $derived(new ImageData(decodeBlurHash($newsStore ? $newsStore["blur"] : "", 32, 32), 32, 32))
@@ -25,7 +26,7 @@
             time = new Date()
 
             if (time.getTime() > refresh) {
-                newsFetch()
+                newsFetch($sourceSchoolStore.toString())
                 if (!$newsStore) {
                     refresh = time.getTime() + cOffline
                 } else {

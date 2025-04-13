@@ -2,7 +2,7 @@
     import {active, link} from "@dvcol/svelte-simple-router/router"
     import {RouterContext, RouterView} from "@dvcol/svelte-simple-router/components"
     import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
-    import {timetableGroups, timetableGroupStore, timetablePermanentFetch, timetablePermanentStore} from "./lib/timetable.js"
+    import {timetablePermanentFetch, timetablePermanentStore} from "./lib/timetable.js"
     import {preload} from "./lib/preload.js"
     import {onMount} from "svelte"
     import Settings from "./routes/Settings.svelte"
@@ -12,6 +12,7 @@
     import {umami} from "./lib/umami.js"
     import {cOffline} from "./lib/const.js"
     import {ttlCleanCache} from "./lib/ttl.js"
+    import {source, sourceGroupStore, sourceSchoolStore} from "./lib/var.js"
 
     let viewAnimate = $state(false)
     let interval
@@ -46,21 +47,31 @@
         document.getElementById("init-loading").style.display = "none"
         document.getElementById("app").style.display = "flex"
 
-        let group = localStorage.getItem("group")
-        if (group && timetableGroups.some(g => g["id"] === group)) {
-            timetableGroupStore.set(group)
+        // init source school settings
+        let school = localStorage.getItem("school")
+        if (school && source[school]) {
+            sourceSchoolStore.set(school)
         } else {
-            timetableGroupStore.set(timetableGroups[0]["id"])
-            localStorage.setItem("group", timetableGroups[0]["id"])
+            sourceSchoolStore.set(Object.keys(source)[0]) // set default school
+            localStorage.setItem("group", $sourceSchoolStore.toString())
         }
 
-        preload($timetableGroupStore.toString())
-        umami($timetableGroupStore.toString())
+        // init source group settings
+        let group = localStorage.getItem("group")
+        if (group && source[$sourceSchoolStore.toString()].some(g => g["id"] === group)) {
+            sourceGroupStore.set(group)
+        } else {
+            sourceGroupStore.set(source[$sourceSchoolStore.toString()][0]["id"]) // set default group
+            localStorage.setItem("group", $sourceGroupStore.toString())
+        }
+
+        preload($sourceSchoolStore.toString(), $sourceGroupStore.toString())
+        umami($sourceSchoolStore.toString(), $sourceGroupStore.toString())
         ttlCleanCache()
 
         interval = setInterval(() => {
             if (!$timetablePermanentStore) {
-                timetablePermanentFetch($timetableGroupStore.toString())
+                timetablePermanentFetch($sourceGroupStore.toString())
             } else {
                 clearInterval(interval)
             }

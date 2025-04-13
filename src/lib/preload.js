@@ -2,7 +2,7 @@ import {timetableCountdownStore, timetableFetch, timetablePermanentFetch, timeta
 import {canteenFetch, canteenStore} from "./canteen.js"
 import {newsFetch} from "./news.js"
 
-export const preload = (group) => {
+export const preload = (school, group) => {
     timetablePermanentStore.set(null)
     timetableCountdownStore.set(null)
     timetableStore.set(null)
@@ -11,6 +11,6 @@ export const preload = (group) => {
     timetablePermanentFetch(group).then()
     timetableFetch(group, 0, "countdown").then()
     timetableFetch(group, 0, "timetable").then()
-    canteenFetch().then()
-    newsFetch().then()
+    canteenFetch(school).then()
+    newsFetch(school).then()
 }

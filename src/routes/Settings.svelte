@@ -1,25 +1,47 @@
 <script>
-    import {timetableGroups, timetableGroupStore} from "../lib/timetable.js"
     import {preload} from "../lib/preload.js"
     import {umami} from "../lib/umami.js"
+    import {source, sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
+
+
+    const setSchool = () => {
+        localStorage.setItem("school", $sourceSchoolStore.toString())
+
+        // forward to group change
+        sourceGroupStore.set(source[$sourceSchoolStore.toString()][0]["id"]) // set default group
+        setGroup()
+    }
+
+    const setGroup = () => {
+        localStorage.setItem("group", $sourceGroupStore.toString())
+        preload($sourceSchoolStore.toString(), $sourceGroupStore.toString())
+        umami($sourceSchoolStore.toString(), $sourceGroupStore.toString())
+    }
+
 </script>
 
 <div id="settings-block">
-    <div id="settings-group">
+    <div id="settings-input">
+        <label for="group">School</label>
+        <select id="group" bind:value={$sourceSchoolStore} onchange={() => setSchool()}>
+            {#each Object.keys(source) as s}
+                <option value={s}>
+                    {s}
+                </option>
+            {/each}
+        </select>
+    </div>
+    <div id="settings-input">
         <label for="group">Group</label>
-        <select id="group" bind:value={$timetableGroupStore} onchange={() => {
-            localStorage.setItem("group", $timetableGroupStore.toString())
-            preload($timetableGroupStore.toString())
-            umami($timetableGroupStore.toString())
-        }}>
-            {#each timetableGroups as g}
+        <select id="group" bind:value={$sourceGroupStore} onchange={() => setGroup()}>
+            {#each source[$sourceSchoolStore.toString()] as g}
                 <option value={g["id"]}>
                     {g["name"]}
                 </option>
             {/each}
         </select>
     </div>
-    <div>
+    <div style="margin: 60px 0 0 0">
         <span>Zde může být i tvoje třída/skupina stačí když mi pošleš</span>
         <span style="color: var(--pink)">refresh-token</span>
         <span>z tvého bakaláře na discord @czqery</span>
@@ -49,18 +71,17 @@
         color: var(--silver);
     }
 
-    #settings-group {
+    #settings-input {
         display: flex;
         flex-direction: column;
         gap: 10px;
-        margin: 0 0 60px 0;
     }
 
-    #settings-group select {
+    #settings-input select {
         width: 200px;
     }
 
-    #settings-group label {
+    #settings-input label {
         margin: 0 0 0 5px;
     }
 </style>

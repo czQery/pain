@@ -7,13 +7,6 @@ export const timetablePageStore = writable(0)
 export const timetablePermanentStore = writable(null)
 export const timetableCountdownStore = writable(null)
 
-export const timetableGroups = [
-    {"id": "ZGY21K", "name": "R3-EM3-OV4", "class": "R3", "src": "sa"},
-    {"id": "ZGW1WS", "name": "R3-EM2-OV3", "class": "R3", "src": "dk"},
-    {"id": "RGW1X6", "name": "R3-EM1-OV2", "class": "R3", "src": "af"}
-]
-export const timetableGroupStore = writable(null)
-
 export const timetableFetch = async (group, page, override) => {
     try {
         // generate current week string for cache safety
