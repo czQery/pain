@@ -12,14 +12,17 @@
     import {umami} from "./lib/umami.js"
     import {cOffline} from "./lib/const.js"
     import {ttlCleanCache} from "./lib/ttl.js"
+    import {update} from "./main.js"
 
     let viewAnimate = $state(false)
     let interval
 
     let navDone = () => undefined
-    const navStart = () => {
-        navDone()?.()
+    const navStart = async (e) => {
+        // reload page if update is installed
+        if ($update) window.location.replace(window.location.origin + (e?.route?.path ?? ""))
 
+        navDone()?.()
         if (!document.startViewTransition) return
         viewAnimate = true
 
@@ -106,8 +109,8 @@
 <RouterContext {options}>
     <main class="container" style="view-transition-name:{(viewAnimate) ? 'app' : 'none'};">
         <RouterView onChange={
-        async () => {
-            return navStart()
+        async (e) => {
+            return navStart(e)
         }} onError={
         () => {
             navEnd()

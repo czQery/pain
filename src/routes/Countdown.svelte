@@ -7,6 +7,7 @@
     import {overrideWeek} from "../lib/override.js"
     import {getWeek} from "../lib/helper.js"
     import Banner from "../components/Banner.svelte"
+    import {update} from "../main.js"
 
     /*const sparticles = {
         "composition": "source-over",
@@ -156,7 +157,7 @@
                 <a href="https://qery.cz/l/g_pain">Štěpán Aubrecht</a>
             </div>
             <div style="text-align: right">
-                <span>build: {__CF_PAGES_COMMIT_SHA__ ? "#" + __CF_PAGES_COMMIT_SHA__.slice(0, 7) : "dev"}</span> <!--injected variable by cloudflare-->
+                <span>build: {(__CF_PAGES_COMMIT_SHA__ ? ("#" + __CF_PAGES_COMMIT_SHA__.slice(0, 7)) : "dev") + ($update ? "*" : "")}</span> <!--injected variable by cloudflare-->
                 <span>group: {timetableGroups.find(g => g["id"] === $timetableGroupStore)?.["name"]}</span>
             </div>
         </div>
