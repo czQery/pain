@@ -8,6 +8,7 @@
     import {getWeek} from "../lib/helper.js"
     import Banner from "../components/Banner.svelte"
     import {source, sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
+    import {update} from "../main.js"
 
     /*const sparticles = {
         "composition": "source-over",
@@ -157,7 +158,7 @@
                 <a href="https://qery.cz/l/g_pain">Štěpán Aubrecht</a>
             </div>
             <div style="text-align: right">
-                <span>build: {__CF_PAGES_COMMIT_SHA__ ? "#" + __CF_PAGES_COMMIT_SHA__.slice(0, 7) : "dev"}</span> <!--injected variable by cloudflare-->
+                <span>build: {(__CF_PAGES_COMMIT_SHA__ ? ("#" + __CF_PAGES_COMMIT_SHA__.slice(0, 7)) : "dev") + ($update ? "*" : "")}</span> <!--injected variable by cloudflare-->
                 <span>group: {source[$sourceSchoolStore.toString()].find(g => g["id"] === $sourceGroupStore)?.["name"]}</span>
             </div>
         </div>
