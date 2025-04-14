@@ -1,3 +1,8 @@
+// remove when gymnp.cz branch is merged
+export const ttlSchoolPreset = () => {
+    localStorage.setItem("school", "sssenp.cz")
+}
+
 // clean deprecated caches
 export const ttlCleanCache = () => {
     if (!("caches" in window)) return
