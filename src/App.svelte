@@ -57,7 +57,7 @@
             sourceSchoolStore.set(school)
         } else {
             sourceSchoolStore.set(Object.keys(source)[0]) // set default school
-            localStorage.setItem("group", $sourceSchoolStore.toString())
+            localStorage.setItem("school", $sourceSchoolStore.toString())
         }
 
         // init source group settings
