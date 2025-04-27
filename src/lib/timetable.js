@@ -28,7 +28,7 @@ export const timetableFetch = async (group, page, override) => {
         }
 
         // do the actual request
-        const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable?group=" + group + "&page=" + page.toString() + "&v=" + v.toString(), {
+        const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable?school=sssenp.cz&group=" + group + "&page=" + page.toString() + "&v=" + v.toString(), {
             credentials: "include"
         })
         const data = await response.json()
@@ -115,7 +115,7 @@ export const timetableFetch = async (group, page, override) => {
 
 export const timetablePermanentFetch = async (group) => {
     try {
-        const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable-permanent?group=" + group.toString(), {
+        const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable-permanent?school=sssenp.cz&group=" + group.toString(), {
             credentials: "include"
         })
         const data = await response.json()

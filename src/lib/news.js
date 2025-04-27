@@ -4,7 +4,7 @@ export const newsStore = writable(null)
 
 export const newsFetch = async () => {
     try {
-        const response = await fetch(import.meta.env.VITE_API + "/api/news", {
+        const response = await fetch(import.meta.env.VITE_API + "/api/news?school=sssenp.cz", {
             credentials: "include"
         })
         const data = await response.json()
