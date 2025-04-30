@@ -2,7 +2,7 @@ import {writable} from "svelte/store"
 
 export const source = {
 	"gymnp.cz": [
-		{"id": "ZGY21K", "name": "KVINTA", "class": "KVINTA", "src": "am"}
+		{"id": "764", "name": "KVINTA", "class": "KVINTA", "src": "am"}
 	],
 	"sssenp.cz": [
 		{"id": "ZGY21K", "name": "R3-EM3-OV4", "class": "R3", "src": "sa"},

@@ -2,24 +2,24 @@
   "name": "pain",
   "type": "module",
   "scripts": {
-	"dev": "vite --host",
-	"build": "vite build",
-	"preview": "vite preview"
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-	"@sveltejs/vite-plugin-svelte": "^5.0.3",
-	"@umami/node": "^0.4.0",
-	"svelte": "^5.26.3",
-	"vite": "^6.2.6"
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@umami/node": "^0.4.0",
+    "svelte": "^5.28.2",
+    "vite": "^6.3.4"
   },
   "dependencies": {
-	"@dvcol/svelte-simple-router": "^1.11.2",
-	"browserslist": "^4.24.4",
-	"fast-blurhash": "^1.1.4",
-	"lightningcss": "^1.29.3",
-	"lucide-svelte": "^0.488.0",
-	"path": "^0.12.7",
-	"vite-plugin-minify": "^2.1.0",
-	"vite-plugin-pwa": "^1.0.0"
+    "@dvcol/svelte-simple-router": "^2.0.1",
+    "browserslist": "^4.24.4",
+    "fast-blurhash": "^1.1.4",
+    "lightningcss": "^1.29.3",
+    "lucide-svelte": "^0.503.0",
+    "path": "^0.12.7",
+    "vite-plugin-minify": "^2.1.0",
+    "vite-plugin-pwa": "^1.0.0"
   }
 }
