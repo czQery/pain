@@ -1,24 +1,24 @@
 <script>
-    import {onDestroy, onMount} from "svelte"
-    import {LucideRefreshCw, LucideUnplug} from "lucide-svelte"
+	import {onDestroy, onMount} from "svelte"
+	import {LucideRefreshCw, LucideUnplug} from "lucide-svelte"
 
-    const timeToError = 5000 // 5s
+	const timeToError = 5000 // 5s
 
-    let start = new Date()
-    let interval
+	let start = new Date()
+	let interval
 
-    let error = $state(false)
+	let error = $state(false)
 
-    onMount(() => {
-        if (interval) clearInterval(interval)
-        setInterval(() => {
-            error = (new Date().getTime() > start.getTime() + timeToError)
-        }, 1000)
-    })
+	onMount(() => {
+		if (interval) clearInterval(interval)
+		setInterval(() => {
+			error = (new Date().getTime() > start.getTime() + timeToError)
+		}, 1000)
+	})
 
-    onDestroy(() => {
-        clearInterval(interval)
-    })
+	onDestroy(() => {
+		clearInterval(interval)
+	})
 </script>
 
 <div id="loading">
@@ -32,18 +32,18 @@
 </div>
 
 <style>
-    #loading {
-        margin: auto 0;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        animation: var(--animation-fade-in);
-    }
+	#loading {
+		margin: auto 0;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		animation: var(--animation-fade-in);
+	}
 
-    #loading :global(svg) {
-        height: 40px;
-        width: 40px;
-        margin: 0 auto;
-        stroke: var(--white)
-    }
+	#loading :global(svg) {
+		height: 40px;
+		width: 40px;
+		margin: 0 auto;
+		stroke: var(--white)
+	}
 </style>

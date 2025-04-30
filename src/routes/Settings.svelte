@@ -1,22 +1,22 @@
 <script>
-    import {preload} from "../lib/preload.js"
-    import {umami} from "../lib/umami.js"
-    import {source, sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
+	import {preload} from "../lib/preload.js"
+	import {umami} from "../lib/umami.js"
+	import {source, sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
 
 
-    const setSchool = () => {
-        localStorage.setItem("school", $sourceSchoolStore.toString())
+	const setSchool = () => {
+		localStorage.setItem("school", $sourceSchoolStore.toString())
 
-        // forward to group change
-        sourceGroupStore.set(source[$sourceSchoolStore.toString()][0]["id"]) // set default group
-        setGroup()
-    }
+		// forward to group change
+		sourceGroupStore.set(source[$sourceSchoolStore.toString()][0]["id"]) // set default group
+		setGroup()
+	}
 
-    const setGroup = () => {
-        localStorage.setItem("group", $sourceGroupStore.toString())
-        preload($sourceSchoolStore.toString(), $sourceGroupStore.toString())
-        umami($sourceSchoolStore.toString(), $sourceGroupStore.toString())
-    }
+	const setGroup = () => {
+		localStorage.setItem("group", $sourceGroupStore.toString())
+		preload($sourceSchoolStore.toString(), $sourceGroupStore.toString())
+		umami($sourceSchoolStore.toString(), $sourceGroupStore.toString())
+	}
 
 </script>
 
@@ -51,37 +51,37 @@
 </div>
 
 <style>
-    #settings-block {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        padding: 20px;
-        height: inherit;
-        justify-content: center;
-        gap: 20px;
-        align-items: center;
-    }
+	#settings-block {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		padding: 20px;
+		height: inherit;
+		justify-content: center;
+		gap: 20px;
+		align-items: center;
+	}
 
-    #settings-block span {
-        display: inline-block;
-        color: var(--silver);
-    }
+	#settings-block span {
+		display: inline-block;
+		color: var(--silver);
+	}
 
-    #settings-block code {
-        color: var(--silver);
-    }
+	#settings-block code {
+		color: var(--silver);
+	}
 
-    #settings-input {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
+	#settings-input {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
 
-    #settings-input select {
-        width: 200px;
-    }
+	#settings-input select {
+		width: 200px;
+	}
 
-    #settings-input label {
-        margin: 0 0 0 5px;
-    }
+	#settings-input label {
+		margin: 0 0 0 5px;
+	}
 </style>

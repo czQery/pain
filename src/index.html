@@ -21,261 +21,261 @@
     <link rel="preconnect" href="%VITE_API%">
     <script defer src="%VITE_UMAMI_URL%" data-website-id="%VITE_UMAMI_ID%"></script>
     <style>
-        @font-face {
-            font-family: "Roboto";
-            src: local("Roboto"), local("Roboto-Regular"), url("/font/roboto.woff2") format("woff2");
-            font-weight: normal;
-            font-style: normal;
-            font-display: block;
-        }
+		@font-face {
+			font-family: "Roboto";
+			src: local("Roboto"), local("Roboto-Regular"), url("/font/roboto.woff2") format("woff2");
+			font-weight: normal;
+			font-style: normal;
+			font-display: block;
+		}
 
-        @font-face {
-            font-family: "Roboto";
-            src: local("Roboto Bold"), local("Roboto-Bold"), url("/font/roboto-bold.woff2") format("woff2");
-            font-weight: bold;
-            font-style: normal;
-            font-display: swap;
-        }
+		@font-face {
+			font-family: "Roboto";
+			src: local("Roboto Bold"), local("Roboto-Bold"), url("/font/roboto-bold.woff2") format("woff2");
+			font-weight: bold;
+			font-style: normal;
+			font-display: swap;
+		}
 
-        :root {
-            --black: #000000;
-            --white: #ffffff;
-            --snow: #e6e6e6;
-            --silver: #8f8f8f;
-            --gray: #2f3336;
-            --pink: #a646c9;
-            --purple: #5918d5;
-            --brand: linear-gradient(145deg, var(--pink) 0%, var(--purple) 100%);
-            --brand-milky: linear-gradient(145deg, rgba(223, 193, 246, 0.4) 0%, rgba(129, 110, 164, 0.4) 100%);
-            --border: 5px;
-            --transition: 0.1s;
-            --hover: 0.4;
-            --animation-rotate: rotate 1.5s cubic-bezier(.79, .14, .15, .86) infinite;
-            --animation-fade-in: fade-in 1s cubic-bezier(.6, -0.28, .74, .05) 1;
-            --animation-scale: 50ms reverse scale;
-        }
+		:root {
+			--black: #000000;
+			--white: #ffffff;
+			--snow: #e6e6e6;
+			--silver: #8f8f8f;
+			--gray: #2f3336;
+			--pink: #a646c9;
+			--purple: #5918d5;
+			--brand: linear-gradient(145deg, var(--pink) 0%, var(--purple) 100%);
+			--brand-milky: linear-gradient(145deg, rgba(223, 193, 246, 0.4) 0%, rgba(129, 110, 164, 0.4) 100%);
+			--border: 5px;
+			--transition: 0.1s;
+			--hover: 0.4;
+			--animation-rotate: rotate 1.5s cubic-bezier(.79, .14, .15, .86) infinite;
+			--animation-fade-in: fade-in 1s cubic-bezier(.6, -0.28, .74, .05) 1;
+			--animation-scale: 50ms reverse scale;
+		}
 
-        * {
-            color: var(--snow);
-            box-sizing: border-box;
-            font-family: "Roboto", sans-serif;
-        }
+		* {
+			color: var(--snow);
+			box-sizing: border-box;
+			font-family: "Roboto", sans-serif;
+		}
 
-        html, body {
-            padding: 0;
-            margin: 0;
-            background-color: var(--black);
-            overflow: clip;
-        }
+		html, body {
+			padding: 0;
+			margin: 0;
+			background-color: var(--black);
+			overflow: clip;
+		}
 
-        ::view-transition-old(root),
-        ::view-transition-new(root),
-        ::view-transition-group(root) {
-            animation: none;
-        }
+		::view-transition-old(root),
+		::view-transition-new(root),
+		::view-transition-group(root) {
+			animation: none;
+		}
 
-        @media (pointer: fine) {
-            ::-webkit-scrollbar {
-                width: 5px;
-                height: 5px;
-            }
+		@media (pointer: fine) {
+			::-webkit-scrollbar {
+				width: 5px;
+				height: 5px;
+			}
 
-            ::-webkit-scrollbar-track {
-                background: none;
-                border-radius: 0 var(--border) var(--border) 0;
-            }
+			::-webkit-scrollbar-track {
+				background: none;
+				border-radius: 0 var(--border) var(--border) 0;
+			}
 
-            ::-webkit-scrollbar-thumb {
-                background: var(--snow);
-                border-radius: var(--border);
-            }
-        }
+			::-webkit-scrollbar-thumb {
+				background: var(--snow);
+				border-radius: var(--border);
+			}
+		}
 
-        span, h1, h2, h3, h4, code {
-            margin: 0;
-            color: var(--white);
-            display: block;
-        }
+		span, h1, h2, h3, h4, code {
+			margin: 0;
+			color: var(--white);
+			display: block;
+		}
 
-        h1 {
-            font-size: 80px;
-            min-height: 80px;
-            line-height: 80px;
-            font-weight: bold;
-        }
+		h1 {
+			font-size: 80px;
+			min-height: 80px;
+			line-height: 80px;
+			font-weight: bold;
+		}
 
-        h2 {
-            font-size: 25px;
-            min-height: 25px;
-            line-height: 25px;
-        }
+		h2 {
+			font-size: 25px;
+			min-height: 25px;
+			line-height: 25px;
+		}
 
-        h3 {
-            font-size: 18px;
-            min-height: 18px;
-            line-height: 18px;
-        }
+		h3 {
+			font-size: 18px;
+			min-height: 18px;
+			line-height: 18px;
+		}
 
-        span {
-            font-size: 10px;
-            min-height: 10px;
-            line-height: 10px;
-            color: var(--snow);
-        }
+		span {
+			font-size: 10px;
+			min-height: 10px;
+			line-height: 10px;
+			color: var(--snow);
+		}
 
-        strong {
-            font-size: 13px;
-            min-height: 13px;
-            line-height: 13px;
-            color: var(--pink);
-            font-family: monospace, monospace;
-        }
+		strong {
+			font-size: 13px;
+			min-height: 13px;
+			line-height: 13px;
+			color: var(--pink);
+			font-family: monospace, monospace;
+		}
 
-        code {
-            font-size: 13px;
-            min-height: 13px;
-            line-height: 13px;
-            color: var(--snow);
-            font-family: monospace, monospace;
-            line-break: anywhere;
-            border: 1px var(--gray) solid;
-            padding: 5px;
-            border-radius: var(--border);
-            width: fit-content;
-        }
+		code {
+			font-size: 13px;
+			min-height: 13px;
+			line-height: 13px;
+			color: var(--snow);
+			font-family: monospace, monospace;
+			line-break: anywhere;
+			border: 1px var(--gray) solid;
+			padding: 5px;
+			border-radius: var(--border);
+			width: fit-content;
+		}
 
-        select {
-            border: 1px var(--gray) solid;
-            padding: 5px;
-            height: 35px;
-            font-size: 18px;
-            line-height: 20px;
-            color: var(--snow);
-            background-color: var(--black);
-            border-radius: var(--border);
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
+		select {
+			border: 1px var(--gray) solid;
+			padding: 5px;
+			height: 35px;
+			font-size: 18px;
+			line-height: 20px;
+			color: var(--snow);
+			background-color: var(--black);
+			border-radius: var(--border);
+			appearance: none;
+			-webkit-appearance: none;
+			-moz-appearance: none;
 
-            /* Arrow */
-            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1hcnJvdy1kb3duIj48cGF0aCBkPSJNMTIgNXYxNCIvPjxwYXRoIGQ9Im0xOSAxMi03IDctNy03Ii8+PC9zdmc+");
-            background-repeat: no-repeat;
-            background-position: right 0.7rem top 50%;
-            background-size: 0.65rem auto;
-        }
+			/* Arrow */
+			background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1hcnJvdy1kb3duIj48cGF0aCBkPSJNMTIgNXYxNCIvPjxwYXRoIGQ9Im0xOSAxMi03IDctNy03Ii8+PC9zdmc+");
+			background-repeat: no-repeat;
+			background-position: right 0.7rem top 50%;
+			background-size: 0.65rem auto;
+		}
 
-        select:active, select:focus {
-            outline: none;
-            border: 1px var(--white) solid;
-        }
+		select:active, select:focus {
+			outline: none;
+			border: 1px var(--white) solid;
+		}
 
-        select option {
-            height: 18px;
-            line-height: 18px;
-            font-size: 18px;
-            background-color: var(--black);
-            color: var(--snow);
-            padding: 5px;
-            border: 1px var(--gray) solid;
-            border-radius: var(--border);
-            margin: 20px 0 0 0;
-        }
+		select option {
+			height: 18px;
+			line-height: 18px;
+			font-size: 18px;
+			background-color: var(--black);
+			color: var(--snow);
+			padding: 5px;
+			border: 1px var(--gray) solid;
+			border-radius: var(--border);
+			margin: 20px 0 0 0;
+		}
 
-        label {
-            height: 18px;
-            line-height: 18px;
-            font-size: 18px;
-            color: var(--white);
-            font-weight: bold;
-        }
+		label {
+			height: 18px;
+			line-height: 18px;
+			font-size: 18px;
+			color: var(--white);
+			font-weight: bold;
+		}
 
-        a svg, button svg {
-            will-change: transform, opacity, stroke;
-            transition: var(--transition) opacity linear;
-        }
+		a svg, button svg {
+			will-change: transform, opacity, stroke;
+			transition: var(--transition) opacity linear;
+		}
 
-        button:disabled,
-        button[disabled] {
-            cursor: default !important;
-        }
+		button:disabled,
+		button[disabled] {
+			cursor: default !important;
+		}
 
-        button:disabled svg,
-        button[disabled] svg {
-            opacity: var(--hover);
-        }
+		button:disabled svg,
+		button[disabled] svg {
+			opacity: var(--hover);
+		}
 
-        @media (hover: hover) and (pointer: fine) {
-            a:hover, button:hover {
-                cursor: pointer;
-            }
+		@media (hover: hover) and (pointer: fine) {
+			a:hover, button:hover {
+				cursor: pointer;
+			}
 
-            a:hover svg, button:hover svg {
-                opacity: var(--hover);
-            }
-        }
+			a:hover svg, button:hover svg {
+				opacity: var(--hover);
+			}
+		}
 
-        #app {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            justify-content: center;
-        }
+		#app {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			justify-content: center;
+		}
 
-        #init-loading {
-            display: none;
-            height: 100svh;
-            width: 100%;
-            animation: var(--animation-fade-in);
-        }
+		#init-loading {
+			display: none;
+			height: 100svh;
+			width: 100%;
+			animation: var(--animation-fade-in);
+		}
 
-        #init-loading div {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+		#init-loading div {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
 
-        #init-loading div svg {
-            animation: var(--animation-rotate);
-            width: 150px;
-            height: 150px;
-            display: block;
-            margin: 0 auto;
-            stroke: var(--white)
-        }
+		#init-loading div svg {
+			animation: var(--animation-rotate);
+			width: 150px;
+			height: 150px;
+			display: block;
+			margin: 0 auto;
+			stroke: var(--white)
+		}
 
-        #init-loading div noscript {
-            margin: 40px 0 0 0;
-            display: block;
-            color: #ffffff;
-            font-size: 30px;
-            text-align: center;
-            font-weight: 600;
-        }
+		#init-loading div noscript {
+			margin: 40px 0 0 0;
+			display: block;
+			color: #ffffff;
+			font-size: 30px;
+			text-align: center;
+			font-weight: 600;
+		}
 
-        @keyframes rotate {
-            100% {
-                transform: rotate(360deg);
-            }
-        }
+		@keyframes rotate {
+			100% {
+				transform: rotate(360deg);
+			}
+		}
 
-        @keyframes scale {
-            to {
-                transform: scale(110%);
-            }
-        }
+		@keyframes scale {
+			to {
+				transform: scale(110%);
+			}
+		}
 
-        @keyframes fade-in {
-            from {
-                opacity: 0;
-            }
-        }
+		@keyframes fade-in {
+			from {
+				opacity: 0;
+			}
+		}
 
-        @keyframes fade-out {
-            to {
-                opacity: 0;
-            }
-        }
+		@keyframes fade-out {
+			to {
+				opacity: 0;
+			}
+		}
     </style>
 </head>
 <body>
