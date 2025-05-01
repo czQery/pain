@@ -97,6 +97,10 @@ export const overrideCanteen = {
 }
 
 export const overrideOVGroup = {
+	"764": [
+		[null, null, null, null, null],
+		[null, null, null, null, null]
+	],
 	"ZGY21K": [ // R3-EM3-OV4
 		[null, null, "UV02Z", "UV02Z", "UX03D"], // odd
 		[null, null, null, null, null] // even 4->1->2->3

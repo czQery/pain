@@ -181,17 +181,28 @@
 		--subject-NON: var(--silver);
 
 		--subject-A: #0c355b;
+		--subject-F: var(--subject-A);
 		--subject-AJ: #d5334b;
 		--subject-CAD: #5f6895;
-		--subject-ČJL: #f2c40e;
+		--subject-INF: var(--subject-CAD);
+		--subject-ČJ: #f2c40e;
+		--subject-ČJL: var(--subject-ČJ);
 		--subject-ČT: #dd7571;
+		--subject-HV: var(--subject-ČT);
 		--subject-E: #058e3f;
+		--subject-G: var(--subject-E);
 		--subject-EM: #a845b3;
+		--subject-CH: var(--subject-EM);
 		--subject-ET: #11bb41;
+		--subject-B: var(--subject-ET);
 		--subject-EK: #fa147f;
+		--subject-ZSV: var(--subject-EK);
 		--subject-M: #23b1d2;
 		--subject-ON: #851049;
+		--subject-NJ: var(--subject-ON);
 		--subject-OV: #885d4c;
+		--subject-D: var(--subject-OV);
+		--subject-VV: #ff7629;
 		--subject-TV: #f5980c;
 	}
 
