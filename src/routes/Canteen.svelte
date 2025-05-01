@@ -48,7 +48,9 @@
                             <h3 style="color:var(--snow)">{day["soup"]}</h3>
                             {#each day["menus"] as menu, i}
                                 <div style="display: flex;gap: 5px">
-                                    <h3 style="color:var(--silver)">{(i + 1).toString() + ":"}</h3>
+                                    {#if day["menus"].length > 1}
+                                        <h3 style="color:var(--silver)">{(i + 1).toString() + ":"}</h3>
+                                    {/if}
                                     <h3 style="color:var(--snow)">{menu}</h3>
                                 </div>
                             {/each}

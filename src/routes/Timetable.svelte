@@ -142,7 +142,7 @@
         <thead>
         <tr>
             <th class="slim" bind:offsetHeight={cornerHeight}>
-                <h3>{($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek)) === "2" ? "EVEN" : "ODD"}</h3>
+                <h3>{(!isNaN($timetableStore["Cycles"][0]?.["Id"] ?? "#") ? $timetableStore["Cycles"][0]?.["Id"] : overrideWeek(pageWeek)) === "2" ? "EVEN" : "ODD"}</h3>
                 <span>{formatOrdinalNumber(pageWeek) + " week"}</span>
             </th>
             {#each days as day, i}
