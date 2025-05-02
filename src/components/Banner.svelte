@@ -3,7 +3,7 @@
 	import {onDestroy, onMount} from "svelte"
 	import {cOffline, cRefresh} from "../lib/const.js"
 	import {newsFetch, newsStore} from "../lib/news.js"
-	import {formatDate, formatDay} from "../lib/format.js"
+	import {formatDate, formatDay, formatHTML} from "../lib/format.js"
 	import {sourceSchoolStore} from "../lib/var.js"
 
 	let canvas
@@ -26,7 +26,7 @@
 			time = new Date()
 
 			if (time.getTime() > refresh) {
-				newsFetch($sourceSchoolStore.toString())
+				newsFetch($sourceSchoolStore.toString()).then()
 				if (!$newsStore) {
 					refresh = time.getTime() + cOffline
 				} else {
@@ -53,7 +53,7 @@
         {@const ago = Math.floor((time - (new Date($newsStore["date"]))) / 86_400_000).toString()}
         <div id="banner-news">
             <h4>{ago === "0" ? "Today: " : (ago + "d ago: ")}</h4>
-            <span>{$newsStore["title"]}</span>
+            <span>{formatHTML($newsStore["title"])}</span>
         </div>
     {/if}
     <canvas id="banner-blur" bind:this={canvas} width="32" height="32"></canvas>
@@ -105,7 +105,7 @@
 		right: 0;
 		height: 100%;
 		width: 100%;
-		opacity: 0.2;
+		opacity: 0.25;
 		border-radius: var(--border);
 	}
 
