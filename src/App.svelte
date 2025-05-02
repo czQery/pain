@@ -21,7 +21,7 @@
 	let navDone = () => undefined
 	const navStart = async (e) => {
 		// reload page if update is installed
-		if ($update) window.location.replace(window.location.origin + (e?.route?.path ?? ""))
+		if ($update) await window.location.replace(window.location.origin + (e?.route?.path ?? ""))
 
 		navDone()?.()
 

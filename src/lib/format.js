@@ -37,3 +37,9 @@ export const formatOrdinalNumber = (n) => {
 	let v = n % 100
 	return n + (s[(v - 20) % 10] || s[v] || s[0])
 }
+
+export const formatHTML = (text) => {
+	const parser = new DOMParser()
+	const doc = parser.parseFromString(text, "text/html")
+	return doc.body.textContent
+}
