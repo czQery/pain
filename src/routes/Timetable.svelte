@@ -135,7 +135,7 @@
         {/if}
         {#if modalTheme !== ""}
             <div style="height:10px"></div>
-            <h3 style="color:var(--silver)">{modalTheme}</h3>
+            <h3 style="color:var(--silver);white-space:pre-line">{modalTheme}</h3>
         {/if}
     </Modal>
     <table>
