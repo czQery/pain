@@ -195,23 +195,26 @@
                             {@const subject = $timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"]) ?? null}
                             {@const teacher = $timetablePermanentStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? $timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? null}
                             {@const change = ((subjectOriginal?.["Id"] ?? "#") !== subject["Id"] && atom["LessonRelease"] !== "override")}
-                            <td style="background-color:var(--subject-{subject['Abbrev'].toUpperCase()})" class={past} onclick={()=>modalShow(subject, teacher, atom["Theme"])}>
+                            <td style="background-color:var(--subject-{subject['Abbrev'].toUpperCase()})" class={past} onclick={()=>modalShow(subject, teacher, (atom["Test"] ? "Test: "+atom["Test"]+"\n"+atom["Theme"] : atom["Theme"]))}>
                                 <div class="flex-atom" style="height:{atomHeight-10}px"> <!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
                                     <div class="flex-between">
-                                        <span>{group}</span>
+                                        <span style="text-align:left">{group}</span>
+                                        {#if atom["Test"]}
+                                            <span style="background-color:var(--black);padding: 0 5px;border-radius:var(--border)">test</span>
+                                        {/if}
                                         {#if room !== ""}
-                                            <span>{room}</span>
+                                            <span style="text-align:right">{room}</span>
                                         {:else if subject["Abbrev"].toUpperCase() === "OV"}
-                                            <span>{overrideMasters?.[teacher?.["Id"]] ?? ""}</span>
+                                            <span style="text-align:right">{overrideMasters?.[teacher?.["Id"]] ?? ""}</span>
                                         {:else if roomOverride && !roomOverride["ignore"].includes(subject["Abbrev"].toUpperCase())}
-                                            <span>{roomOverride["rooms"][($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek)) === "2" ? 1 : 0][j]}</span>
+                                            <span style="text-align:right">{roomOverride["rooms"][($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek)) === "2" ? 1 : 0][j]}</span>
                                         {:else}
                                             <span></span>
                                         {/if}
                                     </div>
                                     <h3>{(change ? (subjectOriginal?.["Abbrev"].toUpperCase() ?? "#") + subjectChange : "") + subject["Abbrev"].toUpperCase()}</h3> <!--2*5px padding + 2*10px span + 18px h3 and the -1px magic number xd-->
                                     <div class="flex-between">
-                                        <span>
+                                        <span style="text-align:left">
                                             {#if change}
                                                 {#if subjectOriginal}
                                                     <LucidePencil/>
@@ -223,7 +226,7 @@
                                             {/if}
                                         </span>
                                         <span>{teacher?.["Abbrev"] ?? "#"}</span>
-                                        <span>
+                                        <span style="text-align:right">
                                             {#if atom["Theme"]}
                                                 <LucideMessageSquareText/>
                                             {:else}
@@ -399,6 +402,10 @@
 	.flex-between {
 		display: flex;
 		justify-content: space-between;
+	}
+
+	.flex-between span {
+		min-width: 12px;
 	}
 
 	/*hours: 9*/
