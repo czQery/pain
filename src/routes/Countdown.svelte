@@ -4,7 +4,7 @@
 	import {formatAddZero, formatTime} from "../lib/format.js"
 	import {onDestroy, onMount} from "svelte"
 	import {cOffline, cRefresh} from "../lib/const.js"
-	import {overrideWeek} from "../lib/override.js"
+	import {overrideMasters, overrideRooms, overrideWeek} from "../lib/override.js"
 	import {getWeek} from "../lib/helper.js"
 	import Banner from "../components/Banner.svelte"
 	import {source, sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
@@ -104,6 +104,9 @@
     {@const subject = $timetableCountdownStore["Subjects"].find(s => s["Id"] === (atom?.["SubjectId"] ?? (atomNext?.["SubjectId"] ?? "#")))?.["Abbrev"].toUpperCase() ?? "#"}
     {@const teacher = $timetablePermanentStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Name"] ?? $timetableCountdownStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Name"] ?? ""}
 
+    {@const room = $timetableCountdownStore["Rooms"].find(s => s["Id"] === (atom?.["RoomId"] ?? (atomNext?.["RoomId"] ?? "#")))?.["Abbrev"] ?? ""}
+    {@const roomOverride = overrideRooms?.[source[$sourceSchoolStore.toString()].find(g => g["id"] === $sourceGroupStore)?.["class"]]}
+
     {@const hourH = (hour ? getH(hour["EndTime"]) : getH(hourNext?.["BeginTime"] ?? "00"))}
     {@const hourM = (hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00"))}
     {@const hourS = (hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00"))}
@@ -143,7 +146,25 @@
                     <h2 style="color:var(--snow)">break followed by</h2>
                 {/if}
             {/if}
-            <h2 style="color:var(--subject-{(subject !== '#' ? subject : 'NON')})">{subject !== "#" ? ("#" + (hour?.["Caption"] ?? hourNext["Caption"]) + " - " + subject) : "painless"}</h2>
+            <div id="countdown-subject" style="color:var(--subject-{(subject !== '#' ? subject : 'NON')})">
+                {#if subject !== "#"}
+                    <h2>{"#" + (hour?.["Caption"] ?? hourNext["Caption"])}</h2>
+                    <h2>-</h2>
+                {/if}
+                <h2>{subject !== "#" ? subject : "painless"}</h2>
+                {#if subject !== "#"}
+                    {#if room !== ""}
+                        <h2>-</h2>
+                        <h2>{room}</h2>
+                    {:else if subject.toUpperCase() === "OV"}
+                        <h2>-</h2>
+                        <h2>{overrideMasters?.[atom?.["TeacherId"] ?? atomNext?.["TeacherId"]] ?? "#"}</h2>
+                    {:else if roomOverride && !roomOverride["ignore"].includes(subject.toUpperCase())}
+                        <h2>-</h2>
+                        <h2>{roomOverride["rooms"][($timetableCountdownStore["Cycles"][0]?.["Id"] ?? overrideWeek(getWeek(time))) === "2" ? 1 : 0][time.getDay() - 1]}</h2>
+                    {/if}
+                {/if}
+            </div>
             {#if subject !== "#"}
                 <h4 style="color:var(--silver)">{teacher}</h4>
             {/if}
@@ -212,6 +233,25 @@
 
 	#countdown-clock[data-animate="true"] * {
 		animation-duration: 50ms !important;
+	}
+
+	#countdown-subject {
+		display: flex;
+		justify-content: center;
+		gap: 5px;
+	}
+
+	#countdown-subject *:first-child {
+		text-align: right;
+	}
+
+	#countdown-subject *:last-child {
+		text-align: left;
+	}
+
+	#countdown-subject * {
+		color: inherit;
+		margin: auto 0;
 	}
 
 	#countdown-header {
