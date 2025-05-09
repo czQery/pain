@@ -5,7 +5,7 @@
 	import Loading from "../components/Loading.svelte"
 	import {formatDate, formatDay} from "../lib/format.js"
 	import {cOffline} from "../lib/const.js"
-	import {overrideCanteen, overrideOVGroup} from "../lib/override.js"
+	import {overrideCanteen, overrideOrdering, overrideOVGroup} from "../lib/override.js"
 	import {getWeek} from "../lib/helper.js"
 	import {sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
 
@@ -28,7 +28,7 @@
 </script>
 
 {#if $canteenStore}
-    <div id="canteen-block">
+    <div id="canteen-block" style="padding-bottom: {overrideOrdering[$sourceSchoolStore] ? '60px' : '20px'}">
         {#each $canteenStore as day, _}
             <!--DEBUG
             <h3>{time.getDate() + "." + time.getMonth() + "-" + date.getDate() + "." + date.getMonth()}</h3>
@@ -66,6 +66,9 @@
             {/if}
         {/each}
     </div>
+    {#if overrideOrdering[$sourceSchoolStore]}
+        <a id="canteen-button" href={overrideOrdering[$sourceSchoolStore]}>Ordering</a>
+    {/if}
 {:else}
     <Loading/>
 {/if}
@@ -111,5 +114,23 @@
 		display: flex;
 		flex-direction: column;
 		gap: 2px;
+	}
+
+	#canteen-button {
+		width: calc(100% - 20px);
+		height: 40px;
+		margin: 10px;
+		bottom: 50px;
+		position: absolute;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: var(--border);
+		z-index: 15;
+		color: var(--white);
+		text-decoration: none;
+		font-size: 18px;
+		background-color: var(--black);
+		border: 1px var(--gray) solid;
 	}
 </style>
