@@ -117,7 +117,7 @@
 	}
 
 	#canteen-button {
-		width: calc(100% - 20px);
+		width: calc(min(540px, 100%) - 20px);
 		height: 40px;
 		margin: 10px;
 		bottom: 50px;
