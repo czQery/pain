@@ -57,6 +57,11 @@ export const overrideMasters = {
 	"UW034": 306  //No
 }
 
+export const overrideOrdering = {
+	"gymnp.cz": "https://e-jidelnicek.cz/login",
+	"sssenp.cz": "https://jidelna.sssenp.cz/faces/login.jsp"
+}
+
 export const overrideCanteen = {
 	"UJ01Z": [
 		["7:50", "7:40", "7:30", "7:30", "7:20"],
