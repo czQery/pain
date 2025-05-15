@@ -67,7 +67,7 @@
         {/each}
     </div>
     {#if overrideOrdering[$sourceSchoolStore]}
-        <a id="canteen-button" href={overrideOrdering[$sourceSchoolStore]}>Ordering</a>
+        <a id="canteen-button" target="_blank" rel="noopener noreferrer" href={overrideOrdering[$sourceSchoolStore]}>Ordering</a>
     {/if}
 {:else}
     <Loading/>
@@ -132,5 +132,6 @@
 		font-size: 18px;
 		background-color: var(--black);
 		border: 1px var(--gray) solid;
+		box-shadow: 0 0 40px 20px var(--black);
 	}
 </style>
