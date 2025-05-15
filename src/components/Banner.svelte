@@ -41,7 +41,7 @@
 	})
 </script>
 
-<a id="banner" href={$newsStore ? $newsStore["link"] : ""}>
+<a id="banner" target="_blank" rel="noopener noreferrer" href={$newsStore ? $newsStore["link"] : ""}>
     <div id="banner-date">
         <div id="banner-date-current">
             <h2>{formatDay(time)}</h2>
