@@ -119,7 +119,7 @@
 </script>
 
 <RouterContext {options}>
-    <main class="container" style="view-transition-name:{(viewAnimate) ? 'app' : 'none'};">
+    <main class="container" style="view-transition-name:{(viewAnimate) ? 'main' : 'none'};">
         <RouterView onChange={
         async (e) => {
             return navStart(e)
@@ -158,16 +158,23 @@
 </RouterContext>
 
 <style>
-	::view-transition-group(app) {
+	::view-transition-group(main) {
 		animation-duration: 150ms;
 	}
 
-	::view-transition-old(app) {
+	::view-transition-old(main) {
 		animation: 50ms linear both fade-out;
 	}
 
-	::view-transition-new(app) {
+	::view-transition-new(main) {
 		animation: 100ms cubic-bezier(1.000, 0.700, 1.000, 1.000) 50ms both fade-in;
+	}
+
+	::view-transition-old(footer),
+	::view-transition-new(footer),
+	::view-transition-group(footer) {
+		height: 50px;
+		animation: none;
 	}
 
 	main {
@@ -213,6 +220,7 @@
 		outline: 1px var(--gray) solid;
 		z-index: 20;
 		background-color: var(--black);
+		view-transition-name: footer;
 	}
 
 	footer ul {
