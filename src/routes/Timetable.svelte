@@ -237,7 +237,7 @@
                                 </div>
                             </td>
                         {:else if atom["Change"]["ChangeType"] === "Removed" || atom["Change"]["ChangeType"] === "Canceled"} <!--atom removed-->
-                            <td class={"subject-removed "+past} onclick={() => modalShow(atom["Change"]["ChangeType"], null, atom["Change"]["TypeName"] ?? "Unknown reason")}>
+                            <td class={"subject-"+atom["Change"]["ChangeType"].toLowerCase()+" "+past} onclick={() => modalShow(atom["Change"]["ChangeType"], null, atom["Change"]["TypeName"] ?? "Unknown reason")}>
                                 <span></span>
                                 <h3>{subjectOriginal?.["Abbrev"].toUpperCase() ?? "#"}</h3>
                                 <span>{atom["Change"]["TypeName"]?.split(" ")[0].toLowerCase() ?? "removed"}</span>
@@ -383,13 +383,11 @@
 	}
 
 	.subject-removed {
-		background: repeating-linear-gradient(
-				45deg,
-				var(--black),
-				var(--black) 10px,
-				rgba(255, 255, 255, 0.2) 10px,
-				rgba(255, 255, 255, 0.2) 20px
-		);
+		background: repeating-linear-gradient(45deg, var(--black), var(--black) 10px, rgba(255, 255, 255, 0.2) 10px, rgba(255, 255, 255, 0.2) 20px);
+	}
+
+	.subject-canceled {
+		background: repeating-linear-gradient(135deg, var(--black), var(--black) 10px, rgba(126, 101, 177, 0.4) 10px, rgba(126, 101, 177, 0.4) 20px);
 	}
 
 	.flex-atom {
