@@ -77,7 +77,7 @@
 	})
 </script>
 
-{#if $timetableCountdownStore && $timetablePermanentStore}
+{#if $timetableCountdownStore && $timetablePermanentStore && $timetablePermanentStore["Hours"]}
     {@const today = $timetableCountdownStore["Days"]?.[time.getDay() - 1] ?? null}
     {@const atomBegin = today ? today?.["Atoms"].find(s => s["SubjectId"]) : null}
 
