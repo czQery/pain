@@ -106,7 +106,7 @@
 </script>
 
 <svelte:window bind:innerHeight={windowHeight}/>
-{#if $timetablePermanentStore}
+{#if $timetablePermanentStore && $timetablePermanentStore["Hours"]}
     <nav>
         <button onclick={() => setPage("backward")} disabled="{$timetablePageStore === 0 || !$timetableStore}">
             <LucideArrowBigLeftDash/>
@@ -122,7 +122,7 @@
         </button>
     </nav>
 {/if}
-{#if $timetableStore && $timetablePermanentStore}
+{#if $timetableStore && $timetablePermanentStore && $timetablePermanentStore["Hours"]}
     {@const pageWeek = getWeek(getNewDateTime(5))}
     <Modal bind:modal title="Tuition details">
         {#if modalSubjectColor === "FREE"}
