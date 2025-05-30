@@ -45,8 +45,7 @@ const setGroup = () => {
 		<span>z tvého bakaláře na discord @czqery</span>
 	</div>
 
-	<code>curl -d "grant_type=password&client_id=ANDR&username=<strong>jméno</strong>&password=<strong
-		>heslo</strong>&scope=bakalari_api+offline_access+timetable_widget" https://sssenp.bakalari.cz/api/login</code>
+	<code>curl -d "grant_type=password&client_id=ANDR&username=<strong>jméno</strong>&password=<strong>heslo</strong>&scope=bakalari_api+offline_access+timetable_widget" https://sssenp.bakalari.cz/api/login</code>
 </div>
 
 <style>

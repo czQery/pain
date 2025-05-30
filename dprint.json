@@ -21,6 +21,10 @@
 	"malva": {
 	},
 	"markup": {
+		"closingBracketSameLine": true,
+		"preferAttrsSingleLine": true,
+		"closingTagLineBreakForEmpty": "never",
+		"printWidth": 600
 	},
 	"yaml": {
 	},

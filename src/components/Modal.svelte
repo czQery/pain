@@ -11,8 +11,7 @@ let { modal = $bindable(), title = "Alert", children } = $props()
 	onkeydown={e => {
 		if (e.keyCode === 27) modal.close()
 	}}
-	aria-label="Close"
->
+	aria-label="Close">
 	<div class="dialog-block">
 		<header>
 			<h3 style="color: var(--silver)">{title}</h3>
