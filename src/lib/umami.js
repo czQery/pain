@@ -1,4 +1,4 @@
-import {aAttempts, cOffline} from "./const.js"
+import { aAttempts, cOffline } from "./const.js"
 
 export const umami = (school, group) => {
 	let attempts = 0
@@ -9,7 +9,7 @@ export const umami = (school, group) => {
 		}
 
 		if (window.umami) {
-			await window.umami.identify({school: school, group: group})
+			await window.umami.identify({ school: school, group: group })
 			clearInterval(interval)
 			return
 		}
