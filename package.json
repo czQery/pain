@@ -1,25 +1,25 @@
 {
-  "name": "pain",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --host",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^5.0.3",
-    "@umami/node": "^0.4.0",
-    "svelte": "^5.32.1",
-    "vite": "^6.3.5"
-  },
-  "dependencies": {
-    "@dvcol/svelte-simple-router": "2.4.0",
-    "browserslist": "^4.24.5",
-    "fast-blurhash": "^1.1.4",
-    "lightningcss": "^1.30.1",
-    "lucide-svelte": "^0.511.0",
-    "path": "^0.12.7",
-    "vite-plugin-minify": "^2.1.0",
-    "vite-plugin-pwa": "^1.0.0"
-  }
+	"name": "pain",
+	"type": "module",
+	"scripts": {
+		"dev": "vite --host",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"devDependencies": {
+		"@sveltejs/vite-plugin-svelte": "^5.0.3",
+		"@umami/node": "^0.4.0",
+		"svelte": "^5.33.10",
+		"vite": "^6.3.5"
+	},
+	"dependencies": {
+		"@dvcol/svelte-simple-router": "2.7.2",
+		"browserslist": "^4.25.0",
+		"fast-blurhash": "^1.1.4",
+		"lightningcss": "^1.30.1",
+		"lucide-svelte": "^0.511.0",
+		"path": "^0.12.7",
+		"vite-plugin-minify": "^2.1.0",
+		"vite-plugin-pwa": "^1.0.0"
+	}
 }

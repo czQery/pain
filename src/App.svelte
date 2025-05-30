@@ -1,5 +1,5 @@
 <script>
-	import {active, link} from "@dvcol/svelte-simple-router/router"
+	import {link, active} from "@dvcol/svelte-simple-router/action"
 	import {RouterContext, RouterView} from "@dvcol/svelte-simple-router/components"
 	import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
 	import {timetablePermanentFetch, timetablePermanentStore} from "./lib/timetable.js"

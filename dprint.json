@@ -1,0 +1,44 @@
+{
+	"typescript": {
+		"preferSingleLine": true,
+		"quoteStyle": "alwaysDouble",
+		"quoteProps": "consistent",
+		"operatorPosition": "nextLine",
+		"jsx.bracketPosition": "nextLine",
+		"arrowFunction.useParentheses": "preferNone",
+		"importDeclaration.forceSingleLine": true,
+		"exportDeclaration.forceSingleLine": true,
+		"commentLine.forceSpaceAfterSlashes": true,
+		"binaryExpression.spaceSurroundingBitwiseAndArithmeticOperator": true,
+		"semiColons": "asi"
+	},
+	"json": {
+	},
+	"markdown": {
+	},
+	"toml": {
+	},
+	"malva": {
+	},
+	"markup": {
+	},
+	"yaml": {
+	},
+	"lineWidth": 160,
+	"indentWidth": 4,
+	"useTabs": true,
+	"excludes": [
+		"**/node_modules",
+		"**/*-lock.json",
+		"src/js/{htmx,lucide,particles,qrcode}.js"
+	],
+	"plugins": [
+		"https://plugins.dprint.dev/typescript-0.95.5.wasm",
+		"https://plugins.dprint.dev/json-0.20.0.wasm",
+		"https://plugins.dprint.dev/markdown-0.18.0.wasm",
+		"https://plugins.dprint.dev/toml-0.7.0.wasm",
+		"https://plugins.dprint.dev/g-plane/malva-v0.12.1.wasm",
+		"https://plugins.dprint.dev/g-plane/markup_fmt-v0.20.0.wasm",
+		"https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.1.wasm"
+	]
+}

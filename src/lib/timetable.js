@@ -1,6 +1,6 @@
-import {writable} from "svelte/store"
-import {overrideOV, overrideOVGroup} from "./override.js"
-import {getWeek} from "./helper.js"
+import { writable } from "svelte/store"
+import { getWeek } from "./helper.js"
+import { overrideOV, overrideOVGroup } from "./override.js"
 
 export const timetableStore = writable(null)
 export const timetablePageStore = writable(0)
@@ -17,12 +17,14 @@ export const timetableFetch = async (group, page, override) => {
 		let v = encodeURIComponent(btoa(timeNow.getDate().toString() + "/" + (time.getMonth() + 1).toString() + "/" + time.getFullYear().toString()))
 
 		if (time.getDate() < timeNow.getDate()) {
-			v = encodeURIComponent(btoa(timeFallback.getDate().toString() + "/" + (timeFallback.getMonth() + 1).toString() + "/" + timeFallback.getFullYear().toString()))
+			v = encodeURIComponent(
+				btoa(timeFallback.getDate().toString() + "/" + (timeFallback.getMonth() + 1).toString() + "/" + timeFallback.getFullYear().toString()),
+			)
 		}
 
 		// do the actual request
 		const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable?group=" + group + "&page=" + page.toString() + "&v=" + v.toString(), {
-			credentials: "include"
+			credentials: "include",
 		})
 		const data = await response.json()
 
@@ -48,10 +50,10 @@ export const timetableFetch = async (group, page, override) => {
 			case "timetable":
 				let edit = data["data"]
 				let week = getWeek(new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + page * 7)))
-				let ov = overrideOVGroup[group][(week) % 2 === 0 ? 1 : 0]
+				let ov = overrideOVGroup[group][week % 2 === 0 ? 1 : 0]
 
 				if (time.getDay() === 0) {
-					ov = overrideOVGroup[group][(week) % 2 === 0 ? 0 : 1] // swap week polarity. could be week-- but it would break on new year eve
+					ov = overrideOVGroup[group][week % 2 === 0 ? 0 : 1] // swap week polarity. could be week-- but it would break on new year eve
 				}
 
 				for (let i = 0; i < 5; i++) {
@@ -91,7 +93,6 @@ export const timetableFetch = async (group, page, override) => {
 				data["data"] = edit
 		}
 
-
 		switch (override) {
 			case "countdown":
 				timetableCountdownStore.set(data["data"])
@@ -106,11 +107,9 @@ export const timetableFetch = async (group, page, override) => {
 	}
 }
 
-export const timetablePermanentFetch = async (group) => {
+export const timetablePermanentFetch = async group => {
 	try {
-		const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable-permanent?group=" + group.toString(), {
-			credentials: "include"
-		})
+		const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable-permanent?group=" + group.toString(), { credentials: "include" })
 		const data = await response.json()
 		timetablePermanentStore.set(data["data"])
 	} catch {

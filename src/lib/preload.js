@@ -1,6 +1,6 @@
-import {timetableCountdownStore, timetableFetch, timetablePermanentFetch, timetablePermanentStore, timetableStore} from "./timetable.js"
-import {canteenFetch, canteenStore} from "./canteen.js"
-import {newsFetch} from "./news.js"
+import { canteenFetch, canteenStore } from "./canteen.js"
+import { newsFetch } from "./news.js"
+import { timetableCountdownStore, timetableFetch, timetablePermanentFetch, timetablePermanentStore, timetableStore } from "./timetable.js"
 
 export const preload = (school, group) => {
 	timetablePermanentStore.set(null)
