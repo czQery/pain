@@ -36,7 +36,7 @@ onDestroy(() => {
 			{@const date = new Date(Number(day["date"]))}
 			{@const ovGroup = overrideOVGroup[$sourceGroupStore]?.[(getWeek(date)) % 2 === 0 ? 1 : 0]?.[date.getDay() - 1]}
 			{@const ovOverride = overrideCanteen[ovGroup]?.[(getWeek(date)) % 2 === 0 ? 1 : 0]?.[date.getDay() - 1]}
-			{@const ovMaster = (timetablePermanentStore?.["Teachers"] || []).find(s => s["Id"] === ovGroup)}
+			{@const ovMaster = ($timetablePermanentStore?.["Teachers"] || []).find(s => s["Id"] === ovGroup)}
 			{#if time.getMonth() < date.getMonth() || (time.getMonth() === date.getMonth() && time.getDate() <= date.getDate())}
 				<!--date correction-->
 				<div class="canteen-day">
