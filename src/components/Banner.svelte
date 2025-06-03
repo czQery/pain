@@ -2,7 +2,7 @@
 import { decodeBlurHash } from "fast-blurhash"
 import { onDestroy, onMount } from "svelte"
 import { cOffline, cRefresh } from "../lib/const.js"
-import { formatDate, formatDay, formatHTML } from "../lib/format.js"
+import { formatDate, formatDateDiff, formatDay, formatHTML } from "../lib/format.js"
 import { newsFetch, newsStore } from "../lib/news.js"
 import { sourceSchoolStore } from "../lib/var.js"
 
@@ -50,9 +50,9 @@ onDestroy(() => {
 		<h3 id="banner-date-extra">{$newsStore ? (Math.round($newsStore["temp"]) + "°") : ""}</h3>
 	</div>
 	{#if $newsStore}
-		{@const ago = Math.floor((time - (new Date($newsStore["date"]))) / 86_400_000).toString()}
+		{@const ago = formatDateDiff(new Date($newsStore["date"]))}
 		<div id="banner-news">
-			<h4>{ago === "0" ? "Today: " : (ago + "d ago: ")}</h4>
+			<h4>{ago === 0 ? "Today: " : (ago.toString() + "d ago: ")}</h4>
 			<span>{formatHTML($newsStore["title"])}</span>
 		</div>
 	{/if}

@@ -7,6 +7,15 @@ export const formatDate = date => {
 	return date.getDate().toString() + "." + (date.getMonth() + 1).toString() + "." + date.getFullYear().toString()
 }
 
+export const formatDateDiff = date => {
+	const now = new Date()
+
+	const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0)
+	const end = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0)
+
+	return Math.round(Math.abs(start - end) / 86_400_000)
+}
+
 export const formatTime = hour => {
 	let split = hour.split(":")
 	let date = new Date()
