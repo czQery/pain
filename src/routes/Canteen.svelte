@@ -1,30 +1,30 @@
 <script>
-import { onDestroy, onMount } from "svelte"
-import Loading from "../components/Loading.svelte"
-import { canteenFetch, canteenStore } from "../lib/canteen.js"
-import { cOffline } from "../lib/const.js"
-import { formatDate, formatDay } from "../lib/format.js"
-import { getWeek } from "../lib/helper.js"
-import { overrideCanteen, overrideOrdering, overrideOVGroup } from "../lib/override.js"
-import { timetablePermanentStore } from "../lib/timetable.js"
-import { sourceGroupStore, sourceSchoolStore } from "../lib/var.js"
+	import { onDestroy, onMount } from "svelte"
+	import Loading from "../components/Loading.svelte"
+	import { canteenFetch, canteenStore } from "../lib/canteen.js"
+	import { cOffline } from "../lib/const.js"
+	import { formatDate, formatDay } from "../lib/format.js"
+	import { getWeek } from "../lib/helper.js"
+	import { overrideCanteen, overrideOrdering, overrideOVGroup } from "../lib/override.js"
+	import { timetablePermanentStore } from "../lib/timetable.js"
+	import { sourceGroupStore, sourceSchoolStore } from "../lib/var.js"
 
-let time = $state(new Date())
-let interval
+	let time = $state(new Date())
+	let interval
 
-onMount(async () => {
-	if (interval) clearInterval(interval)
-	interval = setInterval(() => {
-		time = new Date()
-		if (!$canteenStore) {
-			canteenFetch($sourceSchoolStore.toString())
-		}
-	}, cOffline)
-})
+	onMount(async () => {
+		if (interval) clearInterval(interval)
+		interval = setInterval(() => {
+			time = new Date()
+			if (!$canteenStore) {
+				canteenFetch($sourceSchoolStore.toString())
+			}
+		}, cOffline)
+	})
 
-onDestroy(() => {
-	clearInterval(interval)
-})
+	onDestroy(() => {
+		clearInterval(interval)
+	})
 </script>
 
 {#if $canteenStore}
@@ -75,64 +75,64 @@ onDestroy(() => {
 {/if}
 
 <style>
-#canteen-block {
-	display: flex;
-	width: 100%;
-	flex-direction: column;
-	overflow-y: auto;
-	padding: 20px;
-	align-items: center;
-	gap: 20px;
-	will-change: scroll-position;
-	z-index: 10;
-}
+	#canteen-block {
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+		overflow-y: auto;
+		padding: 20px;
+		align-items: center;
+		gap: 20px;
+		will-change: scroll-position;
+		z-index: 10;
+	}
 
-.canteen-day {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	max-width: 500px;
-	width: 100%;
-}
+	.canteen-day {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		max-width: 500px;
+		width: 100%;
+	}
 
-.canteen-title {
-	display: flex;
-	gap: 5px;
-	align-items: baseline;
-}
+	.canteen-title {
+		display: flex;
+		gap: 5px;
+		align-items: baseline;
+	}
 
-.canteen-title h2 {
-	background: var(--brand);
-	color: transparent;
-	background-clip: text;
-}
+	.canteen-title h2 {
+		background: var(--brand);
+		color: transparent;
+		background-clip: text;
+	}
 
-.canteen-title h3 {
-	color: var(--silver);
-}
+	.canteen-title h3 {
+		color: var(--silver);
+	}
 
-.canteen-lines {
-	display: flex;
-	flex-direction: column;
-	gap: 2px;
-}
+	.canteen-lines {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
 
-#canteen-button {
-	width: calc(min(540px, 100%) - 20px);
-	height: 40px;
-	margin: 10px;
-	bottom: 50px;
-	position: absolute;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: var(--border);
-	z-index: 15;
-	color: var(--white);
-	text-decoration: none;
-	font-size: 18px;
-	background-color: var(--black);
-	border: 1px var(--gray) solid;
-	box-shadow: 0 0 40px 20px var(--black);
-}
+	#canteen-button {
+		width: calc(min(540px, 100%) - 20px);
+		height: 40px;
+		margin: 10px;
+		bottom: 50px;
+		position: absolute;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: var(--border);
+		z-index: 15;
+		color: var(--white);
+		text-decoration: none;
+		font-size: 18px;
+		background-color: var(--black);
+		border: 1px var(--gray) solid;
+		box-shadow: 0 0 40px 20px var(--black);
+	}
 </style>
