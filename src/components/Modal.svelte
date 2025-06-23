@@ -1,7 +1,7 @@
 <script>
-import { LucideX } from "lucide-svelte"
+	import { LucideX } from "lucide-svelte"
 
-let { modal = $bindable(), title = "Alert", children } = $props()
+	let { modal = $bindable(), title = "Alert", children } = $props()
 </script>
 
 <!--svelte-ignore a11y_no_noninteractive_element_interactions-->
@@ -28,60 +28,60 @@ let { modal = $bindable(), title = "Alert", children } = $props()
 </dialog>
 
 <style>
-dialog {
-	z-index: 30;
-	margin: 0;
-	padding: 0;
-	border: none;
-	background: var(--brand-milky);
-}
+	dialog {
+		z-index: 30;
+		margin: 0;
+		padding: 0;
+		border: none;
+		background: var(--brand-milky);
+	}
 
-dialog[open] {
-	display: flex;
-	width: 100%;
-	height: 100svh;
-	justify-content: center;
-	align-items: center;
-}
+	dialog[open] {
+		display: flex;
+		width: 100%;
+		height: 100svh;
+		justify-content: center;
+		align-items: center;
+	}
 
-.dialog-block {
-	background-color: var(--black);
-	border: 1px var(--gray) solid;
-	border-radius: var(--border);
-	max-width: calc(100% - 100px);
-	max-height: calc(100svh - 100px);
-	min-width: 270px;
-}
+	.dialog-block {
+		background-color: var(--black);
+		border: 1px var(--gray) solid;
+		border-radius: var(--border);
+		max-width: calc(100% - 100px);
+		max-height: calc(100svh - 100px);
+		min-width: 270px;
+	}
 
-.dialog-block header {
-	display: flex;
-	justify-content: space-between;
-	border-bottom: 1px var(--gray) solid;
-	padding: 20px;
-	height: 58px;
-}
+	.dialog-block header {
+		display: flex;
+		justify-content: space-between;
+		border-bottom: 1px var(--gray) solid;
+		padding: 20px;
+		height: 58px;
+	}
 
-.dialog-block header button {
-	background: none;
-	border: none;
-	text-decoration: none;
-	-webkit-tap-highlight-color: transparent !important;
-	outline: none !important;
-	padding: 0;
-	height: 18px;
-	width: 18px;
-}
+	.dialog-block header button {
+		background: none;
+		border: none;
+		text-decoration: none;
+		-webkit-tap-highlight-color: transparent !important;
+		outline: none !important;
+		padding: 0;
+		height: 18px;
+		width: 18px;
+	}
 
-.dialog-block header :global(svg) {
-	height: 18px;
-	width: 18px;
-	stroke: var(--silver);
-}
+	.dialog-block header :global(svg) {
+		height: 18px;
+		width: 18px;
+		stroke: var(--silver);
+	}
 
-.dialog-block div {
-	padding: 20px;
-	display: flex;
-	flex-direction: column;
-	gap: 5px;
-}
+	.dialog-block div {
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
 </style>

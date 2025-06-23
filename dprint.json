@@ -24,7 +24,9 @@
 		"closingBracketSameLine": true,
 		"preferAttrsSingleLine": true,
 		"closingTagLineBreakForEmpty": "never",
-		"printWidth": 600
+		"printWidth": 600,
+		"svelte.scriptIndent": true,
+		"svelte.styleIndent": true
 	},
 	"yaml": {
 	},

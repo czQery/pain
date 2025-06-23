@@ -37,6 +37,10 @@ export const formatAddZero = num => {
 	}
 }
 
+export const formatRound = num => {
+	return Math.round((num + Number.EPSILON) * 100) / 100
+}
+
 export const formatCapitalize = text => {
 	return text.charAt(0).toUpperCase() + text.slice(1)
 }
