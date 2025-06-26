@@ -1,13 +1,10 @@
 <script>
 	import {onDestroy, onMount} from "svelte"
 	import Banner from "../components/Banner.svelte"
-	import Loading from "../components/Loading.svelte"
 	import Summer from "../components/season/Summer.svelte"
 	import {cOffline, cRefresh} from "../lib/const.js"
 	import {formatAddZero, formatTime} from "../lib/format.js"
-	import {getWeek} from "../lib/helper.js"
-	import {overrideRooms, overrideWeek} from "../lib/override.js"
-	import {timetableCountdownStore, timetableFetch, timetablePermanentStore} from "../lib/timetable.js"
+	import {timetableCountdownStore, timetableFetch} from "../lib/timetable.js"
 	import {source, sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
 	import {update} from "../main.js"
 
@@ -22,6 +19,8 @@
 	const getH = hour => formatAddZero(Math.trunc((formatTime(hour).getTime() - time) / 1000 / 3600).toString())
 	const getM = hour => formatAddZero(Math.trunc((((formatTime(hour).getTime() - time) / 1000) % 3600) / 60).toString())
 	const getS = hour => formatAddZero(Math.trunc(((formatTime(hour).getTime() - time) / 1000) % 60).toString())
+
+	let hourD = $derived(getD(1756677600000))
 
 	onMount(async () => {
 		setTimeout(async () => {
@@ -49,7 +48,7 @@
 	})
 </script>
 
-{#if $timetableCountdownStore && $timetablePermanentStore && $timetablePermanentStore["Hours"]}
+<!--{#if $timetableCountdownStore && $timetablePermanentStore && $timetablePermanentStore["Hours"]}
 	{@const today = $timetableCountdownStore["Days"]?.[time.getDay() - 1] ?? null}
 	{@const atomBegin = today ? today?.["Atoms"].find(s => s["SubjectId"]) : null}
 
@@ -79,26 +78,25 @@
 	{@const room = $timetableCountdownStore["Rooms"].find(s => s["Id"] === (atom?.["RoomId"] ?? (atomNext?.["RoomId"] ?? "#")))?.["Abbrev"] ?? ""}
 	{@const roomOverride = overrideRooms?.[source[$sourceSchoolStore.toString()].find(g => g["id"] === $sourceGroupStore)?.["class"]]}
 
-	{@const hourD = getD(1756677600000)}
 	{@const hourH = hour ? getH(hour["EndTime"]) : getH(hourNext?.["BeginTime"] ?? "00")}
 	{@const hourM = hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00")}
-	{@const hourS = hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00")}
+	{@const hourS = hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00")}-->
 
-	<!--<Winter />-->
-	<Summer />
-	<div id="countdown-block">
-		<div id="countdown-header">
-			<Banner />
+<!--<Winter />-->
+<Summer />
+<div id="countdown-block">
+	<div id="countdown-header">
+		<Banner />
+	</div>
+	<div id="countdown-center">
+		<div id="countdown-clock" data-animate={animate}>
+			{#key hourD}
+				<h1 style="will-change: transform">{hourD}</h1>
+			{/key}
 		</div>
-		<div id="countdown-center">
-			<div id="countdown-clock" data-animate={animate}>
-				{#key hourD}
-					<h1 style="will-change: transform">{hourD}</h1>
-				{/key}
-			</div>
-			<h2 style="color: var(--silver)">days</h2>
-		</div>
-		<!--<div id="countdown-center">
+		<h2 style="color: var(--silver)">days</h2>
+	</div>
+	<!--<div id="countdown-center">
 			<div id="countdown-clock" data-animate={animate}>
 				{#if subject !== "#" && hourH !== "00"}
 					{#key hourH}
@@ -156,21 +154,21 @@
             <span>{"HOUR - " +hour?.["Caption"] + " - " + atom?.["SubjectId"]}</span>
             <span>{"NEXT - " +hourNext?.["Caption"] + " - " + atomNext?.["SubjectId"]}</span>&ndash;&gt;
 		</div>-->
-		<div id="countdown-footer">
-			<div>
-				<span>Created by</span>
-				<a href="https://qery.cz/l/g_pain">Štěpán Aubrecht</a>
-			</div>
-			<div style="text-align: right">
-				<!--injected variable by cloudflare-->
-				<span>build: {(__CF_PAGES_COMMIT_SHA__ ? ("#" + __CF_PAGES_COMMIT_SHA__.slice(0, 7)) : "dev") + ($update ? "*" : "")}</span>
-				<span>group: {source[$sourceSchoolStore.toString()].find(g => g["id"] === $sourceGroupStore)?.["name"]}</span>
-			</div>
+	<div id="countdown-footer">
+		<div>
+			<span>Created by</span>
+			<a href="https://qery.cz/l/g_pain">Štěpán Aubrecht</a>
+		</div>
+		<div style="text-align: right">
+			<!--injected variable by cloudflare-->
+			<span>build: {(__CF_PAGES_COMMIT_SHA__ ? ("#" + __CF_PAGES_COMMIT_SHA__.slice(0, 7)) : "dev") + ($update ? "*" : "")}</span>
+			<span>group: {source[$sourceSchoolStore.toString()].find(g => g["id"] === $sourceGroupStore)?.["name"]}</span>
 		</div>
 	</div>
-{:else}
+</div>
+<!--{:else}
 	<Loading />
-{/if}
+{/if}-->
 
 <style>
 	#countdown-block {
