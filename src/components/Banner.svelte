@@ -154,8 +154,6 @@
 	#banner-news h4 {
 		color: var(--snow);
 		white-space: nowrap;
-		font-size: 15px;
-		line-height: 18px;
 	}
 
 	#banner-news span {
