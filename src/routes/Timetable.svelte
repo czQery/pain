@@ -134,8 +134,8 @@
 			<h3 style="color: var(--snow)">{modalTeacher}</h3>
 		{/if}
 		{#if modalTheme !== ""}
-			<div style="height: 10px"></div>
-			<h3 style="color: var(--silver); white-space: pre-line">{modalTheme}</h3>
+			<div style="height: 0"></div>
+			<h4 style="color: var(--silver); white-space: pre-line">{modalTheme}</h4>
 		{/if}
 	</Modal>
 	<table>

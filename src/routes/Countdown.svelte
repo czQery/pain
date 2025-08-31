@@ -1,12 +1,14 @@
 <script>
-	import {onDestroy, onMount} from "svelte"
+	import { onDestroy, onMount } from "svelte"
 	import Banner from "../components/Banner.svelte"
-	import Summer from "../components/season/Summer.svelte"
-	import {cOffline, cRefresh} from "../lib/const.js"
-	import {formatAddZero, formatTime} from "../lib/format.js"
-	import {timetableCountdownStore, timetableFetch} from "../lib/timetable.js"
-	import {source, sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
-	import {update} from "../main.js"
+	import Loading from "../components/Loading.svelte"
+	import { cOffline, cRefresh } from "../lib/const.js"
+	import { formatAddZero, formatTime } from "../lib/format.js"
+	import { getWeek } from "../lib/helper.js"
+	import { overrideRooms, overrideWeek } from "../lib/override.js"
+	import { timetableCountdownStore, timetableFetch, timetablePermanentStore } from "../lib/timetable.js"
+	import { source, sourceGroupStore, sourceSchoolStore } from "../lib/var.js"
+	import { update } from "../main.js"
 
 	let animate = $state(false)
 	let time = $state(new Date())
@@ -15,12 +17,11 @@
 	let refresh = time.getTime() + cOffline // cOffline run is set always for the next request after the data is already loaded anyway
 	let interval
 
-	const getD = end => Math.ceil((end - time) / 1000 / 3600 / 24).toString()
+	/*const getD = end => Math.ceil((end - time) / 1000 / 3600 / 24).toString()
+    let hourD = $derived(getD(1756677600000))*/
 	const getH = hour => formatAddZero(Math.trunc((formatTime(hour).getTime() - time) / 1000 / 3600).toString())
 	const getM = hour => formatAddZero(Math.trunc((((formatTime(hour).getTime() - time) / 1000) % 3600) / 60).toString())
 	const getS = hour => formatAddZero(Math.trunc(((formatTime(hour).getTime() - time) / 1000) % 60).toString())
-
-	let hourD = $derived(getD(1756677600000))
 
 	onMount(async () => {
 		setTimeout(async () => {
@@ -48,7 +49,7 @@
 	})
 </script>
 
-<!--{#if $timetableCountdownStore && $timetablePermanentStore && $timetablePermanentStore["Hours"]}
+{#if $timetableCountdownStore && $timetablePermanentStore && $timetablePermanentStore["Hours"]}
 	{@const today = $timetableCountdownStore["Days"]?.[time.getDay() - 1] ?? null}
 	{@const atomBegin = today ? today?.["Atoms"].find(s => s["SubjectId"]) : null}
 
@@ -80,29 +81,30 @@
 
 	{@const hourH = hour ? getH(hour["EndTime"]) : getH(hourNext?.["BeginTime"] ?? "00")}
 	{@const hourM = hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00")}
-	{@const hourS = hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00")}-->
+	{@const hourS = hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00")}
 
-<!--<Winter />-->
-<Summer />
-<div id="countdown-block">
-	<div id="countdown-header">
-		<Banner />
-	</div>
-	<div id="countdown-center">
-		<div id="countdown-clock" data-animate={animate}>
-			{#key hourD}
-				<h1 style="will-change: transform">{hourD}</h1>
-			{/key}
+	<!--<Winter />-->
+	<!--<Summer />-->
+	<div id="countdown-block">
+		<div id="countdown-header">
+			<Banner />
 		</div>
-		<h2 style="color: var(--silver)">days</h2>
-	</div>
-	<!--<div id="countdown-center">
+		<!-- Days countdown
+		<div id="countdown-center">
+            <div id="countdown-clock" data-animate={animate}>
+                {#key hourD}
+                    <h1 style="will-change: transform">{hourD}</h1>
+                {/key}
+            </div>
+            <h2 style="color: var(&#45;&#45;silver)">days</h2>
+        </div>-->
+		<div id="countdown-center">
 			<div id="countdown-clock" data-animate={animate}>
 				{#if subject !== "#" && hourH !== "00"}
 					{#key hourH}
 						<h1 style="will-change: transform">{hourH}</h1>
 					{/key}
-					<h1 style="color: var(&#45;&#45;silver)">:</h1>
+					<h1 style="color: var(--silver)">:</h1>
 				{/if}
 				{#if subject !== "#"}
 					{#key hourM}
@@ -111,7 +113,7 @@
 				{:else}
 					<h1>00</h1>
 				{/if}
-				<h1 style="color: var(&#45;&#45;silver)">:</h1>
+				<h1 style="color: var(--silver)">:</h1>
 				{#if subject !== "#"}
 					{#key hourS}
 						<h1 style="will-change: transform">{hourS}</h1>
@@ -122,12 +124,12 @@
 			</div>
 			{#if !hour && subject !== "#"}
 				{#if hourNext?.["Id"] === atomBegin?.["HourId"]}
-					<h2 style="color: var(&#45;&#45;snow)">starting with</h2>
+					<h2 style="color: var(--snow)">starting with</h2>
 				{:else}
-					<h2 style="color: var(&#45;&#45;snow)">break followed by</h2>
+					<h2 style="color: var(--snow)">break followed by</h2>
 				{/if}
 			{/if}
-			<div id="countdown-subject" style:color={"var(&#45;&#45;subject-" + (subject !== "#" ? subject : "NON") + ")"}>
+			<div id="countdown-subject" style:color={"var(--subject-" + (subject !== "#" ? subject : "NON") + ")"}>
 				{#if subject !== "#"}
 					<h2>{"#" + (hour?.["Caption"] ?? hourNext["Caption"])}</h2>
 					<h2>-</h2>
@@ -147,28 +149,28 @@
 				{/if}
 			</div>
 			{#if subject !== "#"}
-				<h4 style="color: var(&#45;&#45;silver)">{teacher}</h4>
+				<h4 style="color: var(--silver)">{teacher}</h4>
 			{/if}
-			&lt;!&ndash;DEBUG
+			<!--DEBUG
             <span>{subject}</span>
             <span>{"HOUR - " +hour?.["Caption"] + " - " + atom?.["SubjectId"]}</span>
-            <span>{"NEXT - " +hourNext?.["Caption"] + " - " + atomNext?.["SubjectId"]}</span>&ndash;&gt;
-		</div>-->
-	<div id="countdown-footer">
-		<div>
-			<span>Created by</span>
-			<a href="https://qery.cz/l/g_pain">Štěpán Aubrecht</a>
+            <span>{"NEXT - " +hourNext?.["Caption"] + " - " + atomNext?.["SubjectId"]}</span>-->
 		</div>
-		<div style="text-align: right">
-			<!--injected variable by cloudflare-->
-			<span>build: {(__CF_PAGES_COMMIT_SHA__ ? ("#" + __CF_PAGES_COMMIT_SHA__.slice(0, 7)) : "dev") + ($update ? "*" : "")}</span>
-			<span>group: {source[$sourceSchoolStore.toString()].find(g => g["id"] === $sourceGroupStore)?.["name"]}</span>
+		<div id="countdown-footer">
+			<div>
+				<h4>Created by</h4>
+				<a href="https://qery.cz">Štěpán Aubrecht</a>
+			</div>
+			<div style="text-align: right">
+				<!--injected variable by cloudflare-->
+				<h4>build: {(__CF_PAGES_COMMIT_SHA__ ? ("#" + __CF_PAGES_COMMIT_SHA__.slice(0, 7)) : "dev") + ($update ? "*" : "")}</h4>
+				<h4>group: {source[$sourceSchoolStore.toString()].find(g => g["id"] === $sourceGroupStore)?.["name"]}</h4>
+			</div>
 		</div>
 	</div>
-</div>
-<!--{:else}
+{:else}
 	<Loading />
-{/if}-->
+{/if}
 
 <style>
 	#countdown-block {
@@ -200,6 +202,7 @@
 		display: flex;
 		justify-content: center;
 		user-select: none;
+		font-family: RobotoMono, monospace;
 	}
 
 	#countdown-clock * {
@@ -254,15 +257,15 @@
 		flex-direction: column;
 	}
 
-	#countdown-footer span, #countdown-footer a {
-		font-size: 15px;
-		line-height: 18px;
+	#countdown-footer h4, #countdown-footer a {
 		display: inline-block;
 		text-decoration: none;
 		color: var(--snow);
 	}
 
 	#countdown-footer a {
+		font-size: 15px;
+		line-height: 18px;
 		background: var(--brand);
 		color: transparent;
 		background-clip: text;

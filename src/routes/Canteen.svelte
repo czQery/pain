@@ -117,6 +117,10 @@
 		gap: 2px;
 	}
 
+	.canteen-lines h3 {
+		font-weight: normal;
+	}
+
 	#canteen-button {
 		width: calc(min(540px, 100%) - 20px);
 		height: 40px;

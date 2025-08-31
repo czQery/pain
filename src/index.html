@@ -11,21 +11,20 @@
 		<meta name="mobile-web-app-capable" content="yes">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="theme-color" content="#000000">
-		<meta name="twitter:card" content="summary">
 		<meta name="twitter:site" content="@czQery">
-		<meta name="twitter:creator" content="@czQery">
-		<meta name="og:site_name" content="Pain">
-		<meta name="author" content="Štěpán Aubrecht">
+		<meta property="og:type" content="website">
+		<meta name="pinterest-rich-pin" content="true">
+		<meta name="googlebot" content="notranslate">
 		<link rel="preload" href="/font/roboto.woff2" as="font" type="font/woff2" crossorigin>
-		<link rel="preload" href="/font/roboto-bold.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/font/roboto-mono.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="preconnect" href="%VITE_API%">
 		<script defer src="%VITE_UMAMI_URL%" data-website-id="%VITE_UMAMI_ID%"></script>
 		<style>
 		@font-face {
 			font-family: "Roboto";
 			src:
-				local("Roboto"),
-				local("Roboto-Regular"),
+				local("Roboto Medium"),
+				local("Roboto-Medium"),
 				url("/font/roboto.woff2") format("woff2");
 			font-weight: normal;
 			font-style: normal;
@@ -33,14 +32,14 @@
 		}
 
 		@font-face {
-			font-family: "Roboto";
+			font-family: "RobotoMono";
 			src:
-				local("Roboto Bold"),
-				local("Roboto-Bold"),
-				url("/font/roboto-bold.woff2") format("woff2");
-			font-weight: bold;
+				local("Roboto Mono Bold"),
+				local("RobotoMono-Bold"),
+				url("/font/roboto-mono.woff2") format("woff2");
+			font-weight: normal;
 			font-style: normal;
-			font-display: swap;
+			font-display: block;
 		}
 
 		:root {
@@ -115,12 +114,21 @@
 			font-size: 25px;
 			min-height: 25px;
 			line-height: 25px;
+			font-weight: bold;
 		}
 
 		h3 {
 			font-size: 18px;
 			min-height: 18px;
 			line-height: 18px;
+			font-weight: bold;
+		}
+
+		h4 {
+			font-size: 15px;
+			min-height: 18px;
+			line-height: 18px;
+			font-weight: normal;
 		}
 
 		span {
@@ -128,6 +136,7 @@
 			min-height: 10px;
 			line-height: 10px;
 			color: var(--snow);
+			font-weight: normal;
 		}
 
 		strong {
@@ -136,6 +145,7 @@
 			line-height: 13px;
 			color: var(--pink);
 			font-family: monospace, monospace;
+			font-weight: normal;
 		}
 
 		code {
@@ -144,6 +154,7 @@
 			line-height: 13px;
 			color: var(--snow);
 			font-family: monospace, monospace;
+			font-weight: normal;
 			line-break: anywhere;
 			border: 1px var(--gray) solid;
 			padding: 5px;
