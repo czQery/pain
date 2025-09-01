@@ -1,14 +1,14 @@
 <script>
-	import {onDestroy, onMount} from "svelte"
+	import { onDestroy, onMount } from "svelte"
 	import Banner from "../components/Banner.svelte"
 	import Loading from "../components/Loading.svelte"
-	import {cOffline, cRefresh} from "../lib/const.js"
-	import {formatAddZero, formatTime} from "../lib/format.js"
-	import {getWeek} from "../lib/helper.js"
-	import {overrideRooms, overrideWeek} from "../lib/override.js"
-	import {timetableCountdownStore, timetableFetch, timetablePermanentStore} from "../lib/timetable.js"
-	import {source, sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
-	import {update} from "../main.js"
+	import { cOffline, cRefresh } from "../lib/const.js"
+	import { formatAddZero, formatTime } from "../lib/format.js"
+	import { getWeek } from "../lib/helper.js"
+	import { overrideRooms, overrideWeek } from "../lib/override.js"
+	import { timetableCountdownStore, timetableFetch, timetablePermanentStore } from "../lib/timetable.js"
+	import { source, sourceGroupStore, sourceSchoolStore } from "../lib/var.js"
+	import { update } from "../main.js"
 
 	let animate = $state(false)
 	let time = $state(new Date())
@@ -74,6 +74,7 @@
 	{@const atomNext = today?.["Atoms"].find(t => t["HourId"] === (hourNext?.["Id"] ?? "#") && (t["Change"] === null || t["SubjectId"] !== (atomOriginalNext?.["SubjectId"] ?? "#") || t["TeacherId"] !== (atomOriginalNext?.["TeacherId"] ?? "#") || t["RoomId"] !== (atomOriginal?.["RoomId"] ?? "#"))) ?? null}
 
 	{@const subject = $timetableCountdownStore["Subjects"].find(s => s["Id"] === (atom?.["SubjectId"] ?? (atomNext?.["SubjectId"] ?? "#")))?.["Abbrev"].toUpperCase() ?? "#"}
+	{@const subjectName = $timetableCountdownStore["Subjects"].find(s => s["Id"] === (atom?.["SubjectId"] ?? (atomNext?.["SubjectId"] ?? "#")))?.["Name"] ?? ""}
 	{@const teacher = $timetablePermanentStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Name"] ?? $timetableCountdownStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Name"] ?? ""}
 
 	{@const room = $timetableCountdownStore["Rooms"].find(s => s["Id"] === (atom?.["RoomId"] ?? (atomNext?.["RoomId"] ?? "#")))?.["Abbrev"] ?? ""}
@@ -129,7 +130,7 @@
 					<h2 style="color: var(--snow)">break followed by</h2>
 				{/if}
 			{/if}
-			<div id="countdown-subject" style:color={"var(--subject-" + (subject !== "#" ? subject : "NON") + ")"}>
+			<div id="countdown-subject" style:color={subject !== "#" ? (subjectName !== "" ? "var(--subject-" + subject + ")" : "transparent") : "var(--subject-NON)"} style={subjectName !== "" ? "" : "background:var(--brand);background-clip:text"}>
 				{#if subject !== "#"}
 					<h2>{"#" + (hour?.["Caption"] ?? hourNext["Caption"])}</h2>
 					<h2>-</h2>
