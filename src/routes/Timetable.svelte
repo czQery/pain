@@ -25,6 +25,9 @@
 		if (subject["Name"]) {
 			modalSubject = subject["Name"]
 			modalSubjectColor = subject["Abbrev"].toUpperCase()
+		} else if (subject["Abbrev"]) {
+			modalSubject = subject["Abbrev"].toUpperCase()
+			modalSubjectColor = "FREE"
 		} else {
 			modalSubject = subject
 			modalSubjectColor = "FREE"
@@ -196,7 +199,7 @@
 								{@const subject = $timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"]) ?? null}
 								{@const teacher = $timetablePermanentStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? $timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? null}
 								{@const change = (subjectOriginal?.["Id"] ?? "#") !== subject["Id"] && atom["LessonRelease"] !== "override"}
-								<td style:background-color={"var(--subject-" + subject["Abbrev"].toUpperCase() + ")"} class={past} onclick={() => modalShow(subject, teacher, atom["Test"] ? "Test: " + atom["Test"] + "\n" + atom["Theme"] : atom["Theme"])}>
+								<td style:background-color={subject["Name"] !== "" ? "var(--subject-" + subject["Abbrev"].toUpperCase() + ")" : ""} class={past + (subject["Name"] !== "" ? "" : " subject-canceled")} onclick={() => modalShow(subject, teacher, atom["Test"] ? "Test: " + atom["Test"] + "\n" + atom["Theme"] : atom["Theme"])}>
 									<div class="flex-atom" style:height={atomHeight - 10 + "px"}>
 										<!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
 										<div class="flex-between">
