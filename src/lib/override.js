@@ -11,11 +11,18 @@ export const overrideOV = {
 }
 
 export const overrideRooms = {
-	R3: {
+	/*R3: {
 		ignore: ["TV", "CAD", "AJ"],
 		rooms: [
 			[4, 4, 0, 0, 0], // odd
 			[1, 1, 1, 2, 4], // even
+		],
+	},*/
+	R4: {
+		ignore: ["TV"],
+		rooms: [
+			[0, 0, 0, 0, 0], // odd
+			[0, 0, 0, 0, 0], // even
 		],
 	},
 }
@@ -48,7 +55,7 @@ export const overrideCanteen = {
 
 export const overrideOVGroup = {
 	"764": [[null, null, null, null, null], [null, null, null, null, null]],
-	"ZGY21K": [ // R3-EM3-OV4
+	/*"ZGY21K": [ // R3-EM3-OV4
 		[null, null, "UV02Z", "UV02Z", "UX03D"], // odd
 		[null, null, null, null, null], // even 4->1->2->3
 	],
@@ -59,7 +66,7 @@ export const overrideOVGroup = {
 	"RGW1X6": [ // R3-EM1-OV2
 		[null, null, "UJ01Z", "UX03D", "U0014"], // odd
 		[null, null, null, null, null], // even 2->3->4->1
-	],
+	],*/
 }
 
 export const overrideWeek = week => {

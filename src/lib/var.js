@@ -1,11 +1,11 @@
 import { writable } from "svelte/store"
 
 export const source = {
-	"gymnp.cz": [{ id: "764", name: "KVINTA", class: "KVINTA", src: "am" }],
-	"sssenp.cz": [{ id: "ZGY21K", name: "R3-EM3-OV4", class: "R3", src: "sa" }, { id: "ZGW1WS", name: "R3-EM2-OV3", class: "R3", src: "dk" }, {
+	"gymnp.cz": [{ id: "764", name: "SEXTA", class: "SEXTA", src: "am" }],
+	"sssenp.cz": [{ id: "ZGY21K", name: "R4-OV2", class: "R4", src: "sa" }, { id: "ZGW1WS", name: "R3-OV3", class: "R4", src: "dk" }, {
 		id: "RGW1X6",
-		name: "R3-EM1-OV2",
-		class: "R3",
+		name: "R4-OV2",
+		class: "R4",
 		src: "af",
 	}],
 }
