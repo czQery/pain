@@ -1,14 +1,14 @@
 <script>
-	import { onDestroy, onMount } from "svelte"
+	import {onDestroy, onMount} from "svelte"
 	import Banner from "../components/Banner.svelte"
 	import Loading from "../components/Loading.svelte"
-	import { cOffline, cRefresh } from "../lib/const.js"
-	import { formatAddZero, formatTime } from "../lib/format.js"
-	import { getWeek } from "../lib/helper.js"
-	import { overrideRooms, overrideWeek } from "../lib/override.js"
-	import { timetableCountdownStore, timetableFetch, timetablePermanentStore } from "../lib/timetable.js"
-	import { source, sourceGroupStore, sourceSchoolStore } from "../lib/var.js"
-	import { update } from "../main.js"
+	import {cOffline, cRefresh} from "../lib/const.js"
+	import {formatAddZero, formatTime} from "../lib/format.js"
+	import {getWeek} from "../lib/helper.js"
+	import {overrideRooms, overrideWeek} from "../lib/override.js"
+	import {timetableCountdownStore, timetableFetch, timetablePermanentStore} from "../lib/timetable.js"
+	import {source, sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
+	import {update} from "../main.js"
 
 	let animate = $state(false)
 	let time = $state(new Date())
@@ -201,13 +201,13 @@
 	#countdown-clock {
 		display: flex;
 		justify-content: center;
-		user-select: none;
-		font-family: RobotoMono, monospace;
 	}
 
 	#countdown-clock * {
 		animation: var(--animation-scale);
 		animation-duration: 0s;
+		user-select: none;
+		font-family: RobotoMono, monospace;
 	}
 
 	#countdown-clock[data-animate="true"] * {
