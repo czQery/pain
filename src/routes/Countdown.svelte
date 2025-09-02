@@ -5,7 +5,7 @@
 	import { cOffline, cRefresh } from "../lib/const.js"
 	import { formatAddZero, formatTime } from "../lib/format.js"
 	import { getWeek } from "../lib/helper.js"
-	import { overrideRooms, overrideWeek } from "../lib/override.js"
+	import { overrideMasters, overrideRooms, overrideWeek } from "../lib/override.js"
 	import { timetableCountdownStore, timetableFetch, timetablePermanentStore } from "../lib/timetable.js"
 	import { source, sourceGroupStore, sourceSchoolStore } from "../lib/var.js"
 	import { update } from "../main.js"
@@ -105,7 +105,7 @@
 					{#key hourH}
 						<h1 style="will-change: transform">{hourH}</h1>
 					{/key}
-					<h1 style="color: var(--silver)">:</h1>
+					<h1 style="color: var(--silver); font-size: 65px; line-height: 65px; min-height: 65px; letter-spacing: -5px; text-indent: -5px">:</h1>
 				{/if}
 				{#if subject !== "#"}
 					{#key hourM}
@@ -114,7 +114,7 @@
 				{:else}
 					<h1>00</h1>
 				{/if}
-				<h1 style="color: var(--silver)">:</h1>
+				<h1 style="color: var(--silver); font-size: 65px; line-height: 65px; min-height: 65px; letter-spacing: -5px; text-indent: -5px">:</h1>
 				{#if subject !== "#"}
 					{#key hourS}
 						<h1 style="will-change: transform">{hourS}</h1>
