@@ -19,10 +19,10 @@ export const overrideRooms = {
 		],
 	},*/
 	R4: {
-		ignore: ["TV"],
-		rooms: [
-			[0, 0, 0, 0, 0], // odd
-			[0, 0, 0, 0, 0], // even
+		ignore: ["TV", "A", "AJ", "KAJ", "EM", "PRO"],
+		rooms: [ // FIXME: idk its shit fest this year, so this is very temporary
+			[8, 3, 4, 0, 3], // odd
+			[4, 0, 6, 1, 2], // even
 		],
 	},
 }
@@ -55,6 +55,9 @@ export const overrideCanteen = {
 
 export const overrideOVGroup = {
 	"764": [[null, null, null, null, null], [null, null, null, null, null]],
+	"ZGY21K": [[null, null, null, "UW033", null], [null, "UV02Z", null, null, null]],
+	"ZGW1WS": [[null, null, null, null, null], [null, null, null, null, null]],
+	"RGW1X6": [[null, null, null, null, null], [null, null, null, null, null]],
 	/*"ZGY21K": [ // R3-EM3-OV4
 		[null, null, "UV02Z", "UV02Z", "UX03D"], // odd
 		[null, null, null, null, null], // even 4->1->2->3

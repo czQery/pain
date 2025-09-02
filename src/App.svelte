@@ -160,8 +160,10 @@
 		--subject-A: #0c355b;
 		--subject-F: var(--subject-A);
 		--subject-AJ: #d5334b;
+		--subject-KAJ: var(--subject-AJ);
 		--subject-CAD: #5f6895;
 		--subject-INF: var(--subject-CAD);
+		--subject-PRO: var(--subject-CAD);
 		--subject-ČJ: #f2c40e;
 		--subject-ČJL: var(--subject-ČJ);
 		--subject-ČT: #dd7571;
@@ -175,6 +177,7 @@
 		--subject-EK: #fa147f;
 		--subject-ZSV: var(--subject-EK);
 		--subject-M: #23b1d2;
+		--subject-MVE: var(--subject-M);
 		--subject-ON: #851049;
 		--subject-NJ: var(--subject-ON);
 		--subject-OV: #885d4c;
