@@ -1,14 +1,14 @@
 <script>
-	import { onDestroy, onMount } from "svelte"
+	import {onDestroy, onMount} from "svelte"
 	import Banner from "../components/Banner.svelte"
 	import Loading from "../components/Loading.svelte"
-	import { cOffline, cRefresh } from "../lib/const.js"
-	import { formatAddZero, formatTime } from "../lib/format.js"
-	import { getWeek } from "../lib/helper.js"
-	import { overrideMasters, overrideRooms, overrideWeek } from "../lib/override.js"
-	import { timetableCountdownStore, timetableFetch, timetablePermanentStore } from "../lib/timetable.js"
-	import { source, sourceGroupStore, sourceSchoolStore } from "../lib/var.js"
-	import { update } from "../main.js"
+	import {cOffline, cRefresh} from "../lib/const.js"
+	import {formatAddZero, formatTime} from "../lib/format.js"
+	import {getWeek} from "../lib/helper.js"
+	import {overrideMasters, overrideRooms, overrideWeek} from "../lib/override.js"
+	import {timetableCountdownStore, timetableFetch, timetablePermanentStore} from "../lib/timetable.js"
+	import {source, sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
+	import {update} from "../main.js"
 
 	let animate = $state(false)
 	let time = $state(new Date())
@@ -105,7 +105,7 @@
 					{#key hourH}
 						<h1 style="will-change: transform">{hourH}</h1>
 					{/key}
-					<h1 style="color: var(--silver); font-size: 65px; line-height: 65px; min-height: 65px; letter-spacing: -5px; text-indent: -5px">:</h1>
+					<h1 class="countdown-clock-colon">:</h1>
 				{/if}
 				{#if subject !== "#"}
 					{#key hourM}
@@ -114,7 +114,7 @@
 				{:else}
 					<h1>00</h1>
 				{/if}
-				<h1 style="color: var(--silver); font-size: 65px; line-height: 65px; min-height: 65px; letter-spacing: -5px; text-indent: -5px">:</h1>
+				<h1 class="countdown-clock-colon">:</h1>
 				{#if subject !== "#"}
 					{#key hourS}
 						<h1 style="will-change: transform">{hourS}</h1>
@@ -209,6 +209,16 @@
 		animation-duration: 0s;
 		user-select: none;
 		font-family: RobotoMono, monospace;
+	}
+
+	/*i dont want to talk about this xd*/
+	.countdown-clock-colon {
+		color: var(--silver);
+		font-size: 60px;
+		line-height: 60px;
+		min-height: 60px;
+		letter-spacing: -5px;
+		text-indent: -6px;
 	}
 
 	#countdown-clock[data-animate="true"] * {
