@@ -1,6 +1,6 @@
 {
 	"typescript": {
-		"preferSingleLine": true,
+		"preferSingleLine": false,
 		"quoteStyle": "alwaysDouble",
 		"quoteProps": "consistent",
 		"operatorPosition": "nextLine",
@@ -35,8 +35,7 @@
 	"useTabs": true,
 	"excludes": [
 		"**/node_modules",
-		"**/*-lock.json",
-		"src/js/{htmx,lucide,particles,qrcode}.js"
+		"**/*-lock.json"
 	],
 	"plugins": [
 		"https://plugins.dprint.dev/typescript-0.95.5.wasm",

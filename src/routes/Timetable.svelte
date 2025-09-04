@@ -195,7 +195,7 @@
 								<!--normal atom-->
 								{@const group = $timetableStore["Groups"].find(s => s["Id"] === atom["GroupIds"]?.[0] ?? "#")?.["Abbrev"].replace(" ", "").replace($timetableStore["Classes"][0]["Abbrev"], "") ?? ""}
 								{@const room = $timetableStore["Rooms"].find(s => s["Id"] === atom["RoomId"])?.["Abbrev"] ?? ""}
-								{@const roomOverride = overrideRooms?.[source[$sourceSchoolStore.toString()].find(g => g["id"] === $sourceGroupStore)?.["class"]]}
+								{@const roomOverride = overrideRooms?.[$sourceGroupStore]}
 								{@const subject = $timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"]) ?? null}
 								{@const teacher = $timetablePermanentStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? $timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? null}
 								{@const change = (subjectOriginal?.["Id"] ?? "#") !== subject["Id"] && atom["LessonRelease"] !== "override"}
@@ -211,8 +211,8 @@
 												<span style="text-align: right">{room}</span>
 											{:else if subject["Abbrev"].toUpperCase() === "OV"}
 												<span style="text-align: right">{overrideMasters?.[teacher?.["Id"]] ?? ""}</span>
-											{:else if roomOverride && !roomOverride["ignore"].includes(subject["Abbrev"].toUpperCase())}
-												<span style="text-align: right">{roomOverride["rooms"][($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek)) === "2" ? 1 : 0][j]}</span>
+											{:else if roomOverride}
+												<span style="text-align: right">{roomOverride["rooms"][($timetableStore["Cycles"][0]?.["Id"] ?? overrideWeek(pageWeek)) === "2" ? 1 : 0][j][i]}</span>
 											{:else}
 												<span></span>
 											{/if}

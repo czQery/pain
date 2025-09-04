@@ -1,14 +1,14 @@
 <script>
-	import {onDestroy, onMount} from "svelte"
+	import { onDestroy, onMount } from "svelte"
 	import Banner from "../components/Banner.svelte"
 	import Loading from "../components/Loading.svelte"
-	import {cOffline, cRefresh} from "../lib/const.js"
-	import {formatAddZero, formatTime} from "../lib/format.js"
-	import {getWeek} from "../lib/helper.js"
-	import {overrideMasters, overrideRooms, overrideWeek} from "../lib/override.js"
-	import {timetableCountdownStore, timetableFetch, timetablePermanentStore} from "../lib/timetable.js"
-	import {source, sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
-	import {update} from "../main.js"
+	import { cOffline, cRefresh } from "../lib/const.js"
+	import { formatAddZero, formatTime } from "../lib/format.js"
+	import { getWeek } from "../lib/helper.js"
+	import { overrideMasters, overrideRooms, overrideWeek } from "../lib/override.js"
+	import { timetableCountdownStore, timetableFetch, timetablePermanentStore } from "../lib/timetable.js"
+	import { source, sourceGroupStore, sourceSchoolStore } from "../lib/var.js"
+	import { update } from "../main.js"
 
 	let animate = $state(false)
 	let time = $state(new Date())
@@ -78,7 +78,7 @@
 	{@const teacher = $timetablePermanentStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Name"] ?? $timetableCountdownStore["Teachers"].find(s => s["Id"] === (atom?.["TeacherId"] ?? (atomNext?.["TeacherId"] ?? "#")))?.["Name"] ?? ""}
 
 	{@const room = $timetableCountdownStore["Rooms"].find(s => s["Id"] === (atom?.["RoomId"] ?? (atomNext?.["RoomId"] ?? "#")))?.["Abbrev"] ?? ""}
-	{@const roomOverride = overrideRooms?.[source[$sourceSchoolStore.toString()].find(g => g["id"] === $sourceGroupStore)?.["class"]]}
+	{@const roomOverride = overrideRooms?.[$sourceGroupStore]}
 
 	{@const hourH = hour ? getH(hour["EndTime"]) : getH(hourNext?.["BeginTime"] ?? "00")}
 	{@const hourM = hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00")}
@@ -143,9 +143,9 @@
 					{:else if subject.toUpperCase() === "OV"}
 						<h2>-</h2>
 						<h2>{overrideMasters?.[atom?.["TeacherId"] ?? atomNext?.["TeacherId"]] ?? "#"}</h2>
-					{:else if roomOverride && !roomOverride["ignore"].includes(subject.toUpperCase())}
+					{:else if roomOverride && !isNaN(Number(hour?.["Caption"] ?? hourNext["Caption"]))}
 						<h2>-</h2>
-						<h2>{roomOverride["rooms"][($timetableCountdownStore["Cycles"][0]?.["Id"] ?? overrideWeek(getWeek(time))) === "2" ? 1 : 0][time.getDay() - 1]}</h2>
+						<h2>{roomOverride["rooms"][($timetableCountdownStore["Cycles"][0]?.["Id"] ?? overrideWeek(getWeek(time))) === "2" ? 1 : 0][time.getDay() - 1]?.[Number(hour?.["Caption"] ?? hourNext["Caption"])]}</h2>
 					{/if}
 				{/if}
 			</div>
