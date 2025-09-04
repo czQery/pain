@@ -1,30 +1,36 @@
 export const overrideOV = {
-	Atoms: [{ HourId: 2, GroupIds: "#", RoomId: "", SubjectId: "67", TeacherId: "#", Change: null }, {
-		HourId: 3,
-		GroupIds: "#",
-		RoomId: "",
-		SubjectId: "67",
-		TeacherId: "#",
-		Change: null,
-	}],
-	Hours: [{ BeginTime: "6:00", Caption: "1/2", EndTime: "9:30", Id: 2 }, { BeginTime: "10:00", Caption: "2/2", EndTime: "13:20", Id: 3 }],
-}
-
-export const overrideRooms = {
-	/*R3: {
-		ignore: ["TV", "CAD", "AJ"],
-		rooms: [
-			[4, 4, 0, 0, 0], // odd
-			[1, 1, 1, 2, 4], // even
-		],
-	},*/
-	R4: {
-		ignore: ["TV", "A", "AJ", "KAJ", "EM", "PRO"],
-		rooms: [ // FIXME: idk its shit fest this year, so this is very temporary
-			[8, 3, 4, 0, 3], // odd
-			[4, 0, 6, 1, 2], // even
-		],
-	},
+	Atoms: [
+		{
+			HourId: 2,
+			GroupIds: "#",
+			RoomId: "",
+			SubjectId: "67",
+			TeacherId: "#",
+			Change: null,
+		},
+		{
+			HourId: 3,
+			GroupIds: "#",
+			RoomId: "",
+			SubjectId: "67",
+			TeacherId: "#",
+			Change: null,
+		},
+	],
+	Hours: [
+		{
+			BeginTime: "6:00",
+			Caption: "1/2",
+			EndTime: "9:30",
+			Id: 2,
+		},
+		{
+			BeginTime: "10:00",
+			Caption: "2/2",
+			EndTime: "13:20",
+			Id: 3,
+		},
+	],
 }
 
 export const overrideMasters = {
@@ -39,37 +45,124 @@ export const overrideMasters = {
 	UW034: 306, // No
 }
 
-export const overrideOrdering = { "gymnp.cz": "https://e-jidelnicek.cz/login", "sssenp.cz": "https://jidelna.sssenp.cz/faces/login.jsp" }
+export const overrideOrdering = {
+	"gymnp.cz": "https://e-jidelnicek.cz/login",
+	"sssenp.cz": "https://jidelna.sssenp.cz/faces/login.jsp",
+}
 
 export const overrideCanteen = {
-	UJ01Z: [["7:50", "7:40", "7:30", "7:30", "7:20"], [null, "9:20", "9:10", "8:20", null]],
-	UW035: [["8:50", "8:10", "8:20", "8:20", "7:40"], ["7:40", null, "8:00", "9:00", "8:50"]],
-	UY03L: [["7:30", "7:20", "9:20", "9:00", "9:00"], ["8:30", "8:10", "8:10", "8:00", "7:50"]],
-	UV02Z: [["9:00", "8:20", "9:10", "8:30", "7:50"], ["7:50", "7:30", "8:50", "8:10", "7:40"]],
-	UX03D: [["9:20", "7:50", "8:00", "7:40", "7:30"], ["7:30", "9:10", "9:00", "8:50", "8:30"]],
-	UW033: [["7:20", "9:10", "9:00", "8:40", "8:30"], ["8:10", "7:50", "7:40", "7:30", "8:00"]],
-	U0014: [[null, null, null, "8:10", "8:00"], [null, null, null, null, null]],
-	UY03K: [["9:10", "8:30", "8:50", "8:00", "8:10"], ["9:20", "8:00", "8:20", "8:40", "9:00"]],
-	UW034: [["8:40", "8:40", "8:30", null, "8:20"], ["8:00", "7:40", "7:20", "9:20", "9:10"]],
+	UJ01Z: [
+		["7:50", "7:40", "7:30", "7:30", "7:20"],
+		[null, "9:20", "9:10", "8:20", null],
+	],
+	UW035: [
+		["8:50", "8:10", "8:20", "8:20", "7:40"],
+		["7:40", null, "8:00", "9:00", "8:50"],
+	],
+	UY03L: [
+		["7:30", "7:20", "9:20", "9:00", "9:00"],
+		["8:30", "8:10", "8:10", "8:00", "7:50"],
+	],
+	UV02Z: [
+		["9:00", "8:20", "9:10", "8:30", "7:50"],
+		["7:50", "7:30", "8:50", "8:10", "7:40"],
+	],
+	UX03D: [
+		["9:20", "7:50", "8:00", "7:40", "7:30"],
+		["7:30", "9:10", "9:00", "8:50", "8:30"],
+	],
+	UW033: [
+		["7:20", "9:10", "9:00", "8:40", "8:30"],
+		["8:10", "7:50", "7:40", "7:30", "8:00"],
+	],
+	U0014: [
+		[null, null, null, "8:10", "8:00"],
+		[null, null, null, null, null],
+	],
+	UY03K: [
+		["9:10", "8:30", "8:50", "8:00", "8:10"],
+		["9:20", "8:00", "8:20", "8:40", "9:00"],
+	],
+	UW034: [
+		["8:40", "8:40", "8:30", null, "8:20"],
+		["8:00", "7:40", "7:20", "9:20", "9:10"],
+	],
 }
 
 export const overrideOVGroup = {
-	"764": [[null, null, null, null, null], [null, null, null, null, null]],
-	"ZGY21K": [[null, null, null, "UW033", null], [null, "UV02Z", null, null, null]],
-	"ZGW1WS": [[null, null, null, null, null], [null, null, null, null, null]],
-	"RGW1X6": [[null, null, null, null, null], [null, null, null, null, null]],
-	/*"ZGY21K": [ // R3-EM3-OV4
-		[null, null, "UV02Z", "UV02Z", "UX03D"], // odd
-		[null, null, null, null, null], // even 4->1->2->3
+	"764": [
+		[null, null, null, null, null],
+		[null, null, null, null, null],
 	],
-	"ZGW1WS": [ // R3-EM2-OV3
-		[null, null, "UW035", "UW033", "UW034"], // odd
-		[null, null, null, null, null], // even 3->4->1->2
+	"ZGY21K": [
+		[null, null, null, "UW033", null],
+		[null, "UV02Z", null, null, null],
 	],
-	"RGW1X6": [ // R3-EM1-OV2
-		[null, null, "UJ01Z", "UX03D", "U0014"], // odd
-		[null, null, null, null, null], // even 2->3->4->1
-	],*/
+	"ZGW1WS": [
+		[null, null, null, null, null],
+		[null, null, null, null, null],
+	],
+	"RGW1X6": [
+		[null, null, null, null, null],
+		[null, null, null, null, null],
+	],
+}
+
+export const overrideRooms = {
+	ZGY21K: {
+		rooms: [
+			[
+				["VT2", "4", "4", "8", "8", "1", "1", "VT2", "VT2"],
+				["EM", "EM", "3", "VT1", "VT1", "12", "VT2", "EM", "EM"],
+				[null, "4", "4", "12", "2", "2", "VT2", "VT2", null],
+				[null, null, null, null, null, null, null, null, null], // OV
+				[null, "3", "3", "3", "3", "TV", "TV", null, null],
+			], // odd
+			[
+				[null, "4", "VT2", "VT2", "12", "12", "2", "2", null],
+				[null, null, null, null, null, null, null, null, null], // OV
+				["VT1", "VT1", "VT1", "6", "6", "VT2", "VT1", "VT1", "VT1"],
+				["VT1", "VT2", "VT2", "1", "5", "5", "VT1", "VT1", null],
+				[null, "2", "2", "VT1", "2", "2", "TV", "TV", null],
+			], // even
+		],
+	},
+	RGW1X6: {
+		rooms: [
+			[
+				["VT2", "4", "4", "8", "8", "1", "1", "VT2", "VT2"],
+				["EM", "EM", "3", "VT1", "VT1", "12", "VT2", "EM", "EM"],
+				[null, "4", "4", "12", "2", "2", "VT2", "VT2", null],
+				[null, null, null, null, null, null, null, null, null], // OV
+				[null, "3", "3", "3", "3", "TV", "TV", null, null],
+			], // odd
+			[
+				[null, "4", "VT2", "VT2", "12", "12", "2", "2", null],
+				[null, null, null, null, null, null, null, null, null], // OV
+				["VT1", "VT1", "VT1", "6", "6", "VT2", "VT1", "VT1", "VT1"],
+				["VT1", "VT2", "VT2", "1", "5", "5", "VT1", "VT1", null],
+				[null, "2", "2", "VT1", "2", "2", "TV", "TV", null],
+			], // even
+		],
+	},
+	ZGW1WS: {
+		rooms: [
+			[
+				["VT2", "11", "11", "8", "8", "1", "1", "VT2", "VT2"],
+				["EM", "EM", "3", "VT1", "VT1", "VT2", "VT2", "EM", "EM"],
+				[null, "4", "4", "12", "2", "2", "VT2", "VT2", null],
+				[null, null, null, null, null, null, null, null, null], // OV
+				[null, "3", "3", "3", "3", "TV", "TV", null, null],
+			], // odd
+			[
+				[null, "4", "VT2", "VT2", "12", "12", "11", "11", null],
+				[null, null, null, null, null, null, null, null, null], // OV
+				["VT1", "VT1", "VT1", "6", "6", "VT2", "VT1", "VT1", "VT1"],
+				["VT1", "VT2", "VT2", "1", "5", "5", "VT1", "VT1", null],
+				[null, "2", "2", "VT1", "2", "2", "TV", "TV", null],
+			], // even
+		],
+	},
 }
 
 export const overrideWeek = week => {
