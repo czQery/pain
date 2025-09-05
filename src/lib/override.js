@@ -38,6 +38,7 @@ export const overrideMasters = {
 	UW035: 201, // Sla
 	UY03K: 202, // Št
 	U0014: 204, // Mi
+	UR02L: 0, // Jo
 	UX03D: 211, // Zí
 	UV02Z: 302, // Šm
 	UY03L: 303, // Du
@@ -79,6 +80,10 @@ export const overrideCanteen = {
 		[null, null, null, "8:10", "8:00"],
 		[null, null, null, null, null],
 	],
+	UR02L: [
+		["8:10", "9:00", "7:50", null, null],
+		["8:50", "8:40", "7:50", "7:40", null],
+	],
 	UY03K: [
 		["9:10", "8:30", "8:50", "8:00", "8:10"],
 		["9:20", "8:00", "8:20", "8:40", "9:00"],
@@ -98,13 +103,13 @@ export const overrideOVGroup = {
 		[null, null, null, "UW033", null],
 		[null, "UV02Z", null, null, null],
 	],
-	"ZGW1WS": [
-		[null, null, null, null, null],
-		[null, null, null, null, null],
-	],
 	"RGW1X6": [
-		[null, null, null, null, null],
-		[null, null, null, null, null],
+		[null, null, null, "UR02L", null],
+		[null, "UJ01Z", null, null, null],
+	],
+	"ZGW1WS": [
+		[null, null, null, "UY03L", null],
+		[null, "UX03D", null, null, null],
 	],
 }
 
