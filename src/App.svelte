@@ -1,15 +1,15 @@
 <script>
-	import {active, link} from "@dvcol/svelte-simple-router/action"
-	import {RouterContext, RouterView} from "@dvcol/svelte-simple-router/components"
-	import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
-	import {onMount} from "svelte"
-	import {cOffline} from "./lib/const.js"
-	import {preload} from "./lib/preload.js"
-	import {timetablePermanentFetch, timetablePermanentStore} from "./lib/timetable.js"
-	import {ttlCleanCache} from "./lib/ttl.js"
-	import {umami} from "./lib/umami.js"
-	import {source, sourceGroupStore, sourceSchoolStore} from "./lib/var.js"
-	import {update} from "./main.js"
+	import { active, link } from "@dvcol/svelte-simple-router/action"
+	import { RouterContext, RouterView } from "@dvcol/svelte-simple-router/components"
+	import { LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed } from "lucide-svelte"
+	import { onMount } from "svelte"
+	import { cOffline } from "./lib/const.js"
+	import { preload } from "./lib/preload.js"
+	import { timetablePermanentFetch, timetablePermanentStore } from "./lib/timetable.js"
+	import { ttlCleanCache } from "./lib/ttl.js"
+	import { umami } from "./lib/umami.js"
+	import { source, sourceGroupStore, sourceSchoolStore } from "./lib/var.js"
+	import { update } from "./main.js"
 	import Canteen from "./routes/Canteen.svelte"
 	import Countdown from "./routes/Countdown.svelte"
 	import Settings from "./routes/Settings.svelte"
@@ -152,7 +152,7 @@
 		width: 100%;
 		align-items: center;
 		flex-direction: column;
-		height: calc(100svh - 50px);
+		height: calc(100svh - 50px - var(--bar));
 		overflow: hidden;
 
 		--subject-NON: var(--silver);

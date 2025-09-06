@@ -17,7 +17,7 @@
 	#season-summer {
 		position: absolute;
 		width: 100%;
-		height: calc(100svh - 50px);
+		height: calc(100svh - 50px - var(--bar));
 	}
 
 	#season-summer img {

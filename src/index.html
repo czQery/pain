@@ -9,7 +9,7 @@
 		<meta name="apple-mobile-web-app-title" content="Pain">
 		<meta name="application-name" content="Pain">
 		<meta name="mobile-web-app-capable" content="yes">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<meta name="theme-color" content="#000000">
 		<meta name="twitter:site" content="@czQery">
 		<meta property="og:type" content="website">
@@ -55,6 +55,7 @@
 			--border: 5px;
 			--transition: 0.1s;
 			--hover: 0.4;
+			--bar: env(safe-area-inset-bottom, 0px);
 			--animation-rotate: rotate 1.5s cubic-bezier(0.79, 0.14, 0.15, 0.86) infinite;
 			--animation-fade-in: fade-in 1s cubic-bezier(0.6, -0.28, 0.74, 0.05) 1;
 			--animation-scale: 50ms reverse scale;
@@ -69,7 +70,7 @@
 		html, body {
 			padding: 0;
 			margin: 0;
-			height: 100svh;
+			height: calc(100svh - var(--bar));
 			background-color: var(--black);
 			overflow: clip;
 		}
