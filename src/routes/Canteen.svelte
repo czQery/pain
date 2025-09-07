@@ -1,13 +1,13 @@
 <script>
-	import { onDestroy, onMount } from "svelte"
+	import {onDestroy, onMount} from "svelte"
 	import Loading from "../components/Loading.svelte"
-	import { canteenFetch, canteenStore } from "../lib/canteen.js"
-	import { cOffline } from "../lib/const.js"
-	import { formatDate, formatDay } from "../lib/format.js"
-	import { getWeek } from "../lib/helper.js"
-	import { overrideCanteen, overrideOrdering, overrideOVGroup } from "../lib/override.js"
-	import { timetablePermanentStore } from "../lib/timetable.js"
-	import { sourceGroupStore, sourceSchoolStore } from "../lib/var.js"
+	import {canteenFetch, canteenStore} from "../lib/canteen.js"
+	import {cOffline} from "../lib/const.js"
+	import {formatDate, formatDay} from "../lib/format.js"
+	import {getWeek} from "../lib/helper.js"
+	import {overrideCanteen, overrideOrdering, overrideOVGroup} from "../lib/override.js"
+	import {timetablePermanentStore} from "../lib/timetable.js"
+	import {sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
 
 	let time = $state(new Date())
 	let interval
@@ -125,7 +125,7 @@
 		width: calc(min(540px, 100%) - 20px);
 		height: 40px;
 		margin: 10px;
-		bottom: 50px;
+		bottom: calc(50px + var(--bar));
 		position: absolute;
 		display: flex;
 		justify-content: center;

@@ -1,20 +1,21 @@
 <script>
-	import { LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideCookingPot, LucideMessageSquareText, LucidePencil, LucideTriangleAlert } from "lucide-svelte"
-	import { onDestroy, onMount } from "svelte"
+	import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideCookingPot, LucideMessageSquareText, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
+	import {onDestroy, onMount} from "svelte"
 	import Loading from "../components/Loading.svelte"
 	import Modal from "../components/Modal.svelte"
-	import { canteenStore } from "../lib/canteen.js"
-	import { cOffline, cRefresh } from "../lib/const.js"
-	import { formatCapitalize, formatOrdinalNumber, formatTime } from "../lib/format.js"
-	import { getWeek } from "../lib/helper.js"
-	import { overrideMasters, overrideOV, overrideRooms, overrideWeek } from "../lib/override.js"
-	import { timetableFetch, timetablePageStore, timetablePermanentStore, timetableStore } from "../lib/timetable.js"
-	import { sourceGroupStore } from "../lib/var.js"
+	import {canteenStore} from "../lib/canteen.js"
+	import {cOffline, cRefresh} from "../lib/const.js"
+	import {formatCapitalize, formatOrdinalNumber, formatTime} from "../lib/format.js"
+	import {getWeek} from "../lib/helper.js"
+	import {overrideMasters, overrideOV, overrideRooms, overrideWeek} from "../lib/override.js"
+	import {timetableFetch, timetablePageStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
+	import {sourceGroupStore} from "../lib/var.js"
 
 	const hours = 9 // 0-8
 	// const hours = 10 // 0-9
 	const subjectChange = " > "
 	const days = ["MON", "TUE", "WED", "THU", "FRI"]
+	let nav = $state()
 
 	let modal = $state()
 	let modalSubject = $state("#")
@@ -63,12 +64,15 @@
 	let refresh = time.getTime() + cOffline // cOffline run is set always for the next request after the data is already loaded anyway
 	let interval
 	let cornerHeight = $state(0)
+	let navHeight = $state(0)
 
 	const maxPage = 6 - 1
 
 	const setPage = async a => {
-		let page = $timetablePageStore
+		// get the real height including margin to lock the navbar in place while loading
+		if (nav) navHeight = (Number(window.getComputedStyle(nav).getPropertyValue("margin-top").replace("px", "")) || 0) * 2 + 40
 
+		let page = $timetablePageStore
 		switch (a) {
 			case "backward":
 				--page
@@ -104,7 +108,7 @@
 </script>
 
 {#if $timetablePermanentStore && $timetablePermanentStore["Hours"]}
-	<nav>
+	<nav style:height={!$timetableStore ? navHeight + "px" : ""} bind:this={nav}>
 		<button onclick={() => setPage("backward")} disabled={$timetablePageStore === 0 || !$timetableStore}>
 			<LucideArrowBigLeftDash />
 		</button>
@@ -302,7 +306,7 @@
 		table-layout: fixed;
 		white-space: nowrap;
 
-		--height: round(down, (max(100svh, 660px) - 40px - 50px - var(--corner) + 1px) / var(--hours), 1px);
+		--height: round(down, (max(100svh, 660px) - var(--bar) - 40px - 50px - var(--corner) + 1px) / var(--hours), 1px);
 	}
 
 	tr th, tr td {
