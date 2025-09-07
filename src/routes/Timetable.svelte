@@ -1,20 +1,21 @@
 <script>
-	import { LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideCookingPot, LucideMessageSquareText, LucidePencil, LucideTriangleAlert } from "lucide-svelte"
-	import { onDestroy, onMount } from "svelte"
+	import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideCookingPot, LucideMessageSquareText, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
+	import {onDestroy, onMount} from "svelte"
 	import Loading from "../components/Loading.svelte"
 	import Modal from "../components/Modal.svelte"
-	import { canteenStore } from "../lib/canteen.js"
-	import { cOffline, cRefresh } from "../lib/const.js"
-	import { formatCapitalize, formatOrdinalNumber, formatTime } from "../lib/format.js"
-	import { getWeek } from "../lib/helper.js"
-	import { overrideMasters, overrideOV, overrideRooms, overrideWeek } from "../lib/override.js"
-	import { timetableFetch, timetablePageStore, timetablePermanentStore, timetableStore } from "../lib/timetable.js"
-	import { source, sourceGroupStore, sourceSchoolStore } from "../lib/var.js"
+	import {canteenStore} from "../lib/canteen.js"
+	import {cOffline, cRefresh} from "../lib/const.js"
+	import {formatCapitalize, formatOrdinalNumber, formatTime} from "../lib/format.js"
+	import {getWeek} from "../lib/helper.js"
+	import {overrideMasters, overrideOV, overrideRooms, overrideWeek} from "../lib/override.js"
+	import {timetableFetch, timetablePageStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
+	import {sourceGroupStore} from "../lib/var.js"
 
 	const hours = 9 // 0-8
 	// const hours = 10 // 0-9
 	const subjectChange = " > "
 	const days = ["MON", "TUE", "WED", "THU", "FRI"]
+	let nav = $state()
 
 	let modal = $state()
 	let modalSubject = $state("#")
@@ -62,17 +63,16 @@
 	// svelte-ignore state_referenced_locally
 	let refresh = time.getTime() + cOffline // cOffline run is set always for the next request after the data is already loaded anyway
 	let interval
-
-	let windowHeight = $state(0)
 	let cornerHeight = $state(0)
-	const navHeight = 40
-	const footerHeight = 50
+	let navHeight = $state(0)
 
 	const maxPage = 6 - 1
 
 	const setPage = async a => {
-		let page = $timetablePageStore
+		// get the real height including margin to lock the navbar in place while loading
+		if (nav) navHeight = (Number(window.getComputedStyle(nav).getPropertyValue("margin-top").replace("px", "")) || 0) * 2 + 40
 
+		let page = $timetablePageStore
 		switch (a) {
 			case "backward":
 				--page
@@ -91,7 +91,6 @@
 		if (interval) clearInterval(interval)
 		interval = setInterval(async () => {
 			time = getNewTime()
-
 			if (time.getTime() > refresh) {
 				timetableFetch($sourceGroupStore, $timetablePageStore, "timetable").then()
 				if (!$timetableStore) {
@@ -108,9 +107,8 @@
 	})
 </script>
 
-<svelte:window bind:innerHeight={windowHeight} />
 {#if $timetablePermanentStore && $timetablePermanentStore["Hours"]}
-	<nav>
+	<nav style:height={!$timetableStore ? navHeight + "px" : ""} bind:this={nav}>
 		<button onclick={() => setPage("backward")} disabled={$timetablePageStore === 0 || !$timetableStore}>
 			<LucideArrowBigLeftDash />
 		</button>
@@ -141,7 +139,7 @@
 			<h4 style="color: var(--silver); white-space: pre-line">{modalTheme}</h4>
 		{/if}
 	</Modal>
-	<table>
+	<table style:--corner={cornerHeight + "px"} style:--hours={hours}>
 		<thead>
 			<tr>
 				<th class="slim" bind:offsetHeight={cornerHeight}>
@@ -167,9 +165,7 @@
 		</thead>
 		<tbody>
 			{#each $timetableStore["Hours"].slice(0, hours) as hour, i}
-				{@const atomHeight = Math.round((((Math.max(windowHeight, 660) - footerHeight - navHeight - (cornerHeight + 1)) / hours) + Number.EPSILON) * 10) / 10}
-				<!--round the number because different browsers use different precision - the epsilon trick is not perfect but whatever -->
-				<tr style:height={atomHeight + "px"}>
+				<tr class="atom">
 					<th class="slim">
 						<h2>{hour["Caption"]}</h2>
 						<span>{hour["BeginTime"] + "-" + hour["EndTime"]}</span>
@@ -200,7 +196,7 @@
 								{@const teacher = $timetablePermanentStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? $timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? null}
 								{@const change = (subjectOriginal?.["Id"] ?? "#") !== subject["Id"] && atom["LessonRelease"] !== "override"}
 								<td style:background-color={subject["Name"] !== "" ? "var(--subject-" + subject["Abbrev"].toUpperCase() + ")" : ""} class={past + (subject["Name"] !== "" ? "" : " subject-canceled")} onclick={() => modalShow(subject, teacher, atom["Test"] ? "Test: " + atom["Test"] + "\n" + atom["Theme"] : atom["Theme"])}>
-									<div class="flex-atom" style:height={atomHeight - 10 + "px"}>
+									<div class="flex-atom">
 										<!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
 										<div class="flex-between">
 											<span style="text-align: left">{group}</span>
@@ -267,10 +263,14 @@
 	nav {
 		display: flex;
 		width: 100%;
-		height: 40px;
+		min-height: 40px;
 		justify-content: space-evenly;
 		align-items: center;
 		overflow: hidden;
+	}
+
+	nav:has(~ table) {
+		margin: auto 0;
 	}
 
 	nav button {
@@ -305,6 +305,8 @@
 		will-change: contents, scroll-position;
 		table-layout: fixed;
 		white-space: nowrap;
+
+		--height: round(down, (max(100svh, 660px) - var(--bar) - 40px - 50px - var(--corner) + 1px) / var(--hours), 1px);
 	}
 
 	tr th, tr td {
@@ -398,11 +400,16 @@
 		background: repeating-linear-gradient(135deg, var(--black), var(--black) 10px, rgba(126, 101, 177, 0.4) 10px, rgba(126, 101, 177, 0.4) 20px);
 	}
 
+	.atom {
+		height: var(--height);
+	}
+
 	.flex-atom {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		padding: 0 5px;
+		height: calc(var(--height) - 10px);
 	}
 
 	.flex-between {

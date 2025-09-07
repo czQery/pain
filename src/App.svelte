@@ -152,7 +152,7 @@
 		width: 100%;
 		align-items: center;
 		flex-direction: column;
-		height: calc(100svh - 50px);
+		height: calc(100svh - 50px - var(--bar));
 		overflow: hidden;
 
 		--subject-NON: var(--silver);
@@ -190,7 +190,7 @@
 		height: 50px;
 		width: 100%;
 		user-select: none;
-		outline: 1px var(--gray) solid;
+		box-shadow: 0 -1px 0 var(--gray);
 		z-index: 20;
 		background-color: var(--black);
 		view-transition-name: footer;
