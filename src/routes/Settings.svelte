@@ -1,7 +1,7 @@
 <script>
-	import {preload} from "../lib/preload.js"
-	import {umami} from "../lib/umami.js"
-	import {source, sourceGroupStore, sourceSchoolStore} from "../lib/var.js"
+	import { preload } from "../lib/preload.js"
+	import { umami } from "../lib/umami.js"
+	import { source, sourceGroupStore, sourceSchoolStore } from "../lib/var.js"
 
 	const setSchool = () => {
 		localStorage.setItem("school", $sourceSchoolStore.toString())
@@ -40,11 +40,11 @@
 		</select>
 	</div>
 	<div style="margin: 60px 0 0 0">
-		<span>Zde může být i tvoje třída/skupina stačí když mi pošleš</span>
+		<span>Zde může být i tvoje třída/skupina, stačí, když mi pošleš</span>
 		<span style="color: var(--pink)">refresh-token</span>
-		<span>z tvého bakaláře na discord @czqery</span>
+		<span>z tvého bakaláře na discord @czqery.</span>
 		<br>
-		<span>Zadej tento příkaz do CMD a bakalář ti token vygeneruje</span>
+		<span>Zadej tento příkaz do CMD, a bakalář ti token vygeneruje.</span>
 	</div>
 
 	<code>curl -d "grant_type=password&client_id=ANDR&username=<strong>jméno</strong>&password=<strong>heslo</strong>&scope=bakalari_api+offline_access+timetable_widget" https://sssenp.bakalari.cz/api/login</code>
