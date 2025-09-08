@@ -1,15 +1,15 @@
 <script>
-	import {LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideCookingPot, LucideMessageSquareText, LucidePencil, LucideTriangleAlert} from "lucide-svelte"
-	import {onDestroy, onMount} from "svelte"
+	import { LucideArrowBigLeftDash, LucideArrowBigRightDash, LucideCookingPot, LucideMessageSquareText, LucidePencil, LucideTriangleAlert } from "lucide-svelte"
+	import { onDestroy, onMount } from "svelte"
 	import Loading from "../components/Loading.svelte"
 	import Modal from "../components/Modal.svelte"
-	import {canteenStore} from "../lib/canteen.js"
-	import {cOffline, cRefresh} from "../lib/const.js"
-	import {formatCapitalize, formatOrdinalNumber, formatTime} from "../lib/format.js"
-	import {getWeek} from "../lib/helper.js"
-	import {overrideMasters, overrideOV, overrideRooms, overrideWeek} from "../lib/override.js"
-	import {timetableFetch, timetablePageStore, timetablePermanentStore, timetableStore} from "../lib/timetable.js"
-	import {sourceGroupStore} from "../lib/var.js"
+	import { canteenStore } from "../lib/canteen.js"
+	import { cOffline, cRefresh } from "../lib/const.js"
+	import { formatCapitalize, formatOrdinalNumber, formatTime } from "../lib/format.js"
+	import { getWeek } from "../lib/helper.js"
+	import { overrideMasters, overrideOV, overrideRooms, overrideWeek } from "../lib/override.js"
+	import { timetableFetch, timetablePageStore, timetablePermanentStore, timetableStore } from "../lib/timetable.js"
+	import { sourceGroupStore } from "../lib/var.js"
 
 	const hours = 9 // 0-8
 	// const hours = 10 // 0-9
@@ -124,6 +124,7 @@
 	</nav>
 {/if}
 {#if $timetableStore && $timetablePermanentStore && $timetablePermanentStore["Hours"]}
+	{@const pageHours = $timetablePermanentStore["Hours"].slice(0, hours)}
 	{@const pageWeek = getWeek(getNewDateTime(5))}
 	<Modal bind:modal title="Tuition details">
 		{#if modalSubjectColor === "FREE"}
@@ -139,7 +140,7 @@
 			<h4 style="color: var(--silver); white-space: pre-line">{modalTheme}</h4>
 		{/if}
 	</Modal>
-	<table style:--corner={cornerHeight + "px"} style:--hours={hours}>
+	<table style:--corner={cornerHeight + "px"} style:--hours={pageHours.length}>
 		<thead>
 			<tr>
 				<th class="slim" bind:offsetHeight={cornerHeight}>
@@ -164,7 +165,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each $timetableStore["Hours"].slice(0, hours) as hour, i}
+			{#each pageHours as hour, i}
 				<tr class="atom">
 					<th class="slim">
 						<h2>{hour["Caption"]}</h2>

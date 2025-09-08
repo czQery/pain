@@ -117,7 +117,7 @@ export const overrideRooms = {
 	ZGY21K: {
 		rooms: [
 			[
-				["VT2", "4", "4", "8", "8", "1", "1", "VT2", "VT2"],
+				["VT2", "4", "4", "8", "8", "3", "3", "VT2", "VT2"],
 				["EM", "EM", "3", "VT1", "VT1", "12", "VT2", "EM", "EM"],
 				[null, "4", "4", "12", "2", "2", "VT2", "VT2", null],
 				[null, null, null, null, null, null, null, null, null], // OV
@@ -135,7 +135,7 @@ export const overrideRooms = {
 	RGW1X6: {
 		rooms: [
 			[
-				["VT2", "4", "4", "8", "8", "1", "1", "VT2", "VT2"],
+				["VT2", "4", "4", "8", "8", "3", "3", "VT2", "VT2"],
 				["EM", "EM", "3", "VT1", "VT1", "12", "VT2", "EM", "EM"],
 				[null, "4", "4", "12", "2", "2", "VT2", "VT2", null],
 				[null, null, null, null, null, null, null, null, null], // OV
@@ -153,7 +153,7 @@ export const overrideRooms = {
 	ZGW1WS: {
 		rooms: [
 			[
-				["VT2", "11", "11", "8", "8", "1", "1", "VT2", "VT2"],
+				["VT2", "11", "11", "8", "8", "3", "3", "VT2", "VT2"],
 				["EM", "EM", "3", "VT1", "VT1", "VT2", "VT2", "EM", "EM"],
 				[null, "4", "4", "12", "2", "2", "VT2", "VT2", null],
 				[null, null, null, null, null, null, null, null, null], // OV
