@@ -99,6 +99,18 @@ export const overrideOVGroup = {
 		[null, null, null, null, null],
 		[null, null, null, null, null],
 	],
+	/*"ZGY21K": [
+		[null, null, null, null, null],
+		[null, null, null, null, null],
+	],
+	"RGW1X6": [
+		[null, null, null, null, null],
+		[null, null, null, null, null],
+	],
+	"ZGW1WS": [
+		[null, null, null, null, null],
+		[null, null, null, null, null],
+	],*/
 	"ZGY21K": [
 		[null, null, null, "UW033", null],
 		[null, "UV02Z", null, null, null],
@@ -108,7 +120,7 @@ export const overrideOVGroup = {
 		[null, "UJ01Z", null, null, null],
 	],
 	"ZGW1WS": [
-		[null, null, null, "UY03L", null],
+		[null, null, null, "U0014", null],
 		[null, "UX03D", null, null, null],
 	],
 }
