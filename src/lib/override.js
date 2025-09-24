@@ -131,7 +131,7 @@ export const overrideRooms = {
 			[
 				["VT2", "4", "4", "8", "8", "3", "3", "VT2", "VT2"],
 				["EM", "EM", "3", "VT1", "VT1", "12", "VT2", "EM", "EM"],
-				[null, "4", "4", "12", "2", "2", "VT2", "VT2", null],
+				[null, "4", "4", "12", "2", "2", "2", "VT2", null],
 				[null, null, null, null, null, null, null, null, null], // OV
 				[null, "3", "3", "3", "3", "TV", "TV", null, null],
 			], // odd
@@ -149,7 +149,7 @@ export const overrideRooms = {
 			[
 				["VT2", "4", "4", "8", "8", "3", "3", "VT2", "VT2"],
 				["EM", "EM", "3", "VT1", "VT1", "12", "VT2", "EM", "EM"],
-				[null, "4", "4", "12", "2", "2", "VT2", "VT2", null],
+				[null, "4", "4", "12", "2", "2", "2", "VT2", null],
 				[null, null, null, null, null, null, null, null, null], // OV
 				[null, "3", "3", "3", "3", "TV", "TV", null, null],
 			], // odd
@@ -167,7 +167,7 @@ export const overrideRooms = {
 			[
 				["VT2", "11", "11", "8", "8", "3", "3", "VT2", "VT2"],
 				["EM", "EM", "3", "VT1", "VT1", "VT2", "VT2", "EM", "EM"],
-				[null, "4", "4", "12", "2", "2", "VT2", "VT2", null],
+				[null, "4", "4", "12", "2", "2", "2", "VT2", null],
 				[null, null, null, null, null, null, null, null, null], // OV
 				[null, "3", "3", "3", "3", "TV", "TV", null, null],
 			], // odd
