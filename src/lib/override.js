@@ -169,7 +169,7 @@ export const overrideRooms = {
 				["EM", "EM", "3", "VT1", "VT1", "VT2", "VT2", "EM", "EM"],
 				[null, "4", "4", "12", "2", "2", "2", "VT2", null],
 				[null, null, null, null, null, null, null, null, null], // OV
-				[null, "3", "3", "3", "3", "TV", "TV", null, null],
+				[null, "3", "11", "3", "3", "TV", "TV", null, null],
 			], // odd
 			[
 				[null, "4", "VT2", "VT2", "12", "12", "11", "11", null],
