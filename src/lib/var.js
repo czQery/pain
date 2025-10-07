@@ -1,4 +1,4 @@
-import { writable } from "svelte/store"
+import {writable} from "svelte/store"
 
 export const source = {
 	"gymnp.cz": [
@@ -12,19 +12,19 @@ export const source = {
 	"sssenp.cz": [
 		{
 			id: "ZGY21K",
-			name: "R4-OV1-A1-EM1",
+			name: "R4-ŠTĚPÁN",
 			class: "R4",
 			src: "sa",
 		},
 		{
 			id: "RGW1X6",
-			name: "R4-OV2-A1-EM1",
+			name: "R4-ALEŠ",
 			class: "R4",
 			src: "af",
 		},
 		{
 			id: "ZGW1WS",
-			name: "R4-OV3-A2-EM2",
+			name: "R4-DANIEL",
 			class: "R4",
 			src: "dk",
 		},
