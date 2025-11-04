@@ -126,7 +126,7 @@
 {#if $timetableStore && $timetablePermanentStore && $timetablePermanentStore["Hours"]}
 	{@const pageHours = $timetablePermanentStore["Hours"].slice(0, hours)}
 	{@const pageWeek = getWeek(getNewDateTime(5))}
-	<Modal bind:modal title="Tuition details">
+	<Modal bind:modal title="Lesson details">
 		{#if modalSubjectColor === "FREE"}
 			<h2 style="background: var(--brand); color: transparent; background-clip: text">{modalSubject}</h2>
 		{:else}
