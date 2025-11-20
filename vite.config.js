@@ -20,7 +20,11 @@ export default defineConfig({
 		outDir: "../dist",
 		emptyOutDir: true,
 		sourcemap: false,
-		terserOptions: { mangle: { toplevel: true }, output: { comments: false } },
+		terserOptions: {
+			mangle: { toplevel: true },
+			compress: { passes: 2 },
+			format: { comments: false },
+		},
 	},
 	define: { __CF_PAGES_COMMIT_SHA__: JSON.stringify(process.env.CF_PAGES_COMMIT_SHA) },
 	plugins: [

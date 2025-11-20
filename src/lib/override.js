@@ -112,16 +112,20 @@ export const overrideOVGroup = {
 		[null, null, null, null, null],
 	],*/
 	"ZGY21K": [
-		[null, null, null, "UW033", null],
-		[null, "UV02Z", null, null, null],
-	],
-	"RGW1X6": [
 		[null, null, null, "UR02L", null],
 		[null, "UJ01Z", null, null, null],
 	],
-	"ZGW1WS": [
+	"RGW1X6": [
 		[null, null, null, "U0014", null],
 		[null, "UX03D", null, null, null],
+	],
+	"ZGW1WS": [
+		[null, null, null, "UW033", null],
+		[null, "UV02Z", null, null, null],
+	],
+	"ZGW1X4": [
+		[null, null, null, "UR02L", null],
+		[null, "UJ01Z", null, null, null],
 	],
 }
 
@@ -163,6 +167,24 @@ export const overrideRooms = {
 		],
 	},
 	ZGW1WS: {
+		rooms: [
+			[
+				["VT2", "11", "11", "8", "8", "3", "3", "VT2", "VT2"],
+				["EM", "EM", "3", "VT1", "VT1", "VT2", "VT2", "EM", "EM"],
+				[null, "4", "4", "12", "2", "2", "2", "VT2", null],
+				[null, null, null, null, null, null, null, null, null], // OV
+				[null, "3", "11", "3", "3", "TV", "TV", null, null],
+			], // odd
+			[
+				[null, "4", "VT2", "VT2", "12", "12", "11", "11", null],
+				[null, null, null, null, null, null, null, null, null], // OV
+				["VT1", "VT1", "VT1", "6", "6", "VT2", "VT1", "VT1", "VT1"],
+				["VT1", "VT2", "VT2", "1", "5", "5", "VT1", "VT1", null],
+				[null, "2", "2", "VT1", "2", "2", "TV", "TV", null],
+			], // even
+		],
+	},
+	ZGW1X4: {
 		rooms: [
 			[
 				["VT2", "11", "11", "8", "8", "3", "3", "VT2", "VT2"],

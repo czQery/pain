@@ -1,6 +1,7 @@
 import { writable } from "svelte/store"
 import { getWeek } from "./helper.js"
 import { overrideOV, overrideOVGroup } from "./override.js"
+import { sourceSchoolStore } from "./var.js"
 
 export const timetableStore = writable(null)
 export const timetablePageStore = writable(0)
@@ -30,6 +31,15 @@ export const timetableFetch = async (group, page, override) => {
 
 		if (!data["data"]) {
 			return
+		}
+
+		// yeah, this is next level shit broken use of bakalari
+		if (sourceSchoolStore.toString() === "sssenp.cz") {
+			data["data"]["Teachers"].push({
+				Abbrev: "Lí",
+				Id: "UJ01Z",
+				Name: "Petr Lízr",
+			})
 		}
 
 		switch (override) {

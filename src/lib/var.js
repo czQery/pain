@@ -28,6 +28,12 @@ export const source = {
 			class: "R4",
 			src: "dk",
 		},
+		{
+			id: "ZGW1X4",
+			name: "R4-RADEK",
+			class: "R4",
+			src: "rv",
+		},
 	],
 }
 
