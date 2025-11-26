@@ -84,7 +84,6 @@
 	{@const hourM = hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00")}
 	{@const hourS = hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00")}
 
-	<!--<Winter />-->
 	<!--<Summer />-->
 	<div id="countdown-block">
 		<div id="countdown-header">

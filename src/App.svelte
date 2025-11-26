@@ -3,6 +3,7 @@
 	import {RouterContext, RouterView} from "@dvcol/svelte-simple-router/components"
 	import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
 	import {onMount} from "svelte"
+	import Winter from "./components/season/Winter.svelte"
 	import {cOffline} from "./lib/const.js"
 	import {preload} from "./lib/preload.js"
 	import {timetablePermanentFetch, timetablePermanentStore} from "./lib/timetable.js"
@@ -25,7 +26,7 @@
 
 		navDone()?.()
 
-		if (!document.startViewTransition) return
+		if (!document.startViewTransition || document.activeViewTransition) return
 		viewAnimate = true
 
 		const { promise: navStarting, resolve: navDoneInternal } = Promise.withResolvers()
@@ -88,6 +89,7 @@
 </script>
 
 <RouterContext {options}>
+	<Winter />
 	<main class="container" style:view-transition-name={viewAnimate ? "main" : "none"}>
 		<RouterView
 			onChange={async e => {
@@ -154,6 +156,7 @@
 		flex-direction: column;
 		height: calc(100svh - 50px - var(--bar));
 		overflow: hidden;
+		z-index: 1;
 
 		--subject-NON: var(--silver);
 

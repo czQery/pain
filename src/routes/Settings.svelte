@@ -20,8 +20,8 @@
 
 <div id="settings-block">
 	<div id="settings-input">
-		<label for="group">School</label>
-		<select id="group" bind:value={$sourceSchoolStore} onchange={() => setSchool()}>
+		<label for="school">School</label>
+		<select id="school" bind:value={$sourceSchoolStore} onchange={() => setSchool()}>
 			{#each Object.keys(source) as s}
 				<option value={s}>
 					{s}
