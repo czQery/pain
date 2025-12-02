@@ -16,36 +16,7 @@
 	import Settings from "./routes/Settings.svelte"
 	import Timetable from "./routes/Timetable.svelte"
 
-	let viewAnimate = $state(false)
 	let interval
-
-	let navDone = () => undefined
-	const navStart = async e => {
-		// reload page if update is installed
-		if ($update) await window.location.replace(window.location.origin + (e?.route?.path ?? ""))
-
-		navDone()?.()
-
-		if (!document.startViewTransition || document.activeViewTransition) return
-		viewAnimate = true
-
-		const { promise: navStarting, resolve: navDoneInternal } = Promise.withResolvers()
-		navDone = navDoneInternal
-
-		const { promise: viewStarting, resolve: viewDone } = Promise.withResolvers()
-		document.startViewTransition(async () => {
-			viewDone()
-			await navStarting
-		})
-		return viewStarting
-	}
-
-	const navEnd = () => {
-		navDone()?.()
-		setTimeout(async () => {
-			viewAnimate = false
-		}, 200)
-	}
 
 	onMount(() => {
 		if (interval) clearInterval(interval)
@@ -90,18 +61,8 @@
 
 <RouterContext {options}>
 	<Winter />
-	<main class="container" style:view-transition-name={viewAnimate ? "main" : "none"}>
-		<RouterView
-			onChange={async e => {
-				return navStart(e)
-			}}
-			onError={() => {
-				navEnd()
-			}}
-			onLoaded={() => {
-				navEnd()
-			}}
-		/>
+	<main class="container">
+		<RouterView/>
 	</main>
 	<footer>
 		<ul>
@@ -130,25 +91,6 @@
 </RouterContext>
 
 <style>
-	::view-transition-group(main) {
-		animation-duration: 150ms;
-	}
-
-	::view-transition-old(main) {
-		animation: 50ms linear both fade-out;
-	}
-
-	::view-transition-new(main) {
-		animation: 100ms cubic-bezier(1.000, 0.700, 1.000, 1.000) 50ms both fade-in;
-	}
-
-	::view-transition-old(footer),
-	::view-transition-new(footer),
-	::view-transition-group(footer) {
-		height: 50px;
-		animation: none;
-	}
-
 	main {
 		display: flex;
 		width: 100%;

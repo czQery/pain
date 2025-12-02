@@ -10,7 +10,6 @@
 	import { source, sourceGroupStore, sourceSchoolStore } from "../lib/var.js"
 	import { update } from "../main.js"
 
-	let animate = $state(false)
 	let time = $state(new Date())
 
 	// svelte-ignore state_referenced_locally
@@ -24,10 +23,6 @@
 	const getS = hour => formatAddZero(Math.trunc(((formatTime(hour).getTime() - time) / 1000) % 60).toString())
 
 	onMount(async () => {
-		setTimeout(async () => {
-			animate = true
-		}, 500) // yeah, it's stupid but if it works who cares, it's just an animation
-
 		if (interval) clearInterval(interval)
 		interval = setInterval(() => {
 			time = new Date()
@@ -44,7 +39,6 @@
 	})
 
 	onDestroy(() => {
-		animate = false
 		clearInterval(interval)
 	})
 </script>
@@ -91,7 +85,7 @@
 		</div>
 		<!-- Days countdown
 		<div id="countdown-center">
-            <div id="countdown-clock" data-animate={animate}>
+            <div id="countdown-clock">
                 {#key hourD}
                     <h1 style="will-change: transform">{hourD}</h1>
                 {/key}
@@ -99,7 +93,7 @@
             <h2 style="color: var(&#45;&#45;silver)">days</h2>
         </div>-->
 		<div id="countdown-center">
-			<div id="countdown-clock" data-animate={animate}>
+			<div id="countdown-clock">
 				{#if subject !== "#" && hourH !== "00"}
 					{#key hourH}
 						<h1 style="will-change: transform">{hourH}</h1>
@@ -220,7 +214,7 @@
 		text-indent: -6px;
 	}
 
-	#countdown-clock[data-animate="true"] * {
+	#countdown-clock * {
 		animation-duration: 50ms !important;
 	}
 
