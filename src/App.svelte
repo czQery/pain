@@ -1,16 +1,15 @@
 <script>
-	import {active, link} from "@dvcol/svelte-simple-router/action"
-	import {RouterContext, RouterView} from "@dvcol/svelte-simple-router/components"
-	import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
-	import {onMount} from "svelte"
+	import { active, link } from "@dvcol/svelte-simple-router/action"
+	import { RouterContext, RouterView } from "@dvcol/svelte-simple-router/components"
+	import { LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed } from "lucide-svelte"
+	import { onMount } from "svelte"
 	import Winter from "./components/season/Winter.svelte"
-	import {cOffline} from "./lib/const.js"
-	import {preload} from "./lib/preload.js"
-	import {timetablePermanentFetch, timetablePermanentStore} from "./lib/timetable.js"
-	import {ttlCleanCache} from "./lib/ttl.js"
-	import {umami} from "./lib/umami.js"
-	import {source, sourceGroupStore, sourceSchoolStore} from "./lib/var.js"
-	import {update} from "./main.js"
+	import { cOffline } from "./lib/const.js"
+	import { preload } from "./lib/preload.js"
+	import { timetablePermanentFetch, timetablePermanentStore } from "./lib/timetable.js"
+	import { ttlCleanCache } from "./lib/ttl.js"
+	import { umami } from "./lib/umami.js"
+	import { source, sourceGroupStore, sourceSchoolStore } from "./lib/var.js"
 	import Canteen from "./routes/Canteen.svelte"
 	import Countdown from "./routes/Countdown.svelte"
 	import Settings from "./routes/Settings.svelte"
@@ -62,7 +61,7 @@
 <RouterContext {options}>
 	<Winter />
 	<main class="container">
-		<RouterView/>
+		<RouterView />
 	</main>
 	<footer>
 		<ul>

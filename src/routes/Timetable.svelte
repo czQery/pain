@@ -342,7 +342,7 @@
 	}
 
 	td:not(:has(div)) {
-		cursor: default
+		cursor: default;
 	}
 
 	th {

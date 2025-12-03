@@ -3,6 +3,7 @@ import browserslist from "browserslist"
 import { browserslistToTargets } from "lightningcss"
 import { resolve } from "path"
 import { defineConfig } from "vite"
+import lucidePreprocess from "vite-plugin-lucide-preprocess"
 import { ViteMinifyPlugin } from "vite-plugin-minify"
 import { VitePWA } from "vite-plugin-pwa"
 
@@ -28,6 +29,7 @@ export default defineConfig({
 	},
 	define: { __CF_PAGES_COMMIT_SHA__: JSON.stringify(process.env.CF_PAGES_COMMIT_SHA) },
 	plugins: [
+		lucidePreprocess(),
 		svelte(),
 		ViteMinifyPlugin(),
 		VitePWA({
