@@ -249,7 +249,7 @@
 							{/if}
 						{:else}
 							<!--atom doesnt exist-->
-							<td style="cursor: default"></td>
+							<td></td>
 						{/if}
 					{/each}
 				</tr>
@@ -339,6 +339,10 @@
 		padding: 0;
 		cursor: pointer;
 		-webkit-tap-highlight-color: transparent !important;
+	}
+
+	td:not(:has(div)) {
+		cursor: default;
 	}
 
 	th {

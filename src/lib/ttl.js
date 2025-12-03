@@ -8,7 +8,7 @@ export const ttlCleanCache = () => {
 		list.forEach(name => {
 			if (deprecated.includes(name)) {
 				console.log("[TTL] - deleting old cache:", name)
-				caches.delete(name)
+				caches.delete(name).then()
 			}
 		})
 	})

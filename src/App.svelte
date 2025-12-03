@@ -1,51 +1,21 @@
 <script>
-	import {active, link} from "@dvcol/svelte-simple-router/action"
-	import {RouterContext, RouterView} from "@dvcol/svelte-simple-router/components"
-	import {LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed} from "lucide-svelte"
-	import {onMount} from "svelte"
+	import { active, link } from "@dvcol/svelte-simple-router/action"
+	import { RouterContext, RouterView } from "@dvcol/svelte-simple-router/components"
+	import { LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed } from "lucide-svelte"
+	import { onMount } from "svelte"
 	import Winter from "./components/season/Winter.svelte"
-	import {cOffline} from "./lib/const.js"
-	import {preload} from "./lib/preload.js"
-	import {timetablePermanentFetch, timetablePermanentStore} from "./lib/timetable.js"
-	import {ttlCleanCache} from "./lib/ttl.js"
-	import {umami} from "./lib/umami.js"
-	import {source, sourceGroupStore, sourceSchoolStore} from "./lib/var.js"
-	import {update} from "./main.js"
+	import { cOffline } from "./lib/const.js"
+	import { preload } from "./lib/preload.js"
+	import { timetablePermanentFetch, timetablePermanentStore } from "./lib/timetable.js"
+	import { ttlCleanCache } from "./lib/ttl.js"
+	import { umami } from "./lib/umami.js"
+	import { source, sourceGroupStore, sourceSchoolStore } from "./lib/var.js"
 	import Canteen from "./routes/Canteen.svelte"
 	import Countdown from "./routes/Countdown.svelte"
 	import Settings from "./routes/Settings.svelte"
 	import Timetable from "./routes/Timetable.svelte"
 
-	let viewAnimate = $state(false)
 	let interval
-
-	let navDone = () => undefined
-	const navStart = async e => {
-		// reload page if update is installed
-		if ($update) await window.location.replace(window.location.origin + (e?.route?.path ?? ""))
-
-		navDone()?.()
-
-		if (!document.startViewTransition || document.activeViewTransition) return
-		viewAnimate = true
-
-		const { promise: navStarting, resolve: navDoneInternal } = Promise.withResolvers()
-		navDone = navDoneInternal
-
-		const { promise: viewStarting, resolve: viewDone } = Promise.withResolvers()
-		document.startViewTransition(async () => {
-			viewDone()
-			await navStarting
-		})
-		return viewStarting
-	}
-
-	const navEnd = () => {
-		navDone()?.()
-		setTimeout(async () => {
-			viewAnimate = false
-		}, 200)
-	}
 
 	onMount(() => {
 		if (interval) clearInterval(interval)
@@ -90,18 +60,8 @@
 
 <RouterContext {options}>
 	<Winter />
-	<main class="container" style:view-transition-name={viewAnimate ? "main" : "none"}>
-		<RouterView
-			onChange={async e => {
-				return navStart(e)
-			}}
-			onError={() => {
-				navEnd()
-			}}
-			onLoaded={() => {
-				navEnd()
-			}}
-		/>
+	<main class="container">
+		<RouterView />
 	</main>
 	<footer>
 		<ul>
@@ -130,25 +90,6 @@
 </RouterContext>
 
 <style>
-	::view-transition-group(main) {
-		animation-duration: 150ms;
-	}
-
-	::view-transition-old(main) {
-		animation: 50ms linear both fade-out;
-	}
-
-	::view-transition-new(main) {
-		animation: 100ms cubic-bezier(1.000, 0.700, 1.000, 1.000) 50ms both fade-in;
-	}
-
-	::view-transition-old(footer),
-	::view-transition-new(footer),
-	::view-transition-group(footer) {
-		height: 50px;
-		animation: none;
-	}
-
 	main {
 		display: flex;
 		width: 100%;
