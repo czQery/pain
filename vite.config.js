@@ -30,7 +30,9 @@ export default defineConfig({
 	define: { __CF_PAGES_COMMIT_SHA__: JSON.stringify(process.env.CF_PAGES_COMMIT_SHA) },
 	plugins: [
 		lucidePreprocess(),
-		svelte(),
+		svelte({
+			configFile: resolve(__dirname, "svelte.config.js"),
+		}),
 		ViteMinifyPlugin(),
 		VitePWA({
 			devOptions: { enabled: true },

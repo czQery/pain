@@ -6,6 +6,7 @@
       "name": "pain",
       "dependencies": {
         "@dvcol/svelte-simple-router": "2.7.2",
+        "baseline-browser-mapping": "^2.9.0",
         "browserslist": "^4.28.1",
         "caniuse-lite": "^1.0.30001759",
         "fast-blurhash": "^1.1.4",
