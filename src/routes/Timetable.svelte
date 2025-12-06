@@ -341,7 +341,7 @@
 		-webkit-tap-highlight-color: transparent !important;
 	}
 
-	td:not(:has(div)) {
+	td:not(:has(div, span)) {
 		cursor: default;
 	}
 
