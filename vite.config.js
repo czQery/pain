@@ -1,18 +1,18 @@
-import { svelte } from "@sveltejs/vite-plugin-svelte"
+import {svelte} from "@sveltejs/vite-plugin-svelte"
 import browserslist from "browserslist"
-import { browserslistToTargets } from "lightningcss"
-import { resolve } from "path"
-import { defineConfig } from "vite"
+import {browserslistToTargets} from "lightningcss"
+import {resolve} from "path"
+import {defineConfig} from "vite"
 import lucidePreprocess from "vite-plugin-lucide-preprocess"
-import { ViteMinifyPlugin } from "vite-plugin-minify"
-import { VitePWA } from "vite-plugin-pwa"
+import {ViteMinifyPlugin} from "vite-plugin-minify"
+import {VitePWA} from "vite-plugin-pwa"
 
 const root = resolve(__dirname, "src")
 
 export default defineConfig({
 	root,
 	envDir: "../",
-	css: { transformer: "lightningcss", lightningcss: { targets: browserslistToTargets(browserslist(">= 0.25%")) } },
+	css: { transformer: "lightningcss", lightningcss: { targets: browserslistToTargets(browserslist("defaults")) } },
 	server: { port: 8080, allowedHosts: true },
 	build: {
 		minify: "terser",
