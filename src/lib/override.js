@@ -143,7 +143,7 @@ export const overrideRooms = {
 				[null, "4", "VT2", "VT2", "12", "12", "2", "2", null],
 				[null, null, null, null, null, null, null, null, null], // OV
 				["VT2", "VT1", "VT1", "6", "6", "VT2", "VT2", null, null],
-				["VT1", "VT2", "VT2", "1", "5", "5", "VT1", "VT1", null],
+				["VT1", "VT2", "VT2", "1", "5", "5", "VT2", "VT2", null],
 				[null, "2", "2", "VT1", "2", "2", "TV", "TV", null],
 			], // even
 		],
@@ -161,7 +161,7 @@ export const overrideRooms = {
 				[null, "4", "VT2", "VT2", "12", "12", "2", "2", null],
 				[null, null, null, null, null, null, null, null, null], // OV
 				["VT2", "VT1", "VT1", "6", "6", "VT2", "VT2", null, null],
-				["VT1", "VT2", "VT2", "1", "5", "5", "VT1", "VT1", null],
+				["VT1", "VT2", "VT2", "1", "5", "5", "VT2", "VT2", null],
 				[null, "2", "2", "VT1", "2", "2", "TV", "TV", null],
 			], // even
 		],
@@ -179,7 +179,7 @@ export const overrideRooms = {
 				[null, "4", "VT2", "VT2", "12", "12", "11", "11", null],
 				[null, null, null, null, null, null, null, null, null], // OV
 				["VT2", "VT1", "VT1", "6", "6", "VT2", "VT2", null, null],
-				["VT1", "VT2", "VT2", "1", "5", "5", "VT1", "VT1", null],
+				["VT1", "VT2", "VT2", "1", "5", "5", "VT2", "VT2", null],
 				[null, "2", "2", "VT1", "2", "2", "TV", "TV", null],
 			], // even
 		],
@@ -197,7 +197,7 @@ export const overrideRooms = {
 				[null, "4", "VT2", "VT2", "12", "12", "11", "11", null],
 				[null, null, null, null, null, null, null, null, null], // OV
 				["VT2", "VT1", "VT1", "6", "6", "VT2", "VT2", null, null],
-				["VT1", "VT2", "VT2", "1", "5", "5", "VT1", "VT1", null],
+				["VT1", "VT2", "VT2", "1", "5", "5", "VT2", "VT2", null],
 				[null, "2", "2", "VT1", "2", "2", "TV", "TV", null],
 			], // even
 		],
