@@ -46,14 +46,15 @@
 	const getNewTime = () => {
 		let now = new Date()
 		if (now.getDay() === 0) {
-			now = new Date(now.setDate(now.getDate() - 1))
+			now.setDate(now.getDate() - 1)
 		}
 		return now
 	}
 
 	const getNewDateTime = offset => {
 		let now = getNewTime()
-		let date = new Date(new Date().setDate((now.getDate() - now.getDay() + offset) + $timetablePageStore * 7))
+		let date = new Date(now)
+		date.setDate((now.getDate() - now.getDay() + offset) + $timetablePageStore * 7)
 		date.setHours(0, 0, 0, 0)
 		return date
 	}

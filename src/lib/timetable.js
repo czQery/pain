@@ -1,7 +1,7 @@
-import { get, writable } from "svelte/store"
-import { getWeek } from "./helper.js"
-import { overrideOV, overrideOVGroup } from "./override.js"
-import { sourceSchoolStore } from "./var.js"
+import {get, writable} from "svelte/store"
+import {getWeek} from "./helper.js"
+import {overrideOV, overrideOVGroup} from "./override.js"
+import {sourceSchoolStore} from "./var.js"
 
 export const timetableStore = writable(null)
 export const timetablePageStore = writable(0)
@@ -12,16 +12,10 @@ export const timetableFetch = async (group, page, override) => {
 	try {
 		// generate current week string for cache safety
 		const time = new Date()
-		const timeNow = new Date(new Date().setDate(time.getDate() - time.getDay() + 1))
-		const timeFallback = new Date(new Date().setDate(timeNow.getDate() - 7))
+		const day = time.getDay() || 7
+		time.setDate(time.getDate() - day + 1)
 
-		let v = encodeURIComponent(btoa(timeNow.getDate().toString() + "/" + (time.getMonth() + 1).toString() + "/" + time.getFullYear().toString()))
-
-		if (time.getDate() < timeNow.getDate()) {
-			v = encodeURIComponent(
-				btoa(timeFallback.getDate().toString() + "/" + (timeFallback.getMonth() + 1).toString() + "/" + timeFallback.getFullYear().toString()),
-			)
-		}
+		let v = encodeURIComponent(btoa(time.getDate().toString() + "/" + (time.getMonth() + 1).toString() + "/" + time.getFullYear().toString()))
 
 		// do the actual request
 		const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable?group=" + group + "&page=" + page.toString() + "&v=" + v.toString(), {
@@ -58,7 +52,7 @@ export const timetableFetch = async (group, page, override) => {
 				}
 			case "timetable":
 				let edit = data["data"]
-				let week = getWeek(new Date(new Date().setDate((time.getDate() - time.getDay() + 5) + page * 7)))
+				let week = getWeek(new Date(new Date().setDate(time.getDate() - (time.getDay() || 7) + 4 + page * 7)))
 				let ov = overrideOVGroup[group][week % 2 === 0 ? 1 : 0]
 
 				if (time.getDay() === 0) {
