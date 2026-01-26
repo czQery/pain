@@ -54,7 +54,7 @@
 	const getNewDateTime = offset => {
 		let now = getNewTime()
 		let date = new Date(new Date().setDate((now.getDate() - now.getDay() + offset) + $timetablePageStore * 7))
-		date.setUTCHours(0, 0, 0, 0)
+		date.setHours(0, 0, 0, 0)
 		return date
 	}
 
