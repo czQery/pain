@@ -30,19 +30,19 @@
 {#if $canteenStore}
 	<div id="canteen-block" style:padding-bottom={overrideOrdering[$sourceSchoolStore] ? "60px" : "20px"}>
 		{#each $canteenStore as day, _}
-			<!--DEBUG
-            <h3>{time.getDate() + "." + time.getMonth() + "-" + date.getDate() + "." + date.getMonth()}</h3>
-            <span>{JSON.stringify(day)}</span>-->
 			{@const date = new Date(Number(day["date"]))}
-			{@const ovGroup = overrideOVGroup[$sourceGroupStore]?.[(getWeek(date)) % 2 === 0 ? 1 : 0]?.[date.getDay() - 1]}
-			{@const ovOverride = overrideCanteen[ovGroup]?.[(getWeek(date)) % 2 === 0 ? 1 : 0]?.[date.getDay() - 1]}
+			{@const dateLocal = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())}
+			{@const dayIndex = (date.getDay() || 7) - 1}
+			{@const parity = getWeek(date) % 2 === 0 ? 1 : 0}
+			{@const ovGroup = overrideOVGroup[$sourceGroupStore]?.[parity]?.[dayIndex]}
+			{@const ovOverride = overrideCanteen[ovGroup]?.[parity]?.[dayIndex]}
 			{@const ovMaster = ($timetablePermanentStore?.["Teachers"] || []).find(s => s["Id"] === ovGroup)}
-			{#if time.getMonth() < date.getMonth() || (time.getMonth() === date.getMonth() && time.getDate() <= date.getDate())}
-				<!--date correction-->
+			<!--date correction-->
+			{#if Date.UTC(time.getFullYear(), time.getMonth(), time.getDate()) <= date.getTime()}
 				<div class="canteen-day">
 					<div class="canteen-title">
-						<h2>{formatDay(date)}</h2>
-						<h3>{"- " + formatDate(date)}</h3>
+						<h2>{formatDay(dateLocal)}</h2>
+						<h3>{"- " + formatDate(dateLocal)}</h3>
 					</div>
 					<div class="canteen-lines">
 						{#if day["open"]}
