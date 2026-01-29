@@ -149,11 +149,12 @@
 					<span>{formatOrdinalNumber(pageWeek) + " week"}</span>
 				</th>
 				{#each days as day, i}
+					{@const dayDate = getNewDateTime(i + 1)}
 					<th>
 						<h3>{day}</h3>
-						<span>{getNewDateTime(i + 1).getDate() + ". " + (getNewDateTime(i + 1).getMonth() + 1) + "."}</span>
+						<span>{dayDate.getDate() + ". " + (dayDate.getMonth() + 1) + "."}</span>
 						{#if $canteenStore}
-							{@const dish = $canteenStore.find(s => s["date"] === getNewDateTime(i + 1).getTime())}
+							{@const dish = $canteenStore.find(s => s["date"] === Date.UTC(dayDate.getFullYear(), dayDate.getMonth(), dayDate.getDate()))}
 							{#if dish && !dish["open"]}
 								<span class="day-canteen">
 									<span class="day-canteen-shape"></span>
