@@ -11,15 +11,17 @@ export const timetableCountdownStore = writable(null)
 export const timetableFetch = async (group, page, override) => {
 	try {
 		// generate current week string for cache safety
-		const time = new Date()
-		const day = time.getDay() || 7
-		time.setDate(time.getDate() - day + 1)
+		const timeWeek = new Date()
+		const day = timeWeek.getDay() || 7
+		timeWeek.setDate(timeWeek.getDate() - day + 1)
 
-		let v = encodeURIComponent(btoa(time.getDate().toString() + "/" + (time.getMonth() + 1).toString() + "/" + time.getFullYear().toString()))
+		const timeToday = new Date()
+
+		let v = encodeURIComponent(btoa(timeWeek.getDate().toString() + "/" + (timeWeek.getMonth() + 1).toString() + "/" + timeWeek.getFullYear().toString()))
 
 		// do the actual request
 		const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable?group=" + group + "&page=" + page.toString() + "&v=" + v.toString(), {
-			credentials: "include",
+			credentials: "include"
 		})
 		const data = await response.json()
 
@@ -31,20 +33,20 @@ export const timetableFetch = async (group, page, override) => {
 			data["data"]["Teachers"].push({
 				Abbrev: "Lí",
 				Id: "UJ01Z",
-				Name: "Petr Lízr",
+				Name: "Petr Lízr"
 			})
 		}
 
 		switch (override) {
 			case "countdown":
-				if (data["data"]["Days"][time.getDay() - 1] && data["data"]["Days"][time.getDay() - 1]["Atoms"][0]?.["SubjectId"] === "67") {
+				if (data["data"]["Days"][timeToday.getDay() - 1] && data["data"]["Days"][timeToday.getDay() - 1]["Atoms"][0]?.["SubjectId"] === "67") {
 					let edit = data["data"]
-					let teacher = edit["Days"][time.getDay() - 1]["Atoms"][0]?.["TeacherId"] ?? "#"
+					let teacher = edit["Days"][timeToday.getDay() - 1]["Atoms"][0]?.["TeacherId"] ?? "#"
 
-					edit["Days"][time.getDay() - 1]["Atoms"] = overrideOV["Atoms"]
+					edit["Days"][timeToday.getDay() - 1]["Atoms"] = overrideOV["Atoms"]
 					edit["Hours"] = overrideOV["Hours"]
 
-					for (const atom of edit["Days"][time.getDay() - 1]["Atoms"]) {
+					for (const atom of edit["Days"][timeToday.getDay() - 1]["Atoms"]) {
 						atom["TeacherId"] = teacher
 					}
 
@@ -52,12 +54,8 @@ export const timetableFetch = async (group, page, override) => {
 				}
 			case "timetable":
 				let edit = data["data"]
-				let week = getWeek(new Date(new Date().setDate(time.getDate() - (time.getDay() || 7) + 4 + page * 7)))
+				let week = getWeek(new Date(new Date().setDate(timeWeek.getDate() - (timeWeek.getDay() || 7) + 4 + page * 7)))
 				let ov = overrideOVGroup[group][week % 2 === 0 ? 1 : 0]
-
-				if (time.getDay() === 0) {
-					ov = overrideOVGroup[group][week % 2 === 0 ? 0 : 1] // swap week polarity. could be week-- but it would break on new year eve
-				}
 
 				for (let i = 0; i < 5; i++) {
 					if (!edit["Days"][i]["Atoms"]) { // check if day exists in bakalaři
@@ -112,14 +110,14 @@ export const timetableFetch = async (group, page, override) => {
 
 export const timetablePermanentFetch = async group => {
 	try {
-		const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable-permanent?group=" + group.toString(), { credentials: "include" })
+		const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable-permanent?group=" + group.toString(), {credentials: "include"})
 		const data = await response.json()
 
 		if (get(sourceSchoolStore) === "sssenp.cz") {
 			data["data"]["Teachers"].push({
 				Abbrev: "Lí",
 				Id: "UJ01Z",
-				Name: "Petr Lízr",
+				Name: "Petr Lízr"
 			})
 		}
 
