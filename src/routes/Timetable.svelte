@@ -198,13 +198,15 @@
 								{@const subject = $timetableStore["Subjects"].find(s => s["Id"] === atom["SubjectId"]) ?? null}
 								{@const teacher = $timetablePermanentStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? $timetableStore["Teachers"].find(s => s["Id"] === atom["TeacherId"]) ?? null}
 								{@const change = (subjectOriginal?.["Id"] ?? "#") !== subject["Id"] && atom["LessonRelease"] !== "override"}
-								<td style:background-color={subject["Name"] !== "" ? "var(--subject-" + subject["Abbrev"].toUpperCase() + ")" : ""} class={past + (subject["Name"] !== "" ? "" : " subject-canceled")} onclick={() => modalShow(subject, teacher, atom["Test"] ? "Test: " + atom["Test"] + "\n" + atom["Theme"] : atom["Theme"])}>
+								{@const test = atom["Test"] ?? (atom["Notice"] !== "" ? atom["Notice"] : null)}
+								{@const testLabel = atom["Test"] ? "test" : "notice"}
+								<td style:background-color={subject["Name"] !== "" ? "var(--subject-" + subject["Abbrev"].toUpperCase() + ")" : ""} class={past + (subject["Name"] !== "" ? "" : " subject-canceled")} onclick={() => modalShow(subject, teacher, test ? (formatCapitalize(testLabel)+": " + test + "\n" + atom["Theme"]) : atom["Theme"])}>
 									<div class="flex-atom">
 										<!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
 										<div class="flex-between">
 											<span style="text-align: left">{group}</span>
-											{#if atom["Test"]}
-												<span style="background-color: var(--black); padding: 0 5px; border-radius: var(--border)">test</span>
+											{#if test}
+												<span style="background-color: var(--black); padding: 0 5px; border-radius: var(--border)">{testLabel}</span>
 											{/if}
 											{#if room !== ""}
 												<span style="text-align: right">{room}</span>
