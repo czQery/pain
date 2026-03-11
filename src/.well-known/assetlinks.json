@@ -1,0 +1,15 @@
+[
+	{
+		"relation": [
+			"delegate_permission/common.handle_all_urls",
+			"delegate_permission/common.get_login_creds"
+		],
+		"target": {
+			"namespace": "android_app",
+			"package_name": "cz.qery.pain",
+			"sha256_cert_fingerprints": [
+				"A9:B3:FD:82:58:56:BD:0C:A1:41:A3:5E:11:BB:68:DA:07:35:1D:09:48:08:8C:12:15:A8:77:09:9F:F8:48:C4"
+			]
+		}
+	}
+]
