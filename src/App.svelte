@@ -65,10 +65,10 @@
 
 		switch (e.detail.direction) {
 			case "top":
-				router.push({ path: "/countdown" })
+				router.push({ path: "/settings" })
 				break
 			case "bottom":
-				router.push({ path: "/settings" })
+				router.push({ path: "/countdown" })
 				break
 		}
 	}
