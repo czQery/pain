@@ -39,15 +39,10 @@
 			{/each}
 		</select>
 	</div>
-	<div style="margin: 60px 0 0 0">
-		<span>Zde může být i tvoje třída/skupina, stačí, když mi pošleš</span>
-		<span style="color: var(--pink)">refresh-token</span>
-		<span>z tvého bakaláře na discord @czqery.</span>
-		<br>
-		<span>Zadej tento příkaz do CMD, a bakalář ti token vygeneruje.</span>
+	<div id="settings-note">
+		<span>Contact me on discord to add your school/group.</span>
+		<span style="color: var(--pink)">@czqery</span>
 	</div>
-
-	<code>curl -d "grant_type=password&client_id=ANDR&username=<strong>jméno</strong>&password=<strong>heslo</strong>&scope=bakalari_api+offline_access+timetable_widget" https://sssenp.bakalari.cz/api/login</code>
 </div>
 
 <style>
@@ -67,10 +62,6 @@
 		color: var(--silver);
 	}
 
-	#settings-block code {
-		color: var(--silver);
-	}
-
 	#settings-input {
 		display: flex;
 		flex-direction: column;
@@ -83,5 +74,24 @@
 
 	#settings-input label {
 		margin: 0 0 0 5px;
+	}
+
+	#settings-note {
+		margin: 20px 0 0 0;
+		gap: 5px;
+		flex-direction: column;
+		display: flex;
+		align-items: center;
+		text-align: center;
+	}
+
+	@media screen and (max-height: 350px) {
+		#settings-block {
+			gap: 10px;
+		}
+
+		#settings-note {
+			margin: 0;
+		}
 	}
 </style>
