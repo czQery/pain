@@ -283,4 +283,27 @@
 			transform: translateY(-150%);
 		}
 	}
+
+	@media screen and (max-height: 350px) {
+		#countdown-header {
+			display: none;
+		}
+
+		#countdown-center {
+			margin: auto 0;
+			gap: 5px;
+		}
+
+		#countdown-footer {
+			display: none;
+		}
+
+		.countdown-clock-colon {
+			letter-spacing: -2px;
+			text-indent: -2px;
+			min-height: 35px;
+			font-size: 35px;
+			line-height: 35px;
+		}
+	}
 </style>

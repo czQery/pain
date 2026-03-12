@@ -1,8 +1,10 @@
 <script>
+	import { Router } from "@dvcol/svelte-simple-router"
 	import { active, link } from "@dvcol/svelte-simple-router/action"
 	import { RouterContext, RouterView } from "@dvcol/svelte-simple-router/components"
 	import { LucideCalendarRange, LucideClock, LucideSettings, LucideUtensilsCrossed } from "lucide-svelte"
 	import { onMount } from "svelte"
+	import { useSwipe } from "svelte-gestures"
 	import { cOffline } from "./lib/const.js"
 	import { preload } from "./lib/preload.js"
 	import { timetablePermanentFetch, timetablePermanentStore } from "./lib/timetable.js"
@@ -15,6 +17,9 @@
 	import Settings from "./routes/Settings.svelte"
 	import Timetable from "./routes/Timetable.svelte"
 
+	export const router = new Router({
+		routes: [{ name: "countdown", path: "/countdown", component: Countdown }, { name: "timetable", path: "/timetable", component: Timetable }, { name: "canteen", path: "/canteen", component: Canteen }, { name: "settings", path: "/settings", component: Settings }, { name: "index", path: "*", redirect: { name: "countdown" } }],
+	})
 	let interval
 
 	onMount(() => {
@@ -53,14 +58,25 @@
 		}, cOffline)
 	})
 
-	const routes = [{ name: "countdown", path: "/countdown", component: Countdown }, { name: "timetable", path: "/timetable", component: Timetable }, { name: "canteen", path: "/canteen", component: Canteen }, { name: "settings", path: "/settings", component: Settings }, { name: "index", path: "*", redirect: { name: "countdown" } }]
+	const handler = e => {
+		if (e.detail.pointerType !== "touch") {
+			return
+		}
 
-	const options = { routes }
+		switch (e.detail.direction) {
+			case "top":
+				router.push({ path: "/countdown" })
+				break
+			case "bottom":
+				router.push({ path: "/settings" })
+				break
+		}
+	}
 </script>
 
-<RouterContext {options}>
+<RouterContext {router}>
 	<!--<Winter />-->
-	<main class="container">
+	<main class="container" {...useSwipe(handler, () => ({ timeframe: 300, minSwipeDistance: 50, touchAction: "none" }))}>
 		<RouterView onChange={e => $update ? window.location.replace(window.location.origin + (e?.route?.path ?? "")) : null} />
 	</main>
 	<footer>
@@ -177,5 +193,15 @@
 	footer ul li {
 		width: 100%;
 		max-width: 200px;
+	}
+
+	@media screen and (max-height: 350px) {
+		main {
+			height: calc(100svh - var(--bar));
+		}
+
+		footer {
+			display: none;
+		}
 	}
 </style>
