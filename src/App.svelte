@@ -59,7 +59,7 @@
 	})
 
 	const handler = e => {
-		if (e.detail.pointerType !== "touch") {
+		if (e.detail.pointerType !== "touch" || window.innerHeight > 350) {
 			return
 		}
 
