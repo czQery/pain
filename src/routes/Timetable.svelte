@@ -188,7 +188,7 @@
 						{@const atom = day?.["Atoms"].find(t => t["HourId"] === hour["Id"] && (t["Change"] === null || t["SubjectId"] === overrideOV["Atoms"][0]["SubjectId"] || t["SubjectId"] !== (atomOriginal?.["SubjectId"] ?? "#") || t["TeacherId"] !== (atomOriginal?.["TeacherId"] ?? "#") || t["RoomId"] !== (atomOriginal?.["RoomId"] ?? "#"))) ?? null}
 						{#if day["DayType"] !== "WorkDay" && subjectOriginal}
 							<!--special day-->
-							<td class={"subject-removed " + past} onclick={() => modalShow(day["DayType"], null, day["DayDescription"])}>
+							<td class={"subject-canceled " + past} onclick={() => modalShow(day["DayType"], null, day["DayDescription"])}>
 								<span></span>
 								<h3>{subjectOriginal["Abbrev"].toUpperCase()}</h3>
 								<span>{day["DayType"].toLowerCase()}</span>
