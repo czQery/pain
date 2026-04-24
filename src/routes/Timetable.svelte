@@ -26,6 +26,7 @@
 		if (subject["Name"]) {
 			modalSubject = subject["Name"]
 			modalSubjectColor = subject["Abbrev"].toUpperCase()
+			if (subject["Abbrev"] === "TH") modalSubjectColor = "FREE"
 		} else if (subject["Abbrev"]) {
 			modalSubject = subject["Abbrev"].toUpperCase()
 			modalSubjectColor = "FREE"
@@ -38,6 +39,9 @@
 		} else {
 			modalTeacher = ""
 		}
+
+		modalSubject = modalSubject.charAt(0).toUpperCase() + modalSubject.slice(1)
+
 		modalTheme = formatCapitalize(description.replaceAll("&quot;", "\""))
 		modal.show()
 		return null
@@ -129,7 +133,7 @@
 	{@const pageWeek = getWeek(getNewDateTime(5))}
 	<Modal bind:modal title="Lesson details">
 		{#if modalSubjectColor === "FREE"}
-			<h2 style="background: var(--brand); color: transparent; background-clip: text">{modalSubject}</h2>
+			<h2 style="background: var(--brand);color: transparent;background-clip: text">{modalSubject}</h2>
 		{:else}
 			<h2 style="color: var(--subject-{modalSubjectColor})">{modalSubject}</h2>
 		{/if}
@@ -138,7 +142,7 @@
 		{/if}
 		{#if modalTheme !== ""}
 			<div style="height: 0"></div>
-			<h4 style="color: var(--silver); white-space: pre-line">{modalTheme}</h4>
+			<h4 style="color: var(--silver);white-space: pre-line">{modalTheme}</h4>
 		{/if}
 	</Modal>
 	<table style:--corner={cornerHeight + "px"} style:--hours={pageHours.length}>
@@ -200,7 +204,7 @@
 								{@const change = (subjectOriginal?.["Id"] ?? "#") !== subject["Id"] && atom["LessonRelease"] !== "override"}
 								{@const test = atom["Test"] ?? (atom["Notice"] !== "" ? atom["Notice"] : null)}
 								{@const testLabel = atom["Test"] ? "test" : "notice"}
-								<td style:background-color={subject["Name"] !== "" ? "var(--subject-" + subject["Abbrev"].toUpperCase() + ")" : ""} class={past + (subject["Name"] !== "" ? "" : " subject-canceled")} onclick={() => modalShow(subject, teacher, test ? (formatCapitalize(testLabel)+": " + test + "\n" + atom["Theme"]) : atom["Theme"])}>
+								<td style:background-color={(subject["Name"] !== "" && subject["Abbrev"] !== "TH") ? "var(--subject-" + subject["Abbrev"].toUpperCase() + ")" : ""} class={past + ((subject["Name"] !== "" && subject["Abbrev"] !== "TH") ? "" : " subject-canceled")} onclick={() => modalShow(subject, teacher, test ? (formatCapitalize(testLabel)+": " + test + "\n" + atom["Theme"]) : atom["Theme"])}>
 									<div class="flex-atom">
 										<!--making the div 10px shorter instead of using padding 5px, idk dont ask me tables behave like shit-->
 										<div class="flex-between">
