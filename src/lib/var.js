@@ -8,33 +8,15 @@ export const source = {
 			class: "SEXTA",
 			src: "am",
 		},
-	],
+	],/*
 	"sssenp.cz": [
 		{
 			id: "ZGY21K",
 			name: "R4-ŠTĚPÁN",
 			class: "R4",
 			src: "sa",
-		},
-		{
-			id: "RGW1X6",
-			name: "R4-ALEŠ",
-			class: "R4",
-			src: "af",
-		},
-		{
-			id: "ZGW1WS",
-			name: "R4-DANIEL",
-			class: "R4",
-			src: "dk",
-		},
-		{
-			id: "ZGW1X4",
-			name: "R4-RADEK",
-			class: "R4",
-			src: "rv",
-		},
-	],
+		}
+	],*/
 }
 
 export const sourceSchoolStore = writable(null)
