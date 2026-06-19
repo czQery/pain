@@ -9,6 +9,7 @@
 	import { timetableCountdownStore, timetableFetch, timetablePermanentStore } from "../lib/timetable.js"
 	import { source, sourceGroupStore, sourceSchoolStore } from "../lib/var.js"
 	import { update } from "../main.js"
+    import Summer from "../components/season/Summer.svelte";
 
 	let time = $state(new Date())
 
@@ -78,10 +79,10 @@
 	{@const hourM = hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00")}
 	{@const hourS = hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00")}
 
-	<!--<Summer />-->
+	<Summer/>
 	<div id="countdown-block">
 		<div id="countdown-header">
-			<Banner />
+			<Banner/>
 		</div>
 		<!-- Days countdown
 		<div id="countdown-center">
