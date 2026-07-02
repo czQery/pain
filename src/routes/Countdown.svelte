@@ -44,8 +44,8 @@
 	})
 </script>
 
-{#if $timetableCountdownStore && $timetablePermanentStore && $timetablePermanentStore["Hours"]}
-	{@const today = $timetableCountdownStore["Days"]?.[time.getDay() - 1] ?? null}
+{#if true/* $timetableCountdownStore && $timetablePermanentStore && $timetablePermanentStore["Hours"] */}
+	<!-- {@const today = $timetableCountdownStore["Days"]?.[time.getDay() - 1] ?? null}
 	{@const atomBegin = today ? today?.["Atoms"].find(s => s["SubjectId"]) : null}
 
 	{@const hour = $timetableCountdownStore["Hours"].find(t => {
@@ -75,7 +75,7 @@
 	{@const room = $timetableCountdownStore["Rooms"].find(s => s["Id"] === (atom?.["RoomId"] ?? (atomNext?.["RoomId"] ?? "#")))?.["Abbrev"] ?? ""}
 	{@const roomOverride = overrideRooms?.[$sourceGroupStore]}
 
-	<!-- {@const hourH = hour ? getH(hour["EndTime"]) : getH(hourNext?.["BeginTime"] ?? "00")}
+	{@const hourH = hour ? getH(hour["EndTime"]) : getH(hourNext?.["BeginTime"] ?? "00")}
 	{@const hourM = hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00")}
 	{@const hourS = hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00")} -->
 
@@ -91,7 +91,7 @@
                     <h1 style="will-change: transform">{hourD}</h1>
                 {/key}
             </div>
-            <h2 style="color: var(&#45;&#45;silver)">days</h2>
+            <h2 style="color: var(--silver)">days</h2>
         </div>
 		<!-- <div id="countdown-center">
 			<div id="countdown-clock">
