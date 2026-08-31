@@ -7,7 +7,7 @@ import lucidePreprocess from "vite-plugin-lucide-preprocess"
 import {ViteMinifyPlugin} from "vite-plugin-minify"
 import {VitePWA} from "vite-plugin-pwa"
 
-const root = resolve(__dirname, "src")
+const root = resolve(import.meta.dirname, "src")
 
 export default defineConfig({
 	root,
@@ -31,7 +31,7 @@ export default defineConfig({
 	plugins: [
 		lucidePreprocess(),
 		svelte({
-			configFile: resolve(__dirname, "svelte.config.js"),
+			configFile: resolve(import.meta.dirname, "svelte.config.js"),
 		}),
 		ViteMinifyPlugin(),
 		VitePWA({
