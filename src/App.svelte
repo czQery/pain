@@ -120,6 +120,7 @@
 		--subject-A: #0c355b;
 		--subject-F: var(--subject-A);
 		--subject-AJ: #d5334b;
+		--subject-AK: var(--subject-AJ);
 		--subject-KAJ: var(--subject-AJ);
 		--subject-CAD: #5f6895;
 		--subject-INF: var(--subject-CAD);
@@ -137,6 +138,7 @@
 		--subject-EK: #fa147f;
 		--subject-ZSV: var(--subject-EK);
 		--subject-M: #23b1d2;
+		--subject-MS: var(--subject-M);
 		--subject-MVE: var(--subject-M);
 		--subject-ON: #851049;
 		--subject-NJ: var(--subject-ON);

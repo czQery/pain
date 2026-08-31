@@ -17,11 +17,11 @@
 	let refresh = time.getTime() + cOffline // cOffline run is set always for the next request after the data is already loaded anyway
 	let interval
 
-	const getD = end => Math.ceil((end - time) / 1000 / 3600 / 24).toString()
-    let hourD = $derived(getD(1788213600000))
-	/* const getH = hour => formatAddZero(Math.trunc((formatTime(hour).getTime() - time) / 1000 / 3600).toString())
+	/* const getD = end => Math.ceil((end - time) / 1000 / 3600 / 24).toString()
+    let hourD = $derived(getD(1788213600000)) */
+	const getH = hour => formatAddZero(Math.trunc((formatTime(hour).getTime() - time) / 1000 / 3600).toString())
 	const getM = hour => formatAddZero(Math.trunc((((formatTime(hour).getTime() - time) / 1000) % 3600) / 60).toString())
-	const getS = hour => formatAddZero(Math.trunc(((formatTime(hour).getTime() - time) / 1000) % 60).toString()) */
+	const getS = hour => formatAddZero(Math.trunc(((formatTime(hour).getTime() - time) / 1000) % 60).toString())
 
 	onMount(async () => {
 		if (interval) clearInterval(interval)
@@ -44,8 +44,8 @@
 	})
 </script>
 
-{#if true/* $timetableCountdownStore && $timetablePermanentStore && $timetablePermanentStore["Hours"] */}
-	<!-- {@const today = $timetableCountdownStore["Days"]?.[time.getDay() - 1] ?? null}
+{#if /* true */$timetableCountdownStore && $timetablePermanentStore && $timetablePermanentStore["Hours"]}
+	{@const today = $timetableCountdownStore["Days"]?.[time.getDay() - 1] ?? null}
 	{@const atomBegin = today ? today?.["Atoms"].find(s => s["SubjectId"]) : null}
 
 	{@const hour = $timetableCountdownStore["Hours"].find(t => {
@@ -77,23 +77,23 @@
 
 	{@const hourH = hour ? getH(hour["EndTime"]) : getH(hourNext?.["BeginTime"] ?? "00")}
 	{@const hourM = hour ? getM(hour["EndTime"]) : getM(hourNext?.["BeginTime"] ?? "00")}
-	{@const hourS = hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00")} -->
+	{@const hourS = hour ? getS(hour["EndTime"]) : getS(hourNext?.["BeginTime"] ?? "00")}
 
-	<Summer/>
+	<!-- <Summer/> -->
 	<div id="countdown-block">
 		<div id="countdown-header">
 			<Banner/>
 		</div>
 		<!-- Days countdown -->
-		<div id="countdown-center">
+		<!-- <div id="countdown-center">
             <div id="countdown-clock">
                 {#key hourD}
                     <h1 style="will-change: transform">{hourD}</h1>
                 {/key}
             </div>
             <h2 style="color: var(--silver)">days</h2>
-        </div>
-		<!-- <div id="countdown-center">
+        </div> -->
+		<div id="countdown-center">
 			<div id="countdown-clock">
 				{#if subject !== "#" && hourH !== "00"}
 					{#key hourH}
@@ -146,11 +146,11 @@
 			{#if subject !== "#"}
 				<h4 style="color: var(--silver)">{teacher}</h4>
 			{/if}
-			DEBUG
+			<!-- DEBUG
             <span>{subject}</span>
             <span>{"HOUR - " +hour?.["Caption"] + " - " + atom?.["SubjectId"]}</span>
-            <span>{"NEXT - " +hourNext?.["Caption"] + " - " + atomNext?.["SubjectId"]}</span>
-		</div> -->
+            <span>{"NEXT - " +hourNext?.["Caption"] + " - " + atomNext?.["SubjectId"]}</span> -->
+		</div>
 		<div id="countdown-footer">
 			<div>
 				<h4>Created by</h4>

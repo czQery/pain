@@ -4,8 +4,8 @@ export const source = {
 	"gymnp.cz": [
 		{
 			id: "764",
-			name: "SEXTA",
-			class: "SEXTA",
+			name: "SEPTIMA",
+			class: "SEPTIMA",
 			src: "am",
 		},
 	],/*
