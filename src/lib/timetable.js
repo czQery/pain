@@ -54,7 +54,7 @@ export const timetableFetch = async (group, page, override) => {
 						continue
 					}
 
-					/*
+
 					let h7 = null
 					let h8 = null
 
@@ -82,7 +82,7 @@ export const timetableFetch = async (group, page, override) => {
 								break
 						}
 					}
-					*/
+
 				}
 
 				data["data"] = edit
@@ -106,6 +106,14 @@ export const timetablePermanentFetch = async group => {
 	try {
 		const response = await fetch(import.meta.env.VITE_API + "/api/bakalari/timetable-permanent?group=" + group.toString(), {credentials: "include"})
 		const data = await response.json()
+
+		if (get(sourceSchoolStore) === "sssenp.cz") {
+			data["data"]["Teachers"].push({
+				Abbrev: "Jon",
+				Id: "UR02L",
+				Name: "Vladimír Jón"
+			})
+		}
 
 		timetablePermanentStore.set(data["data"])
 	} catch {

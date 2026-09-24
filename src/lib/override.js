@@ -34,15 +34,21 @@ export const overrideOV = {
 }
 
 export const overrideMasters = {
-	/*
 	UJ01Z: 101, // Lí
 	UW035: 201, // Sla
-	*/
+	UY03K: 202, // Št
+	U0014: 204, // Mi
+	UR02L: 206, // Jo
+	UX03D: 211, // Zí
+	UV02Z: 302, // Šm
+	UY03L: 303, // Du
+	UW033: 306, // Da
+	UW034: 306, // No
 }
 
 export const overrideOrdering = {
 	"gymnp.cz": "https://e-jidelnicek.cz/login",
-	//"sssenp.cz": "https://jidelna.sssenp.cz/faces/login.jsp",
+	"sssenp.cz": "https://jidelna.sssenp.cz/faces/login.jsp",
 }
 
 export const overrideCanteen = {
@@ -62,11 +68,11 @@ export const overrideOVGroup = {
 	"764": [
 		[null, null, null, null, null],
 		[null, null, null, null, null],
-	],/*
-	"ZGY21K": [
-		[null, null, null, "U0014", null],
-		[null, "UX03D", null, null, null],
-	],*/
+	],
+	"ZGW1X6": [
+		[null, null, null, null, "UR02L"],
+		[null, "UR02L", null, null, null],
+	],
 }
 
 export const overrideRooms = {

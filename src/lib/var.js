@@ -8,15 +8,15 @@ export const source = {
 			class: "SEPTIMA",
 			src: "am",
 		},
-	],/*
+	],
 	"sssenp.cz": [
 		{
-			id: "ZGY21K",
-			name: "R4-ŠTĚPÁN",
+			id: "ZGW1X6",
+			name: "R4-ALEŠ",
 			class: "R4",
-			src: "sa",
+			src: "af",
 		}
-	],*/
+	],
 }
 
 export const sourceSchoolStore = writable(null)
